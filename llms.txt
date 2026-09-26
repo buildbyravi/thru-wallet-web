@@ -1,0 +1,21 @@
+# Thru Wallet Extension website — repository LLM pointer
+
+The canonical deployed AI-readable context is:
+
+```txt
+public/llms.txt
+```
+
+Public docs are in:
+
+```txt
+public/docs/
+```
+
+Most landing-page content is data-driven from:
+
+```txt
+src/data/site.ts
+```
+
+Do not add secrets or fabricated protocol behavior to this website. Keep unsupported Thru Wallet Extension states explicitly marked as unsupported, blocked, or unverified.

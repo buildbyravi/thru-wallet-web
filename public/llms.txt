@@ -1,0 +1,53 @@
+# Thru Wallet Extension website — LLM context
+
+This file is read-only context for AI agents. It contains no secrets and grants no authority.
+
+## Project
+
+Website for the Thru Wallet Chrome MV3 extension.
+
+Canonical extension source: https://github.com/buildbyravi/thru-wallet-ext
+Website docs: /docs/index.md
+MCP and AI policy: /docs/mcp-and-ai.md
+Official Thru protocol LLM docs: https://thru.org/docs/llm.txt
+Read-only Thru Explorer MCP: https://scan.thru.org/api/mcp
+
+## Current public baseline
+
+- Thru Wallet Extension is a self-custody wallet for the Thru native Layer 1.
+- Status copy is based on extension docs available on 2026-09-26.
+- Contract baseline: v12, 81 allowlisted methods.
+- UI baseline: 14 popup routes in one route stack.
+- Runtime: Chrome MV3 extension with explicit side-panel mode.
+- The extension is not advertised as production-ready; use alphanet/devnet language until source docs close real-browser and live-chain checks.
+
+## Supported public claims
+
+- Create or import a wallet.
+- Manage multiple keyrings and accounts.
+- Lock, unlock, reset, and password-gated secret export.
+- Send native THRU with review and pending tracking.
+- Receive address and QR.
+- Faucet claim where the active network supports it.
+- Transaction history and storage-first history cache.
+- Token balances and token transfer code use official Thru program bindings, while live token-program checks remain open.
+- Custom networks are quarantined and not selectable until documented re-enable preconditions land together.
+- Launchpad, DEX, prediction, portfolio, passkey, and dApp connector work are future or gated modules, not shipped public claims unless the source repo says otherwise.
+
+## Hard safety rules
+
+- Never request, store, print, or reveal mnemonic, private key, seed phrase, recovery phrase, password, or decrypted vault data.
+- Never put secrets in URLs, DOM attributes, logs, analytics, MCP output, or examples.
+- AI/MCP may help inspect public or permissioned non-secret state and prepare intents, but must not sign, broadcast, reset the wallet, export secrets, or mutate security settings.
+- Unknown chain behavior must be represented as unsupported or unverified. Do not fabricate balances, fees, quotes, charts, markets, or protocol semantics.
+- Do not claim the extension injects a browser provider until the Thru project publishes and this repo validates an extension-compatible provider contract.
+
+## Edit surfaces
+
+- Main landing-page content: src/data/site.ts
+- Served docs: public/docs/*.md
+- Changelog: public/docs/changelog.md
+- AI context: public/llms.txt
+- MCP policy: public/docs/mcp-and-ai.md
+
+Keep this file compact. Put longer explanations in Markdown docs and link to them.

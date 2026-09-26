@@ -1,10 +1,12 @@
 {
-  "name": "react-vite-tailwind",
+  "name": "thru-wallet-web",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "Product website, docs hub, changelog, and AI-readable context for the Thru Wallet extension.",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "typecheck": "tsc --noEmit",
     "build": "vite build",
     "preview": "vite preview"
   },
