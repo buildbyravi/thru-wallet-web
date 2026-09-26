@@ -7,8 +7,11 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: `${site.name} \u2014 ${site.tagline}`,
+  title: `${site.name} — ${site.tagline}`,
   description: site.summary,
+  verification: {
+    google: "BGKQlv57PUBBFxHxmUw8wgFcmO70Y3yl-g5vTKY4dCo",
+  },
   alternates: {
     types: {
       "text/plain": "/llms.txt",
