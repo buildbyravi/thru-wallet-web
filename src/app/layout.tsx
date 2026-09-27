@@ -1,0 +1,62 @@
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import { JetBrains_Mono, Newsreader } from "next/font/google";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
+import { chromeStoreUrl, site } from "@/content/site";
+import "./globals.css";
+
+const serif = Newsreader({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-newsreader",
+  display: "swap",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: {
+    default: "Thru Wallet — Alphanet extension",
+    template: "%s — Thru Wallet",
+  },
+  description: `${site.summary} Add it from the Chrome Web Store: ${chromeStoreUrl}`,
+  applicationName: site.name,
+  authors: [{ name: site.listing.offeredBy }],
+  keywords: ["Thru Wallet", "Thru", "alphanet", "Chrome extension", "self-custody"],
+  openGraph: {
+    title: "Thru Wallet — Alphanet extension",
+    description: site.descriptor,
+    type: "website",
+  },
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en" className={`${serif.variable} ${mono.variable}`}>
+      <body className="antialiased">
+        <a
+          href="#content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:bg-ink focus:px-3 focus:py-2 focus:text-paper"
+        >
+          Skip to content
+        </a>
+        <div className="paper-grain pointer-events-none fixed inset-0 z-0" aria-hidden="true" />
+        <div className="relative z-10 flex min-h-screen flex-col">
+          <div className="h-1 bg-accent" />
+          <SiteHeader />
+          <div id="content" className="flex-1">
+            {children}
+          </div>
+          <SiteFooter />
+        </div>
+      </body>
+    </html>
+  );
+}

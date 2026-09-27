@@ -1,0 +1,223 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f3f0e9;
+  --color-paper-2: #e8e3d7;
+  --color-paper-3: #ded8c8;
+  --color-ink: #16150f;
+  --color-warm: #5e594e;
+  --color-dim: #7a7468;
+  --color-rule: #cbc4b3;
+  --color-accent: #5c6bf5;
+  --color-accent-dark: #2e39b8;
+  --color-accent-light: #e3e6ff;
+  --color-alert: #9a2e18;
+  --color-alert-soft: #f6d7cf;
+  --color-plate: #12120c;
+  --color-plate-2: #1c1b14;
+  --color-plate-3: #2a291f;
+  --color-moss: #d7e4d4;
+  --font-serif: var(--font-newsreader), "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-mono: var(--font-jetbrains), "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  ::selection {
+    background: var(--color-accent-light);
+    color: var(--color-accent-dark);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .verdict {
+    font-style: italic;
+    font-weight: 380;
+    letter-spacing: -0.02em;
+  }
+
+  .paper-grain {
+    background-image: radial-gradient(circle at 1px 1px, rgba(22, 21, 15, 0.045) 1px, transparent 0);
+    background-size: 3px 3px;
+  }
+
+  .plate-grain {
+    background-image: radial-gradient(circle at 1px 1px, rgba(243, 240, 233, 0.07) 1px, transparent 0);
+    background-size: 4px 4px;
+  }
+
+  .text-link {
+    color: var(--color-accent-dark);
+    text-decoration: underline;
+    text-decoration-color: var(--color-rule);
+    text-underline-offset: 3px;
+  }
+
+  .text-link:hover {
+    text-decoration-color: var(--color-accent);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    border-radius: 999px;
+    padding: 0.78rem 1.05rem;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1;
+    transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+
+  .btn-store {
+    background: var(--color-accent-dark);
+    color: #f7f6ff;
+  }
+
+  .btn-store:hover {
+    background: #24309a;
+  }
+
+  .btn-ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .btn-ink:hover {
+    background: #2a2820;
+  }
+
+  .btn-line {
+    border: 1px solid var(--color-ink);
+    color: var(--color-ink);
+    background: transparent;
+  }
+
+  .btn-line:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .btn-ghost {
+    border: 1px solid rgba(243, 240, 233, 0.28);
+    color: var(--color-paper);
+    background: transparent;
+  }
+
+  .btn-ghost:hover {
+    background: rgba(243, 240, 233, 0.08);
+  }
+
+  .prose-dossier h2 {
+    margin-top: 2.2rem;
+    font-family: var(--font-serif);
+    font-size: 1.7rem;
+    font-weight: 450;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .prose-dossier h3 {
+    margin-top: 1.6rem;
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  .prose-dossier p,
+  .prose-dossier ul,
+  .prose-dossier ol,
+  .prose-dossier blockquote,
+  .prose-dossier table,
+  .prose-dossier pre {
+    margin-top: 0.9rem;
+  }
+
+  .prose-dossier ul,
+  .prose-dossier ol {
+    padding-left: 1.2rem;
+  }
+
+  .prose-dossier ul {
+    list-style: disc;
+  }
+
+  .prose-dossier ol {
+    list-style: decimal;
+  }
+
+  .prose-dossier li + li {
+    margin-top: 0.35rem;
+  }
+
+  .prose-dossier code {
+    font-family: var(--font-mono);
+    font-size: 0.84em;
+    background: var(--color-paper-2);
+    padding: 0.08rem 0.32rem;
+    border-radius: 0.25rem;
+  }
+
+  .prose-dossier pre code {
+    background: transparent;
+    padding: 0;
+    font-size: 12.5px;
+    line-height: 1.65;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
