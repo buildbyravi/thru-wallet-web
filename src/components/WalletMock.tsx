@@ -65,15 +65,6 @@ export function WalletMock() {
       <figcaption className="mt-3 text-sm text-warm">
         Static study. Not connected. Sample figures only — not a balance, not an address format certification.
       </figcaption>
-      <style>{`
-        @media (prefers-reduced-motion: no-preference) {
-          .live-dot { box-shadow: 0 0 0 0 rgba(92,107,245,0.7); animation: thru-pulse 2.6s ease-out infinite; }
-          @keyframes thru-pulse {
-            70% { box-shadow: 0 0 0 7px rgba(92,107,245,0); }
-            100% { box-shadow: 0 0 0 0 rgba(92,107,245,0); }
-          }
-        }
-      `}</style>
     </figure>
   );
 }

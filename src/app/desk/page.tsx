@@ -44,7 +44,7 @@ export default async function DeskPage({
 
       {!writable ? (
         <p className="mt-8 max-w-2xl border-l-2 border-accent bg-accent-light px-4 py-3 text-sm text-accent-dark">
-          The catalog database is not configured. Public pages are using checked-in seed data, and editing is disabled.
+          Desk editing is unavailable. Configure both DATABASE_URL and DESK_PASSWORD; public pages remain available in read-only mode.
         </p>
       ) : authed ? (
         <form action={logout} className="mt-6">

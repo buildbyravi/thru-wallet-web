@@ -369,7 +369,7 @@ Authored product copy is TypeScript, so a change is reviewable.
 
 ## Desk
 
-\`/desk\` writes Postgres: field notes and smoke-check marks. The gate password is \`DESK_PASSWORD\`. The sandbox default is \`alphanet-desk\`. The gate does not protect a wallet. It only slows casual edits to the ledger.
+\`/desk\` writes Postgres: field notes and smoke-check marks. The gate requires an explicit \`DESK_PASSWORD\`; there is no default password. Without both \`DATABASE_URL\` and \`DESK_PASSWORD\`, the desk remains read-only. The gate does not protect a wallet. It only slows casual edits to the ledger.
 
 Do not put secrets in a desk note. Notes are rendered publicly on the changelog.
 
