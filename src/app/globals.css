@@ -17,8 +17,8 @@
   --color-plate-2: #1c1b14;
   --color-plate-3: #2a291f;
   --color-moss: #d7e4d4;
-  --font-serif: var(--font-newsreader), "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  --font-mono: var(--font-jetbrains), "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif: "Newsreader Variable", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-mono: "JetBrains Mono Variable", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 @layer base {

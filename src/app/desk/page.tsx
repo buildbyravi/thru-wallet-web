@@ -3,7 +3,7 @@ import { Badge } from "@/components/Badge";
 import { PageHeader } from "@/components/Section";
 import { createNote, deleteNote, login, logout, updateSmoke } from "@/app/desk/actions";
 import { listNotes, listSmoke } from "@/lib/catalog";
-import { isDeskAuthed, passwordHint } from "@/lib/desk";
+import { deskIsWritable, isDeskAuthed, passwordHint } from "@/lib/desk";
 import { formatStamp } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
@@ -19,7 +19,8 @@ export default async function DeskPage({
   searchParams: Promise<{ error?: string }>;
 }) {
   const { error } = await searchParams;
-  const authed = await isDeskAuthed();
+  const writable = deskIsWritable();
+  const authed = writable && await isDeskAuthed();
   const notes = await listNotes(20);
   const checks = await listSmoke();
   const errorText =
@@ -41,7 +42,11 @@ export default async function DeskPage({
       />
       {errorText ? <p className="mt-6 border-l-2 border-alert bg-alert-soft/70 px-4 py-3 text-sm text-alert">{errorText}</p> : null}
 
-      {authed ? (
+      {!writable ? (
+        <p className="mt-8 max-w-2xl border-l-2 border-accent bg-accent-light px-4 py-3 text-sm text-accent-dark">
+          The catalog database is not configured. Public pages are using checked-in seed data, and editing is disabled.
+        </p>
+      ) : authed ? (
         <form action={logout} className="mt-6">
           <button className="btn btn-line" type="submit">
             Lock desk
