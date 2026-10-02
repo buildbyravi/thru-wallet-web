@@ -1,82 +1,82 @@
 import Link from "next/link";
-import { chromeStoreUrl, extensionId, site } from "@/content/site";
+import { site } from "@/content/site";
+
+const columns = [
+  {
+    heading: "Product",
+    links: [
+      { href: "/install", label: "Install" },
+      { href: "/features", label: "Features" },
+      { href: "/architecture", label: "Architecture" },
+      { href: "/security", label: "Security" },
+      { href: "/status", label: "Status" },
+    ],
+  },
+  {
+    heading: "Reference",
+    links: [
+      { href: "/docs", label: "Docs" },
+      { href: "/changelog", label: "Changelog" },
+      { href: "/agents", label: "Agents" },
+      { href: "/llms.txt", label: "llms.txt" },
+      { href: "/llms-full.txt", label: "llms-full.txt" },
+      { href: "/api/catalog", label: "API catalog" },
+    ],
+  },
+  {
+    heading: "Elsewhere",
+    links: [
+      { href: site.links.chromeStore, label: "Chrome Web Store", external: true },
+      { href: site.repos.extension, label: "Extension source", external: true },
+      { href: site.repos.website, label: "Website source", external: true },
+      { href: site.links.thruDocs, label: "Thru docs", external: true },
+      { href: site.links.explorer, label: "Thru explorer", external: true },
+      { href: site.links.license, label: "MIT license", external: true },
+    ],
+  },
+] as const;
 
 export function SiteFooter() {
   return (
-    <footer className="mt-8 border-t border-rule">
-      <div className="mx-auto grid max-w-[1120px] gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[1.3fr_1fr_1fr]">
-        <div>
-          <p className="label text-warm">Extension</p>
-          <p className="mt-3 max-w-sm font-serif text-2xl leading-tight tracking-[-0.03em]">
-            Add Thru Wallet from the Chrome Web Store, or read the source before you do.
+    <footer className="mt-20 border-t border-rule bg-paper-2/60">
+      <div className="mx-auto max-w-6xl px-5 py-12 md:px-8">
+        <div className="grid gap-10 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <p className="text-[20px] leading-tight">{site.name}</p>
+            <p className="mt-2 max-w-sm text-[15px] leading-relaxed text-warm">{site.descriptor}</p>
+            <p className="mt-6 max-w-sm text-[13px] leading-relaxed text-warm">{site.disclaimer}</p>
+          </div>
+          {columns.map((column) => (
+            <div key={column.heading} className="md:col-span-2">
+              <p className="label text-warm">{column.heading}</p>
+              <ul className="mt-4 space-y-2 text-[15px]">
+                {column.links.map((link) =>
+                  "external" in link && link.external ? (
+                    <li key={link.href}>
+                      <a href={link.href} target="_blank" rel="noopener noreferrer" className="no-underline hover:underline">
+                        {link.label} <span aria-hidden="true" className="text-dim">↗</span>
+                      </a>
+                    </li>
+                  ) : (
+                    <li key={link.href}>
+                      <Link href={link.href} className="no-underline hover:underline">
+                        {link.label}
+                      </Link>
+                    </li>
+                  ),
+                )}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-rule pt-6">
+          <p className="label text-warm">
+            Baseline {site.baselineCommit} · {site.baselineDate} · contract {site.contract.version} · {site.contract.methods} methods ·{" "}
+            {site.routesCount} routes
           </p>
-          <a className="text-link mt-4 inline-block" href={chromeStoreUrl} target="_blank" rel="noopener noreferrer">
-            chromewebstore.google.com/detail/thru-wallet/{extensionId}
-          </a>
-          <p className="mt-4 max-w-md text-sm text-warm">{site.warning}</p>
-        </div>
-        <div>
-          <p className="label text-warm">On this site</p>
-          <ul className="mt-3 space-y-1.5">
-            {site.nav.map((item) => (
-              <li key={item.href}>
-                <Link className="text-ink hover:text-accent-dark" href={item.href}>
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <Link className="text-ink hover:text-accent-dark" href="/desk">
-                Desk
-              </Link>
-            </li>
-            <li>
-              <Link className="text-ink hover:text-accent-dark" href="/llms.txt">
-                llms.txt
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <p className="label text-warm">Outside</p>
-          <ul className="mt-3 space-y-1.5">
-            <li>
-              <a className="text-link" href={chromeStoreUrl} target="_blank" rel="noopener noreferrer">
-                Chrome Web Store
-              </a>
-            </li>
-            <li>
-              <a className="text-link" href={site.repos.extension} target="_blank" rel="noopener noreferrer">
-                Extension repository
-              </a>
-            </li>
-            <li>
-              <a className="text-link" href={site.repos.website} target="_blank" rel="noopener noreferrer">
-                Website repository
-              </a>
-            </li>
-            <li>
-              <a className="text-link" href={site.links.privacy} target="_blank" rel="noopener noreferrer">
-                Privacy policy
-              </a>
-            </li>
-            <li>
-              <a className="text-link" href={site.links.explorer} target="_blank" rel="noopener noreferrer">
-                scan.thru.org
-              </a>
-            </li>
-            <li>
-              <a className="text-link" href={site.links.thruDocs} target="_blank" rel="noopener noreferrer">
-                Thru docs
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="border-t border-rule">
-        <div className="mx-auto flex max-w-[1120px] flex-wrap items-center justify-between gap-3 px-5 py-4 sm:px-8">
-          <p className="label text-dim">Unofficial · {site.listing.version} listed · contract {site.contract.version}</p>
-          <p className="label text-dim">Not Unto Labs</p>
+          <Link href="/desk" className="label text-dim no-underline hover:text-ink">
+            Desk
+          </Link>
         </div>
       </div>
     </footer>

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Mark } from "@/components/Mark";
-import { PrimaryNav } from "@/components/PrimaryNav";
 import { StoreButton } from "@/components/StoreButton";
 
 export function SiteHeader() {
@@ -15,9 +14,6 @@ export function SiteHeader() {
           </span>
         </Link>
         <StoreButton />
-      </div>
-      <div className="mx-auto max-w-[1120px] px-5 pb-4 sm:px-8">
-        <PrimaryNav />
       </div>
     </header>
   );

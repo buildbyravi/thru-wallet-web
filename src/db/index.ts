@@ -4,22 +4,23 @@ import * as schema from "./schema";
 
 const databaseUrl = process.env.DATABASE_URL;
 
-if (!databaseUrl) {
-  throw new Error("DATABASE_URL is required");
-}
-
 const globalForDb = globalThis as typeof globalThis & {
   __arenaNextJsPostgresqlPool?: Pool;
 };
 
-export const pool =
-  globalForDb.__arenaNextJsPostgresqlPool ??
-  new Pool({
-    connectionString: databaseUrl,
-  });
+export const pool = databaseUrl
+  ? (globalForDb.__arenaNextJsPostgresqlPool ??
+    new Pool({
+      connectionString: databaseUrl,
+    }))
+  : null;
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "production" && pool) {
   globalForDb.__arenaNextJsPostgresqlPool = pool;
 }
 
-export const db = drizzle(pool, { schema });
+/**
+ * Database access is optional so public, read-only pages can use their
+ * checked-in seed data when Postgres is not configured.
+ */
+export const db = pool ? drizzle(pool, { schema }) : null;

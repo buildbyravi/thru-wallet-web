@@ -10,6 +10,11 @@ export const site = {
   descriptor: "An experimental, self-custody browser extension for Thru's native Layer 1 alphanet.",
   summary:
     "Thru Wallet is an unofficial, high-performance browser extension for personal key management and basic account operations against the Thru alphanet — built on the real @thru/sdk and @thru/programs packages.",
+  disclaimer:
+    "Community-built, open-source software for the Thru alphanet testnet. Not affiliated with or endorsed by Unto Labs. Not audited. Do not use with real financial value.",
+  baselineCommit: "4aa55ba",
+  baselineDate: "2026-09-26",
+  routesCount: 14,
   status: "ALPHA" as const,
   warning:
     "Not production-ready and not security-reviewed. Use alphanet or devnet funds only. This is community software, not affiliated with or endorsed by Unto Labs. Do not use it with real financial value.",
@@ -29,6 +34,7 @@ export const site = {
       "https://github.com/buildbyravi/thru-wallet-ext/blob/main/docs/STATUS_AND_ROADMAP.md",
     smokeDoc:
       "https://github.com/buildbyravi/thru-wallet-ext/blob/main/docs/MANUAL_SMOKE_CHECKLIST.md",
+    license: "https://github.com/buildbyravi/thru-wallet-ext/blob/main/LICENSE",
   },
   listing: {
     version: "1.2.0",
