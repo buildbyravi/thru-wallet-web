@@ -53,7 +53,13 @@ export const site = {
     verifiedOn: "2026-10-03",
     permissions: 4,
   },
-  // The audited source baseline on the extension's `main` branch.
+  // The audited source baseline on the extension's `main` branch (tip `cf71a91`).
+  //
+  // WHEN PR #16 MERGES, this block becomes: version "v15", methods 83, sdk/programs
+  // "@thru/{sdk,programs}@0.4.1", network "betanet", baselineCommit = the merge sha,
+  // baselineDate = the merge date — and `auditedCommit`/`auditedOn` must NOT be moved with
+  // them until docs/STATUS_AND_ROADMAP.md is rewritten, because that document still opens
+  // with "Contract v12, 81 methods" while the code exports 15. Two facts, two fields.
   contract: {
     version: "v12",
     methods: 81,
