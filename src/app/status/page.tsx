@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Badge } from "@/components/Badge";
 import { PageHeader } from "@/components/Section";
 import { completed, roadmap } from "@/content/roadmap";
-import { site } from "@/content/site";
+import { pendingRelease, releaseTracks, site } from "@/content/site";
 import { listSmoke } from "@/lib/catalog";
 import { formatStamp } from "@/lib/format";
 
@@ -22,38 +22,84 @@ export default async function StatusPage() {
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">
       <PageHeader
         kicker="Status"
-        title="Two clocks, both visible."
-        lede="The store listing is what Chrome will install. The status document is what the audited source tree claims. Neither one closes the browser checklist."
+        title="Three clocks, all visible."
+        lede="The store listing is what Chrome will install. The status document is what the audited source tree claims. The pending branch is what has been reviewed but not shipped. None of the three closes the browser checklist."
         meta={`${passed} of ${checks.length} smoke rows marked pass in the desk database`}
       />
 
       <section className="mt-10 grid gap-4 md:grid-cols-3">
-        <article className="rounded-2xl bg-plate p-5 text-paper">
-          <p className="label text-paper/50">Chrome listing</p>
-          <p className="mt-3 font-serif text-4xl font-light tracking-[-0.04em]">{site.listing.version}</p>
-          <p className="mt-2 text-sm text-paper/70">Updated {site.listing.updated} · {site.listing.offeredBy}</p>
-          <a className="mt-4 inline-block text-sm underline underline-offset-4" href={site.links.chromeStore}>
-            Open the listing
-          </a>
-        </article>
-        <article className="rounded-2xl border border-rule p-5">
-          <p className="label text-warm">Source baseline</p>
-          <p className="mt-3 font-serif text-4xl font-light tracking-[-0.04em]">{site.contract.version}</p>
-          <p className="mt-2 text-sm text-warm">
-            {site.contract.methods} methods · {site.contract.auditedOn} · {site.contract.auditedCommit}
+        {releaseTracks.map((track) => (
+          <article
+            key={track.key}
+            className={
+              track.key === "store"
+                ? "rounded-2xl bg-plate p-5 text-paper"
+                : track.key === "pending"
+                  ? "rounded-2xl border border-accent-dark bg-accent-light/40 p-5"
+                  : "rounded-2xl border border-rule p-5"
+            }
+          >
+            <p className={`label ${track.key === "store" ? "text-paper/50" : "text-warm"}`}>{track.label}</p>
+            <p className="mt-3 font-serif text-4xl font-light tracking-[-0.04em]">{track.value}</p>
+            <p className={`mt-2 text-sm ${track.key === "store" ? "text-paper/70" : "text-warm"}`}>{track.meta}</p>
+            <p className={`mt-3 text-sm ${track.key === "store" ? "text-paper/70" : "text-warm"}`}>{track.detail}</p>
+            <a
+              className={`mt-4 inline-block text-sm ${track.key === "store" ? "underline underline-offset-4" : "text-link"}`}
+              href={track.href}
+            >
+              {track.hrefLabel}
+            </a>
+          </article>
+        ))}
+      </section>
+
+      <section className="mt-6 grid gap-4 md:grid-cols-2">
+        <div className="rounded-2xl border border-rule p-5">
+          <p className="label text-warm">Pending release detail</p>
+          <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <div>
+              <dt className="label text-dim">Branch head</dt>
+              <dd className="mono mt-1">{pendingRelease.headCommit}</dd>
+            </div>
+            <div>
+              <dt className="label text-dim">Contract</dt>
+              <dd className="mt-1">
+                {pendingRelease.contract} · {pendingRelease.methods} methods
+              </dd>
+            </div>
+            <div>
+              <dt className="label text-dim">Packages</dt>
+              <dd className="mt-1">
+                {pendingRelease.sdk} · {pendingRelease.programs}
+              </dd>
+            </div>
+            <div>
+              <dt className="label text-dim">Network</dt>
+              <dd className="mono mt-1">{pendingRelease.rpc}</dd>
+            </div>
+            <div>
+              <dt className="label text-dim">Permissions</dt>
+              <dd className="mt-1">{pendingRelease.permissions.join(", ")}</dd>
+            </div>
+            <div>
+              <dt className="label text-dim">CI</dt>
+              <dd className="mt-1">{pendingRelease.ci}</dd>
+            </div>
+          </dl>
+          <p className="mt-4 text-sm text-warm">{pendingRelease.note}</p>
+        </div>
+        <div className="rounded-2xl border-l-2 border-alert bg-alert-soft/50 p-5">
+          <p className="label text-alert">What a store install gets you today</p>
+          <p className="mt-3 text-sm text-warm">
+            Package {site.listing.version} from {site.listing.updated}, built for {site.listing.network}. The extension
+            repository records that chain as reset and replaced by betanet on 2026-09-26, and the listing copy still
+            describes alphanet and four permissions. Until {pendingRelease.version} merges and clears review, the
+            betanet wallet is a source build.
           </p>
-          <a className="text-link mt-4 inline-block text-sm" href={site.links.statusDoc}>
-            STATUS_AND_ROADMAP.md
-          </a>
-        </article>
-        <article className="rounded-2xl border border-rule p-5">
-          <p className="label text-warm">Still manual</p>
-          <p className="mt-3 font-serif text-4xl font-light tracking-[-0.04em]">{checks.length - passed}</p>
-          <p className="mt-2 text-sm text-warm">Checklist rows not marked pass. Node tests do not flip these.</p>
-          <Link className="text-link mt-4 inline-block text-sm" href="/desk">
-            Update from the desk
-          </Link>
-        </article>
+          <p className="mt-3 text-sm text-warm">
+            Listing facts re-read from the live store page on {site.listing.verifiedOn}.
+          </p>
+        </div>
       </section>
 
       <section className="mt-14">

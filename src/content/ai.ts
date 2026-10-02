@@ -30,7 +30,8 @@ export const aiReadFirst = [
   "AGENTS.md — rules, commands, traps, reporting.",
   "docs/DOCS_INDEX.md — documentation map.",
   "docs/PROJECT_LEDGER.md — past, present, and future identifiers.",
-  "docs/STATUS_AND_ROADMAP.md — shipped baseline and open checks.",
+  "docs/STATUS_AND_ROADMAP.md — audited baseline and open checks. Verify its version numbers against src/shared/contract/manifest.js before quoting them.",
+  "extension.md — the Chrome Web Store listing copy, its permission justifications, and the listing changelog.",
   "CONTEXT.md — file-by-file repository map.",
   "docs/MCP_AGENT_INTEGRATION.md — safe companion plan.",
   "https://thru.org/docs/llm.txt — official protocol entry point.",
@@ -48,4 +49,5 @@ export const aiContext = `Read first:
 Do not request, store, print, or reveal wallet secrets.
 Do not invent unsupported protocol behavior.
 Use official Thru SDK and program surfaces when available.
-Prefer the Chrome Web Store listing for a packaged install, and the extension repository for source.`;
+Prefer the Chrome Web Store listing for a packaged install, and the extension repository for source.
+Three artifacts exist at once: the published store package, the audited source baseline on main, and the pending release on an open pull request. Name the one you mean.`;

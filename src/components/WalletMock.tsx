@@ -32,6 +32,10 @@ export function WalletMock() {
           <p className="mt-2 text-sm text-paper/70">
             THRU <span className="mono text-paper/45">· 12,480,000,000 base</span>
           </p>
+          <p className="label mt-3 flex items-center gap-2 text-paper/45">
+            <span>THRU · USDX · 2 more</span>
+            <span aria-hidden="true">›</span>
+          </p>
           <div className="mt-5 grid grid-cols-3 gap-2">
             {["Send", "Receive", "Faucet"].map((action, index) => (
               <div
@@ -57,13 +61,14 @@ export function WalletMock() {
         <div className="flex items-center justify-between border-t border-white/10 px-4 py-3">
           <p className="flex items-center gap-2 text-sm">
             <span className="live-dot h-1.5 w-1.5 rounded-full bg-accent" />
-            Alphanet
+            Betanet
           </p>
-          <p className="label text-paper/50">contract v12</p>
+          <p className="label text-paper/50">contract v15 · pending</p>
         </div>
       </div>
       <figcaption className="mt-3 text-sm text-warm">
-        Static study. Not connected. Sample figures only — not a balance, not an address format certification.
+        Static study of the pending 1.4.0 build, where the balance box is the token-drawer entry. Not connected. Sample
+        figures only — not a balance, not an address format certification.
       </figcaption>
     </figure>
   );

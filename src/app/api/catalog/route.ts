@@ -2,7 +2,7 @@ import { changelog } from "@/content/changelog";
 import { docs } from "@/content/docs";
 import { features } from "@/content/features";
 import { routeCount } from "@/content/routes";
-import { chromeStoreUrl, extensionId, site } from "@/content/site";
+import { chromeStoreUrl, extensionId, pendingRelease, site } from "@/content/site";
 import { listNotes, listSmoke } from "@/lib/catalog";
 
 export const dynamic = "force-dynamic";
@@ -17,6 +17,8 @@ export async function GET() {
       id: extensionId,
       listingVersion: site.listing.version,
       listingUpdated: site.listing.updated,
+      listingNetwork: site.listing.network,
+      listingVerifiedOn: site.listing.verifiedOn,
       offeredBy: site.listing.offeredBy,
       size: site.listing.size,
       privacy: site.links.privacy,
@@ -24,6 +26,7 @@ export async function GET() {
       website: site.repos.website,
     },
     contract: site.contract,
+    pendingRelease,
     routes: routeCount,
     features: features.length,
     docs: docs.map((doc) => ({ slug: doc.slug, title: doc.title, tag: doc.tag })),

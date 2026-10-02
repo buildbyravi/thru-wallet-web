@@ -5,7 +5,7 @@ import { features } from "@/content/features";
 import { gaps } from "@/content/security";
 import { roadmap } from "@/content/roadmap";
 import { routes } from "@/content/routes";
-import { chromeStoreUrl, extensionId, site } from "@/content/site";
+import { chromeStoreUrl, extensionId, pendingRelease, site } from "@/content/site";
 
 export function llmsShort() {
   return `# Thru Wallet
@@ -21,20 +21,30 @@ Privacy: ${site.links.privacy}
 
 ${site.warning}
 
-## Source baseline
+## Source baseline (extension main branch)
 
 - Contract ${site.contract.version}, ${site.contract.methods} methods
 - ${routes.length} routes, popup ${site.contract.popupWidthPx}px, ${site.contract.domSinks} DOM sinks
 - Vault: ${site.contract.kdf}, ${site.contract.cipher}
+- Packages: ${site.contract.sdk}, ${site.contract.programs}, targeting ${site.contract.network}
 - Audited status doc: ${site.contract.auditedOn} at ${site.contract.auditedCommit}
 - The store package and the source baseline are different artifacts
+
+## Pending release (not merged, not published)
+
+- Package ${pendingRelease.version} on PR #${pendingRelease.pr} at ${pendingRelease.headCommit}, state ${pendingRelease.state}
+- Contract ${pendingRelease.contract}, ${pendingRelease.methods} methods
+- Packages ${pendingRelease.sdk} and ${pendingRelease.programs}, network ${pendingRelease.network} (${pendingRelease.rpc})
+- Adds the notifications permission, a token drawer, on-chain-verified custom tokens, and inactivity-based auto-lock
+- Read on ${pendingRelease.checkedOn}: ${pendingRelease.prUrl}
 
 ## Do not
 
 - Request or reveal a seed, private key, or password
 - Invent window.thru or an extension provider contract
 - Treat unverified chain behavior as measured
-- Collapse the store's "inactivity lock" wording into the source. The source describes a fixed-period alarm
+- Collapse the three artifacts. The store serves ${site.listing.version} built for ${site.listing.network}; main is contract ${site.contract.version}; ${pendingRelease.version} is reviewed source on an open pull request
+- Quote the pending build's inactivity-based auto-lock as something an installed extension does today
 
 ## Read
 

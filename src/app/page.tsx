@@ -10,7 +10,7 @@ import { WalletMock } from "@/components/WalletMock";
 import { changelog } from "@/content/changelog";
 import { featureGroups, features } from "@/content/features";
 import { securityPrinciples } from "@/content/security";
-import { chromeStoreUrl, extensionId, heroMetrics, site } from "@/content/site";
+import { chromeStoreUrl, extensionId, heroMetrics, pendingRelease, releaseTracks, site } from "@/content/site";
 import { listNotes } from "@/lib/catalog";
 import { formatDay, formatStamp } from "@/lib/format";
 
@@ -36,7 +36,7 @@ export default async function HomePage() {
               {site.status} · unofficial · {site.network}
             </p>
             <h1 className="mt-4 max-w-3xl font-serif text-[clamp(2.7rem,7vw,5.1rem)] leading-[0.94] font-light tracking-[-0.04em]">
-              A self-custody wallet extension, built for Thru’s <em className="verdict">alphanet</em>.
+              A self-custody wallet extension, built for Thru’s <em className="verdict">betanet</em>.
             </h1>
             <p className="mt-6 max-w-xl text-lg text-warm">{site.summary}</p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -70,6 +70,10 @@ export default async function HomePage() {
                 {site.listing.blurb} Version {site.listing.version}, updated {formatDay(site.listing.updated)}. Use this
                 link unless you are loading <span className="mono text-paper">dist/</span> from source.
               </p>
+              <p className="mt-3 max-w-xl text-sm text-paper/60">
+                That package is the {site.listing.network}-era build. The betanet build is {pendingRelease.version}, and
+                it is still an open pull request — see the three tracks below before you quote a version.
+              </p>
               <p className="mono mt-4 text-xs break-all text-paper/55">{chromeStoreUrl}</p>
             </div>
             <div className="flex flex-col items-start gap-3">
@@ -81,7 +85,36 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <dl className="mt-8 grid grid-cols-2 border-y border-rule lg:grid-cols-4">
+        <section className="mt-8">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <h2 className="font-serif text-3xl leading-tight font-light tracking-[-0.03em]">
+              Three artifacts, kept apart.
+            </h2>
+            <Link className="label text-accent-dark" href="/status">
+              Status detail
+            </Link>
+          </div>
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
+            {releaseTracks.map((track) => (
+              <article
+                key={track.key}
+                className={`rounded-2xl border p-5 ${
+                  track.key === "pending" ? "border-accent-dark bg-accent-light/40" : "border-rule bg-paper-2/40"
+                }`}
+              >
+                <p className="label text-warm">{track.label}</p>
+                <p className="mt-3 font-serif text-4xl leading-none font-light tracking-[-0.04em]">{track.value}</p>
+                <p className="mono mt-2 text-xs text-dim">{track.meta}</p>
+                <p className="mt-3 text-sm text-warm">{track.detail}</p>
+                <a className="text-link mt-4 inline-block text-sm" href={track.href}>
+                  {track.hrefLabel}
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <dl className="mt-10 grid grid-cols-2 border-y border-rule lg:grid-cols-4">
           {heroMetrics.map((metric) => (
             <div key={metric.label} className="border-rule px-1 py-5 sm:px-4 lg:border-l lg:first:border-l-0">
               <dt className="label text-warm">{metric.label}</dt>

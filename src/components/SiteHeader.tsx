@@ -10,7 +10,7 @@ export function SiteHeader() {
           <Mark className="h-9 w-9 text-ink" />
           <span>
             <span className="block font-serif text-[1.35rem] leading-none tracking-[-0.03em]">Thru Wallet</span>
-            <span className="label mt-1 block text-warm">Alphanet dossier</span>
+            <span className="label mt-1 block text-warm">Betanet dossier</span>
           </span>
         </Link>
         <StoreButton />

@@ -17,7 +17,7 @@ export default function SecurityPage() {
         lede="The extension is not security-reviewed. These principles describe how the source is supposed to behave. They are not a promise that every path has been attacked."
       />
       <div className="mt-10 border-l-2 border-alert bg-alert-soft/70 px-4 py-3 text-sm text-alert">
-        Do not import a recovery phrase that protects anything of value. Alphanet and devnet funds only.
+        Do not import a recovery phrase that protects anything of value. Betanet testnet funds only.
       </div>
       <div className="mt-10 grid gap-4 md:grid-cols-2">
         {securityPrinciples.map((principle) => (

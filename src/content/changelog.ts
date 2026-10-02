@@ -12,6 +12,50 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     version: "site",
+    date: "2026-10-02",
+    title: "Three clocks: store build, source baseline, pending 1.4.0",
+    tag: "DOCS",
+    summary:
+      "The extension's betanet work is reviewed and CI-green on an open pull request, so this site now tracks it as a third, clearly separate object instead of folding it into either shipped artifact.",
+    changes: [
+      "Pending release block records PR #16 at 1338380: package 1.4.0, contract v15, 83 methods, @thru 0.4.0, betanet RPC.",
+      "Chrome Web Store facts re-verified against the live listing on 2026-10-02 and left at 1.2.0 / 2026-09-23 / 209 KiB.",
+      "Alphanet wording replaced with betanet where the project's target chain is meant, and kept where the shipped package is meant.",
+      "Auto-lock copy corrected: the pending build measures real inactivity, so the old 'the source says fixed-period alarm' gap is retired on merge, not before.",
+    ],
+  },
+  {
+    version: "1.4.0",
+    date: "2026-10-02",
+    title: "Betanet migration, token drawer, desktop notifications — pending",
+    tag: "RELEASE",
+    summary:
+      "Package 1.4.0 exists as reviewed source on an open pull request. It is not merged to main and it is not what Chrome installs today.",
+    changes: [
+      "Betanet is the default and only enabled network: rpc.betanet.thru.org, explorer links carry ?network=betanet, and the CSP connect-src allows nothing else.",
+      "Program addresses come from @thru/programs 0.4.0 managed-genesis registry instead of the reverse-engineered marker-byte addresses the 2026-09-26 chain reset deleted.",
+      "The balance box is the token entry: click it and a sliding drawer lists tokens, searches, and adds a custom token by contract address after the chain supplies symbol and decimals.",
+      "Optional desktop notifications on transaction confirm or fail, which is the fifth manifest permission and a Settings toggle.",
+      "Auto-lock now measures real inactivity, the faucet no longer demands a signing password, and a repeat transfer inside 30 seconds is detected before it is signed.",
+      "Localnet is gone from the shipped wallet and the manifest homepage points at thruwallet.vercel.app.",
+    ],
+  },
+  {
+    version: "v13 → v15",
+    date: "2026-10-02",
+    title: "Contract moves to v15, 83 methods",
+    tag: "SECURITY",
+    summary:
+      "Three contract steps ride with the pending package: one deliberate behavior break and two additive reads. Append-only discipline holds for everything else.",
+    changes: [
+      "v13 modifies tx.claimFaucet: auth drops from signing to unlocked and the vestigial password param leaves the declaration. Old callers that still send one are ignored, not rejected.",
+      "v14 appends token.readMint so a pasted contract address is verified on-chain before a custom token joins the ledger.",
+      "v15 appends tx.checkDuplicate for repeat transfers inside 30 seconds or still in flight, plus an optional allowDuplicate on the send methods.",
+      "Method count moves 81 → 83. The UI-to-background agreement is still enforced in both directions by test-contract.mjs.",
+    ],
+  },
+  {
+    version: "site",
     date: "2026-09-26",
     title: "Dossier site, with the store as the install path",
     tag: "RELEASE",

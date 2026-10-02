@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/Section";
 import { RouteTable } from "@/components/RouteTable";
 import { architectureFlow, boundaries, contractBreaks } from "@/content/architecture";
 import { routeCount } from "@/content/routes";
-import { site } from "@/content/site";
+import { pendingRelease, site } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Architecture",
@@ -17,7 +17,7 @@ export default function ArchitecturePage() {
       <PageHeader
         kicker="Architecture"
         title="Authority sits in the background."
-        lede={`${architectureFlow.length} layers. ${routeCount} routes. Contract ${site.contract.version}, ${site.contract.methods} methods. The UI asks. The background decides.`}
+        lede={`${architectureFlow.length} layers. ${routeCount} routes. Contract ${site.contract.version} with ${site.contract.methods} methods on the audited tree, ${pendingRelease.contract} with ${pendingRelease.methods} on the pending branch. The UI asks. The background decides.`}
       />
       <div className="mt-10">
         <ArchDiagram />
@@ -46,7 +46,7 @@ export default function ArchitecturePage() {
       </section>
       <section className="mt-14">
         <h2 className="font-serif text-3xl font-light tracking-[-0.03em]">Documented contract breaks</h2>
-        <p className="mt-3 max-w-2xl text-warm">The contract is append-only, except these security changes, which are called out rather than hidden.</p>
+        <p className="mt-3 max-w-2xl text-warm">The contract is append-only, except these security changes, which are called out rather than hidden. Steps marked pending exist only in the unmerged 1.4.0 branch.</p>
         <ol className="mt-6 divide-y divide-rule border-y border-rule">
           {contractBreaks.map((item) => (
             <li key={item.version} className="grid gap-2 py-4 sm:grid-cols-[5rem_1fr]">

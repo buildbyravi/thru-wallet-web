@@ -20,4 +20,25 @@ export const noteSeed = [
     author: "dossier",
     createdAt: new Date("2026-09-26T12:10:00Z"),
   },
+  {
+    title: "Betanet build is reviewed, not published",
+    body: "PR #16 at 1338380 carries package 1.4.0: betanet RPC, @thru 0.4.0 managed program addresses, contract v15 with 83 methods, a token drawer, custom tokens verified on-chain, and desktop notifications. It is mergeable with CI green. Until it merges and a new package is submitted, Chrome still installs 1.2.0.",
+    tag: "RELEASE",
+    author: "dossier",
+    createdAt: new Date("2026-10-02T18:40:00Z"),
+  },
+  {
+    title: "Auto-lock: the source caught up with the listing",
+    body: "The pending build stamps lastActivityAt on every API request and locks on measured idleness, and background sync no longer refreshes the clock. The 2026-09-26 note stays on the record: it described the shipped package, which still runs the fixed-period alarm.",
+    tag: "SECURITY",
+    author: "dossier",
+    createdAt: new Date("2026-10-02T18:55:00Z"),
+  },
+  {
+    title: "The extension's own status doc is behind its code",
+    body: "docs/STATUS_AND_ROADMAP.md on the pending branch still opens with contract v12 and 81 methods at 4aa55ba, while src/shared/contract/manifest.js exports CONTRACT_VERSION 15 with 83 methods. This site quotes the code for pending facts and the status doc for the audited baseline, and labels which is which.",
+    tag: "DOCS",
+    author: "dossier",
+    createdAt: new Date("2026-10-02T19:10:00Z"),
+  },
 ] as const;
