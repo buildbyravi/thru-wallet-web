@@ -10,7 +10,15 @@ import { WalletMock } from "@/components/WalletMock";
 import { changelog } from "@/content/changelog";
 import { featureGroups, features } from "@/content/features";
 import { securityPrinciples } from "@/content/security";
-import { chromeStoreUrl, extensionId, heroMetrics, pendingRelease, releaseTracks, site } from "@/content/site";
+import {
+  chromeStoreUrl,
+  extensionId,
+  heroMetrics,
+  pendingRelease,
+  releaseTracks,
+  site,
+  storeReview,
+} from "@/content/site";
 import { listNotes } from "@/lib/catalog";
 import { formatDay, formatStamp } from "@/lib/format";
 
@@ -71,8 +79,9 @@ export default async function HomePage() {
                 link unless you are loading <span className="mono text-paper">dist/</span> from source.
               </p>
               <p className="mt-3 max-w-xl text-sm text-paper/60">
-                That package is the {site.listing.network}-era build. The betanet build is {pendingRelease.version}, and
-                it is still an open pull request — see the three tracks below before you quote a version.
+                That package is the {site.listing.network}-era build. The betanet package, {storeReview.version}, is
+                submitted and in Chrome review — the public page moves when a reviewer approves it, not when the branch
+                merges. Check the three tracks below before you quote a version.
               </p>
               <p className="mono mt-4 text-xs break-all text-paper/55">{chromeStoreUrl}</p>
             </div>
@@ -104,6 +113,7 @@ export default async function HomePage() {
               >
                 <p className="label text-warm">{track.label}</p>
                 <p className="mt-3 font-serif text-4xl leading-none font-light tracking-[-0.04em]">{track.value}</p>
+                <p className="label mt-2 text-accent-dark">{track.pill}</p>
                 <p className="mono mt-2 text-xs text-dim">{track.meta}</p>
                 <p className="mt-3 text-sm text-warm">{track.detail}</p>
                 <a className="text-link mt-4 inline-block text-sm" href={track.href}>

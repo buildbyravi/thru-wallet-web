@@ -23,7 +23,8 @@ The packaged extension is listed on the Chrome Web Store:
 
 - Listing: [Thru Wallet](https://chromewebstore.google.com/detail/thru-wallet/ocahgpmgfeapjnceaknkikanjikhjgok)
 - Extension id: \`ocahgpmgfeapjnceaknkikanjikhjgok\`
-- Listing version: **1.2.0**, updated 2026-09-23, 209 KiB, offered by PWNX0 — verified against the live page on 2026-10-02
+- Listing version: **1.2.0**, updated 2026-09-23, 209 KiB, offered by PWNX0 — verified against the live page on 2026-10-03
+- In review: package **1.4.0**, the betanet build, submitted and waiting on a Chrome reviewer
 - Source: [buildbyravi/thru-wallet-ext](https://github.com/buildbyravi/thru-wallet-ext)
 - This site: [buildbyravi/thru-wallet-web](https://github.com/buildbyravi/thru-wallet-web)
 
@@ -46,12 +47,14 @@ Thru's own wallet architecture is an embedded, iframe-hosted wallet. There is no
 
 | | Chrome Web Store | Source \`main\` | Pending release |
 | --- | --- | --- | --- |
-| Version | 1.2.0, 2026-09-23 | audited at \`4aa55ba\` | 1.4.0 on PR #16, head \`1338380\` |
+| Version | 1.2.0, 2026-09-23 | audited at \`4aa55ba\` | 1.4.0 on PR #16, head \`9086b22\` |
 | Contract | whatever 1.2.0 contains | v12, 81 methods | v15, 83 methods |
-| Packages | alphanet era | @thru 0.3.16 | @thru 0.4.0 |
+| Packages | alphanet era | @thru 0.3.16 | @thru 0.4.1 |
 | Network | alphanet RPC | alphanet RPC | betanet RPC, nothing else in CSP |
 | Permissions | 4 | 4 | 5, adding \`notifications\` |
-| State | what Chrome installs today | merged and audited | reviewed, CI-green, **not merged** |
+| State | what Chrome installs today | merged and audited | in final review, **not merged** |
+
+Package **1.4.0 is also in Chrome Web Store review** as of 2026-10-03. That is a fourth state, and it is the one most likely to be misread: a submitted package does not change the listing page, a reviewer can reject it, and the branch can merge while the submission is still queued. Submission and merge are tracked as separate events here for exactly that reason.
 
 Shared by all three: 14 routes, one popup stack, a 400px popup, 0 DOM sinks with the ratchet closed, and a vault built on PBKDF2-SHA256 at 600,000 rounds then AES-256-GCM.
 
@@ -59,7 +62,7 @@ Say which artifact you mean. "Thru Wallet supports betanet" is true of the pendi
 
 ## The chain moved underneath the store build
 
-The extension repository records a managed-genesis reset on 2026-09-26: the single-node alphanet is gone, betanet is Thru's final testnet before mainnet, and the old reverse-engineered program addresses no longer exist on-chain. The published 1.2.0 package still points at the alphanet RPC. Until 1.4.0 merges and a new package clears review, a store install is behind the chain — load unpacked from the pending branch if you need a wallet that talks to betanet.
+The extension repository records a managed-genesis reset on 2026-09-26: the single-node alphanet is gone, betanet is Thru's final testnet before mainnet, and the old reverse-engineered program addresses no longer exist on-chain. The published 1.2.0 package still points at the alphanet RPC. Package 1.4.0 — the betanet build — is submitted and in review, so a store install stays behind the chain until a reviewer approves it. Load unpacked from the pending branch if you need a wallet that talks to betanet today.
 `,
   },
   {
@@ -79,7 +82,7 @@ Two paths. Most people should take the first.
 
 The listing is community software. It is not an Unto Labs product and it has not been audited.
 
-> The packaged 1.2.0 build targets alphanet, and the extension repository records that chain as reset and replaced by betanet on 2026-09-26. The betanet build is package 1.4.0, which is still an open pull request. If you need betanet today, build it from source.
+> The packaged 1.2.0 build targets alphanet, and the extension repository records that chain as reset and replaced by betanet on 2026-09-26. The betanet build is package 1.4.0: submitted to the store and in review, with its source in an open pull request that merges today. If you need betanet before the reviewer gets to it, build it from source.
 
 ## Load unpacked
 
@@ -253,7 +256,7 @@ Remaining work is independent. Custom networks and a dApp provider stay blocked 
 
 ## Open
 
-1. Merge the 1.4.0 betanet branch, submit the package, and mirror the listing copy. Today the store serves an alphanet build whose chain was reset.
+1. Finish the 1.4.0 release: the package is in Chrome review, PR #16 merges today, and the listing copy in \`extension.md\` has to match whatever the dashboard actually holds. Track approval and merge as separate events.
 2. Run the Chrome smoke checklist for both popup and side panel, including desktop notifications.
 3. Exercise v12 account activation and owned-recipient just-in-time registration on betanet.
 4. Probe token transfer: fee, and a never-registered recipient owner. Run the token lab against a live chain.
@@ -267,7 +270,7 @@ An extension provider waits on a published Thru contract. The hosted iframe meth
 
 ## Already done
 
-Launchpad quarantine, route lifecycle coverage, custom-network quarantine, token transfer code, and contract v12 registration plus history cache. Reviewed but unmerged: the whole betanet adaptation — 0.4.0 packages, managed-genesis addresses, contract v13 to v15, the token drawer, and inactivity-based auto-lock. Done does not mean live-certified, and reviewed does not mean installed.
+Launchpad quarantine, route lifecycle coverage, custom-network quarantine, token transfer code, and contract v12 registration plus history cache. In final review but unmerged: the whole betanet adaptation — @thru 0.4.1 packages, managed-genesis addresses, contract v13 to v15, the token drawer, and inactivity-based auto-lock. Done does not mean live-certified, and reviewed does not mean installed.
 `,
   },
   {
@@ -280,7 +283,8 @@ This site keeps several clocks and refuses to merge them.
 
 - **Listing version**, such as Chrome Web Store 1.2.0 on 2026-09-23. What Chrome installs.
 - **Contract version**, such as v12 on the audited source tree, or v15 on the pending branch.
-- **Package version**, such as 1.4.0 — which currently exists only as an open pull request.
+- **Package version**, such as 1.4.0 — in Chrome review, with its source in an open pull request.
+- **Submission state**, which is not a version at all: submitted, approved, or rejected.
 - **Desk notes**, which are rows in Postgres and can be added without a code change.
 
 The rendered history is on the [changelog](/changelog). Authored entries live in \`src/content/changelog.ts\`. Desk notes are not a release. They are a ledger.
@@ -402,7 +406,8 @@ The canonical install URL is exported as \`chromeStoreUrl\` from \`src/content/s
 
 \`site.ts\` exports three things that must not be edited as if they were one:
 
-- \`site.listing\` — only ever what the live Chrome Web Store page says. Re-read the page before touching it, and record the date in \`verifiedOn\`.
+- \`site.listing\` — only ever what the live Chrome Web Store page says. Re-read the page before touching it, and record the date in \`verifiedOn\`. A submitted package does not belong here.
+- \`storeReview\` — the package sitting with Chrome's reviewers. Set \`state\` to \`approved\` and move the numbers into \`site.listing\` on the same day the public page changes, not when the email arrives.
 - \`site.contract\` — the audited baseline on the extension's \`main\` branch.
 - \`pendingRelease\` — the unmerged release train, with its PR number and head commit. Flip \`state\` to \`merged\` when the PR lands, and to \`shipped\` only when a package with that version is live on the store. Moving its numbers into \`site.contract\` is a separate edit that waits for the audited status document to move too.
 

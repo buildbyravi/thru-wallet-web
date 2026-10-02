@@ -22,7 +22,7 @@ export function WalletMock() {
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="label text-paper/50">primary</p>
-              <p className="mono mt-1 text-sm text-paper/80">7Kq3 ··· e91A</p>
+              <p className="mono mt-1 text-sm text-paper/80">7Kq3Rt ··· Pe91Aq</p>
             </div>
             <span className="rounded-full border border-white/15 px-2 py-1 text-[10px] tracking-[0.14em] text-paper/70 uppercase">
               Locked view

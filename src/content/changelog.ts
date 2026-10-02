@@ -11,6 +11,20 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.4.0",
+    date: "2026-10-03",
+    title: "Submitted to the Chrome Web Store — in review",
+    tag: "RELEASE",
+    summary:
+      "The betanet package is with Chrome's reviewers. Submitted is not published: the listing keeps serving 1.2.0 until a reviewer approves, and the public page is the only thing this site treats as proof.",
+    changes: [
+      "Package 1.4.0 submitted with the rewritten betanet description and the fifth permission, notifications, justified in the dashboard.",
+      "The live listing page re-read on 2026-10-03 still reports 1.2.0, 2026-09-23, 209 KiB — unchanged, as expected during review.",
+      "Source side: PR #16 is in final review at 9086b22, with @thru/sdk and @thru/programs synced to 0.4.1.",
+      "This site tracks submission and merge as two separate events, because a rejection moves one without the other.",
+    ],
+  },
+  {
     version: "site",
     date: "2026-10-02",
     title: "Three clocks: store build, source baseline, pending 1.4.0",
@@ -38,6 +52,7 @@ export const changelog: ChangelogEntry[] = [
       "Optional desktop notifications on transaction confirm or fail, which is the fifth manifest permission and a Settings toggle.",
       "Auto-lock now measures real inactivity, the faucet no longer demands a signing password, and a repeat transfer inside 30 seconds is detected before it is signed.",
       "Localnet is gone from the shipped wallet and the manifest homepage points at thruwallet.vercel.app.",
+      "Packages tracked the chain twice: 0.3.16 to 0.4.0 for the managed-genesis reset, then a 0.4.1 sync at 9086b22.",
     ],
   },
   {

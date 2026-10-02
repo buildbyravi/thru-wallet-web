@@ -31,7 +31,7 @@ export const securityPrinciples = [
 
 export const gaps = [
   "Run the browser smoke checklist for popup and side-panel layout, focus, canvas QR, clipboard, desktop notifications, and worker eviction.",
-  "The packaged store build is 1.2.0 and still points at the alphanet RPC. The extension repository records that chain as reset and replaced by betanet on 2026-09-26, so the public install is behind the chain until 1.4.0 ships.",
+  "The packaged store build is 1.2.0 and still points at the alphanet RPC. The extension repository records that chain as reset and replaced by betanet on 2026-09-26. Package 1.4.0 is submitted and in Chrome review, so the public install stays behind the chain until a reviewer approves it.",
   "Betanet itself is unaudited infrastructure and Thru's last testnet before mainnet. A 1-base-unit transfer fee was measured once, on one amount and one size.",
   "Live v12 activation — multi-account creation and owned-recipient just-in-time registration — still needs a safe network-reachable pass.",
   "Token transfer code is shipped; the token-program fee and never-registered owner case are not yet measured. The pending token lab exercises deploy, add, send, and receive, but on a chain nobody has certified.",

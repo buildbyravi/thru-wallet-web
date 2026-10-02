@@ -39,8 +39,9 @@ export const site = {
     telegramChannel: "https://t.me/walletext",
     telegramGroup: "https://t.me/+dA8TwsOECcIxZWZl",
   },
-  // Verified against the live Chrome Web Store page on 2026-10-02. The packaged listing is
-  // still the alphanet-era build; do not copy pending-release numbers into this block.
+  // Verified against the live Chrome Web Store page on 2026-10-03: still the alphanet-era
+  // package. A submitted version does not change this block — the public page only moves
+  // when Google approves it. See storeReview below.
   listing: {
     version: "1.2.0",
     updated: "2026-09-23",
@@ -49,7 +50,7 @@ export const site = {
     languages: "English",
     blurb: "High-performance self-custody wallet and key manager for Thru.",
     network: "alphanet",
-    verifiedOn: "2026-10-02",
+    verifiedOn: "2026-10-03",
     permissions: 4,
   },
   // The audited source baseline on the extension's `main` branch.
@@ -81,31 +82,48 @@ export const site = {
   ],
 } as const;
 
-// The 1.4.0 release train. It exists as reviewed, CI-green source on an open pull request.
-// It is NOT merged to the extension's main branch and it is NOT what Chrome installs today.
-// Flip `state` to "shipped" only when the PR lands; move the numbers into `site.contract`
-// only once the audited status document moves with them.
+// The betanet package submitted to the Chrome Web Store. Submitted is not published: the
+// listing page keeps serving site.listing until a reviewer approves this, and a rejection
+// sends it back. Move the numbers into site.listing only when the public page shows them.
+export const storeReview = {
+  state: "in-review" as "in-review" | "approved" | "rejected",
+  stateLabel: "Submitted · in Chrome review",
+  sentenceLabel: "submitted and waiting on a Chrome reviewer",
+  version: "1.4.0",
+  network: "betanet",
+  permissions: 5,
+  newPermission: "notifications",
+  reportedOn: "2026-10-03",
+  note:
+    "Package 1.4.0 is with Chrome's reviewers. The new notifications permission and the rewritten betanet description are part of that submission, so the listing copy and the permission justifications flip together or not at all.",
+} as const;
+
+// The 1.4.0 release train in the extension repository. Reviewed, CI-green, and in final
+// review as of 2026-10-03 — but an open pull request is not a merge. Flip `state` to
+// "merged" when it lands, and only then consider promoting these numbers into
+// `site.contract`, which tracks the audited baseline on main.
 export const pendingRelease = {
-  state: "pending" as "pending" | "merged" | "shipped",
+  state: "final-review" as "open" | "final-review" | "merged" | "shipped",
+  stateLabel: "Final review · merging today",
   version: "1.4.0",
   headline: "Betanet migration, token drawer, desktop notifications",
   pr: 16,
   prUrl: "https://github.com/buildbyravi/thru-wallet-ext/pull/16",
   branch: "arena/01a0dce0-thru-wallet-ext",
-  headCommit: "1338380",
+  headCommit: "9086b22",
   contract: "v15",
   methods: 83,
-  sdk: "@thru/sdk@0.4.0",
-  programs: "@thru/programs@0.4.0",
+  sdk: "@thru/sdk@0.4.1",
+  programs: "@thru/programs@0.4.1",
   network: "betanet",
   rpc: "https://rpc.betanet.thru.org",
   blockSeconds: 6,
   permissions: ["storage", "alarms", "sidePanel", "clipboardRead", "notifications"],
   routes: 14,
   ci: "build-and-test green",
-  checkedOn: "2026-10-02",
+  checkedOn: "2026-10-03",
   note:
-    "Read from the extension repository at 1338380 on 2026-10-02: package 1.4.0, contract v15 with 83 declared methods, @thru packages pinned to 0.4.0, and a CSP whose only connect-src is the betanet RPC.",
+    "Read from the extension repository at 9086b22 on 2026-10-03: package 1.4.0, contract v15 with 83 declared methods, @thru packages synced to 0.4.1, and a CSP whose only connect-src is the betanet RPC.",
 } as const;
 
 // Three clocks. Collapsing any two of them produces a false sentence about this project.
@@ -114,9 +132,10 @@ export const releaseTracks = [
     key: "store",
     label: "Chrome Web Store",
     value: site.listing.version,
+    pill: `${storeReview.version} ${storeReview.stateLabel.toLowerCase()}`,
     meta: `Updated ${site.listing.updated} · ${site.listing.size} · ${site.listing.offeredBy}`,
     detail:
-      "What Chrome installs today. Still the alphanet build and the alphanet listing copy — four permissions, no notifications.",
+      "What Chrome installs today is still the alphanet build with four permissions. The betanet package is submitted and waiting on a reviewer, so the public page has not moved.",
     href: chromeStoreUrl,
     hrefLabel: "Open the listing",
   },
@@ -124,6 +143,7 @@ export const releaseTracks = [
     key: "source",
     label: "Source baseline (main)",
     value: site.contract.version,
+    pill: "Merged and audited",
     meta: `${site.contract.methods} methods · ${site.contract.auditedOn} · ${site.contract.auditedCommit}`,
     detail:
       "The audited status document on the extension's main branch. Packages pinned to 0.3.16, alphanet program addresses.",
@@ -134,9 +154,10 @@ export const releaseTracks = [
     key: "pending",
     label: "Pending release",
     value: pendingRelease.version,
+    pill: pendingRelease.stateLabel,
     meta: `Contract ${pendingRelease.contract} · ${pendingRelease.methods} methods · PR #${pendingRelease.pr}`,
     detail:
-      "Betanet, @thru 0.4.0, token drawer, custom tokens, desktop notifications. Reviewed and CI-green, not merged, not published.",
+      "Betanet, @thru 0.4.1, token drawer, custom tokens, desktop notifications. Reviewed and CI-green; it becomes the source baseline at merge, not before.",
     href: pendingRelease.prUrl,
     hrefLabel: `PR #${pendingRelease.pr} · ${pendingRelease.headCommit}`,
   },
@@ -144,7 +165,7 @@ export const releaseTracks = [
 
 export const heroMetrics = [
   { label: "Chrome installs", value: site.listing.version, note: "Store build · alphanet era" },
-  { label: "Pending", value: pendingRelease.version, note: `Betanet · contract ${pendingRelease.contract}` },
-  { label: "Routes", value: "14", note: "One popup stack, no fallback" },
+  { label: "In review", value: storeReview.version, note: `Betanet · ${storeReview.permissions} permissions` },
+  { label: "Contract", value: pendingRelease.contract, note: `${pendingRelease.methods} methods · PR #${pendingRelease.pr}` },
   { label: "Vault", value: "600k", note: "PBKDF2 rounds, then AES-GCM" },
 ] as const;

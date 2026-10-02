@@ -13,7 +13,7 @@ export const roadmap: RoadmapItem[] = [
     title: "Land and publish the betanet build",
     status: "open",
     detail:
-      "Package 1.4.0 is reviewed and CI-green on PR #16 at 1338380, but the extension's main branch is still contract v12 on @thru 0.3.16, and the Chrome Web Store still serves the 1.2.0 alphanet package with alphanet listing copy. Merging, submitting, and mirroring the store text in extension.md is one unit of work, not three.",
+      "Two halves, moving separately. Package 1.4.0 is submitted and in Chrome review as of 2026-10-03, while the public listing still serves 1.2.0. PR #16 is in final review at 9086b22 and merges today, after which main stops being contract v12 on @thru 0.3.16. Neither half closes the other: a rejected package and a merged branch are a state this project can be in.",
   },
   {
     step: "02",
@@ -66,6 +66,6 @@ export const completed = [
   "Contract v8 ships token transfer and real token balance reads. Live probe still open.",
   "Contract v12 adds owned-account registration and a storage-only history cache.",
   "Modal focus trapping and an explicit side-panel action, without replacing the toolbar popup.",
-  "Pending: the 2026-09-26 chain reset tracked end to end — @thru 0.4.0 packages, managed-genesis program addresses, betanet RPC, and a CSP that allows nothing else.",
+  "Pending: the 2026-09-26 chain reset tracked end to end — @thru 0.4.1 packages, managed-genesis program addresses, betanet RPC, and a CSP that allows nothing else.",
   "Pending: auto-lock measures real inactivity instead of restarting its own clock on every worker wake.",
 ] as const;

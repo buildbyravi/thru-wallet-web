@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Badge } from "@/components/Badge";
 import { PageHeader } from "@/components/Section";
 import { completed, roadmap } from "@/content/roadmap";
-import { pendingRelease, releaseTracks, site } from "@/content/site";
+import { pendingRelease, releaseTracks, site, storeReview } from "@/content/site";
 import { listSmoke } from "@/lib/catalog";
 import { formatStamp } from "@/lib/format";
 
@@ -41,6 +41,7 @@ export default async function StatusPage() {
           >
             <p className={`label ${track.key === "store" ? "text-paper/50" : "text-warm"}`}>{track.label}</p>
             <p className="mt-3 font-serif text-4xl font-light tracking-[-0.04em]">{track.value}</p>
+            <p className={`label mt-2 ${track.key === "store" ? "text-paper/70" : "text-accent-dark"}`}>{track.pill}</p>
             <p className={`mt-2 text-sm ${track.key === "store" ? "text-paper/70" : "text-warm"}`}>{track.meta}</p>
             <p className={`mt-3 text-sm ${track.key === "store" ? "text-paper/70" : "text-warm"}`}>{track.detail}</p>
             <a
@@ -93,8 +94,12 @@ export default async function StatusPage() {
           <p className="mt-3 text-sm text-warm">
             Package {site.listing.version} from {site.listing.updated}, built for {site.listing.network}. The extension
             repository records that chain as reset and replaced by betanet on 2026-09-26, and the listing copy still
-            describes alphanet and four permissions. Until {pendingRelease.version} merges and clears review, the
-            betanet wallet is a source build.
+            describes alphanet and four permissions.
+          </p>
+          <p className="mt-3 text-sm text-warm">
+            Package {storeReview.version} is{" "}
+            <strong className="font-normal text-ink">{storeReview.sentenceLabel}</strong> as of {storeReview.reportedOn}. {storeReview.note} Until a reviewer approves it, the betanet wallet is a
+            source build.
           </p>
           <p className="mt-3 text-sm text-warm">
             Listing facts re-read from the live store page on {site.listing.verifiedOn}.

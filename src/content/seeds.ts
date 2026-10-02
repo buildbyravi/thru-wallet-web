@@ -41,4 +41,18 @@ export const noteSeed = [
     author: "dossier",
     createdAt: new Date("2026-10-02T19:10:00Z"),
   },
+  {
+    title: "1.4.0 is in Chrome review, not published",
+    body: "The betanet package was submitted with the rewritten description and the notifications justification. The live listing page still reports 1.2.0 from 2026-09-23, which is what review looks like from outside. This site flips site.listing only when the public page moves.",
+    tag: "RELEASE",
+    author: "dossier",
+    createdAt: new Date("2026-10-03T09:30:00Z"),
+  },
+  {
+    title: "PR #16 head moved to 9086b22",
+    body: "Four commits after the audited tip: @thru/sdk and @thru/programs synced to 0.4.1, a warm header gradient with frosted pill borders, a fixed-width account pill with 6...6 address truncation, and a balance-hero refresh hover fix. Contract stays v15 with 83 methods and the manifest stays 1.4.0.",
+    tag: "NOTE",
+    author: "dossier",
+    createdAt: new Date("2026-10-03T09:45:00Z"),
+  },
 ] as const;

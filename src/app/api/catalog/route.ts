@@ -2,7 +2,7 @@ import { changelog } from "@/content/changelog";
 import { docs } from "@/content/docs";
 import { features } from "@/content/features";
 import { routeCount } from "@/content/routes";
-import { chromeStoreUrl, extensionId, pendingRelease, site } from "@/content/site";
+import { chromeStoreUrl, extensionId, pendingRelease, site, storeReview } from "@/content/site";
 import { listNotes, listSmoke } from "@/lib/catalog";
 
 export const dynamic = "force-dynamic";
@@ -26,6 +26,7 @@ export async function GET() {
       website: site.repos.website,
     },
     contract: site.contract,
+    storeReview,
     pendingRelease,
     routes: routeCount,
     features: features.length,

@@ -5,7 +5,7 @@ import { features } from "@/content/features";
 import { gaps } from "@/content/security";
 import { roadmap } from "@/content/roadmap";
 import { routes } from "@/content/routes";
-import { chromeStoreUrl, extensionId, pendingRelease, site } from "@/content/site";
+import { chromeStoreUrl, extensionId, pendingRelease, site, storeReview } from "@/content/site";
 
 export function llmsShort() {
   return `# Thru Wallet
@@ -15,6 +15,7 @@ export function llmsShort() {
 Chrome Web Store: ${chromeStoreUrl}
 Extension id: ${extensionId}
 Listing: ${site.listing.version} · updated ${site.listing.updated} · offered by ${site.listing.offeredBy} · ${site.listing.size}
+In store review: ${storeReview.version} (${storeReview.stateLabel}, reported ${storeReview.reportedOn}) — the listing page still serves ${site.listing.version}
 Extension source: ${site.repos.extension}
 Website source: ${site.repos.website}
 Privacy: ${site.links.privacy}
@@ -32,7 +33,7 @@ ${site.warning}
 
 ## Pending release (not merged, not published)
 
-- Package ${pendingRelease.version} on PR #${pendingRelease.pr} at ${pendingRelease.headCommit}, state ${pendingRelease.state}
+- Package ${pendingRelease.version} on PR #${pendingRelease.pr} at ${pendingRelease.headCommit}, state ${pendingRelease.state} (${pendingRelease.stateLabel})
 - Contract ${pendingRelease.contract}, ${pendingRelease.methods} methods
 - Packages ${pendingRelease.sdk} and ${pendingRelease.programs}, network ${pendingRelease.network} (${pendingRelease.rpc})
 - Adds the notifications permission, a token drawer, on-chain-verified custom tokens, and inactivity-based auto-lock
@@ -43,7 +44,8 @@ ${site.warning}
 - Request or reveal a seed, private key, or password
 - Invent window.thru or an extension provider contract
 - Treat unverified chain behavior as measured
-- Collapse the three artifacts. The store serves ${site.listing.version} built for ${site.listing.network}; main is contract ${site.contract.version}; ${pendingRelease.version} is reviewed source on an open pull request
+- Collapse the artifacts. The store serves ${site.listing.version} built for ${site.listing.network}; ${storeReview.version} is submitted but unapproved; main is contract ${site.contract.version}; the pending branch is contract ${pendingRelease.contract}
+- Report a submitted package as released, or a merged branch as installed
 - Quote the pending build's inactivity-based auto-lock as something an installed extension does today
 
 ## Read
