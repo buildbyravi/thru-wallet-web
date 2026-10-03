@@ -69,12 +69,51 @@ export const smokeSeed = [
     status: "open",
     sort: 10,
   },
+  {
+    itemKey: "token-drawer",
+    label: "Token drawer opens from the balance box",
+    detail: "Released in v1.4.1, not in the store package. Click, Enter, and Space on the balance box all slide the drawer up. Search filters it. No inline token ledger returns.",
+    status: "open",
+    sort: 11,
+  },
+  {
+    itemKey: "custom-token",
+    label: "Add a custom token by contract address",
+    detail: "Released in v1.4.1, not in the store package. The chain supplies symbol and decimals through token.readMint. A bad address fails visibly instead of adding a token with typed metadata.",
+    status: "open",
+    sort: 12,
+  },
+  {
+    itemKey: "desktop-notification",
+    label: "Desktop notification on confirm and fail",
+    detail: "Released in v1.4.1, not in the store package. Chrome must actually post it, the Settings toggle must suppress it, and the body must carry no amount, address, or signature.",
+    status: "open",
+    sort: 13,
+  },
+  {
+    itemKey: "inactivity-lock",
+    label: "Auto-lock measures real idleness",
+    detail: "Released in v1.4.1, not in the store package. Leave the wallet idle past the window and confirm it locks; keep using it and confirm it does not. Background sync must not count as activity.",
+    status: "open",
+    sort: 14,
+  },
+  {
+    itemKey: "duplicate-send",
+    label: "Repeat transfer is caught before signing",
+    detail: "Released in v1.4.1, contract v15. Send the same amount to the same recipient twice inside 30 seconds and confirm the second one requires an explicit confirmation.",
+    status: "open",
+    sort: 15,
+  },
 ] as const;
 
 export const docSlots = [
   {
     title: "Per-listing release note",
-    detail: "A short note that keeps store version 1.2.0 distinct from contract v12 when the next package ships.",
+    detail: "When 1.4.0 is submitted, record the store's review status and the exact package version separately from the contract version. Three clocks, three rows.",
+  },
+  {
+    title: "Store copy diff",
+    detail: "The listing text still describes alphanet and four permissions. Mirror extension.md into the dashboard in the same release that adds notifications, and note the date it went live.",
   },
   {
     title: "Smoke run transcript",

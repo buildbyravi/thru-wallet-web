@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CodeBlock } from "@/components/CodeBlock";
 import { PageHeader } from "@/components/Section";
 import { StoreButton } from "@/components/StoreButton";
-import { chromeStoreUrl, extensionId, site } from "@/content/site";
+import { chromeStoreUrl, extensionId, release, site, storeStatus } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Install",
@@ -73,13 +73,30 @@ export default function InstallPage() {
         </div>
       </section>
 
+      <section className="mt-6 border-l-2 border-alert bg-alert-soft/50 px-5 py-4">
+        <p className="label text-alert">Which chain the store build talks to</p>
+        <p className="mt-2 max-w-3xl text-sm text-warm">
+          Package {site.listing.version} targets the {site.listing.network} RPC. The extension repository records that
+          chain as reset and replaced by betanet on 2026-09-26, so a store install today is behind the chain. The
+          betanet build shipped as source release{" "}
+          <a className="text-link" href={release.url}>
+            {release.tag}
+          </a>{" "}
+          on {release.publishedOn} — contract {release.contract}, @thru 0.4.1, and{" "}
+          <span className="mono">{release.rpc}</span> as the only allowed connect-src — merged as{" "}
+          <span className="mono">{release.mergeCommit}</span>. Package {storeStatus.version} is{" "}
+          {storeStatus.sentenceLabel}, so Chrome keeps installing {site.listing.version}. Load unpacked if you need
+          betanet now.
+        </p>
+      </section>
+
       <section className="mt-14 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
           <p className="label text-warm">Developers · load unpacked</p>
           <h2 className="mt-2 font-serif text-3xl font-light tracking-[-0.03em]">Build dist/, then point Chrome at it.</h2>
           <ol className="mt-5 list-decimal space-y-3 pl-5 text-warm">
             <li>Clone the extension repository and install dependencies.</li>
-            <li>Run the test suite. It is local. It does not certify Chrome or alphanet.</li>
+            <li>Run the test suite. It is local. It does not certify Chrome or the chain.</li>
             <li>Build, then load the dist/ folder as an unpacked extension.</li>
             <li>After a code change, reload the extension so the service worker updates too.</li>
           </ol>
@@ -104,7 +121,7 @@ export default function InstallPage() {
           </thead>
           <tbody className="text-warm">
             {[
-              ["Who", "Anyone trying alphanet", "Someone reading or patching the tree"],
+              ["Who", "Anyone trying the wallet", "Someone auditing, patching, or needing betanet now"],
               ["Artifact", `Listing ${site.listing.version}, ${site.listing.updated}`, "The commit you just built"],
               ["Contract", "Whatever that package contains", `Status baseline ${site.contract.version} on the audited tree`],
               ["Updates", "Chrome updates the listing", "You rebuild dist/ and reload the extension"],

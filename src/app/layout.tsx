@@ -10,15 +10,15 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Thru Wallet — Alphanet extension",
+    default: "Thru Wallet — Betanet extension",
     template: "%s — Thru Wallet",
   },
   description: `${site.summary} Add it from the Chrome Web Store: ${chromeStoreUrl}`,
   applicationName: site.name,
   authors: [{ name: site.listing.offeredBy }],
-  keywords: ["Thru Wallet", "Thru", "alphanet", "Chrome extension", "self-custody"],
+  keywords: ["Thru Wallet", "Thru", "betanet", "Chrome extension", "self-custody"],
   openGraph: {
-    title: "Thru Wallet — Alphanet extension",
+    title: "Thru Wallet — Betanet extension",
     description: site.descriptor,
     type: "website",
   },

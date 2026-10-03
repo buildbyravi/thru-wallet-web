@@ -13,9 +13,9 @@ export const docs: Doc[] = [
     description: "What Thru Wallet is, what it refuses to be, and where to install it.",
     tag: "start here",
     markdown: `
-Thru Wallet is an experimental Chrome extension for personal key management and basic account operations on Thru's native Layer 1 alphanet. It is unofficial, self-custody, and deliberately narrower than a general dApp wallet.
+Thru Wallet is an experimental Chrome extension for personal key management and basic account operations on Thru's native Layer 1 betanet. It is unofficial, self-custody, and deliberately narrower than a general dApp wallet.
 
-> Not production-ready. Not security-reviewed. Not affiliated with Unto Labs. Alphanet and devnet funds only.
+> Not production-ready. Not security-reviewed. Not affiliated with Unto Labs. Betanet testnet funds only.
 
 ## Install
 
@@ -23,7 +23,8 @@ The packaged extension is listed on the Chrome Web Store:
 
 - Listing: [Thru Wallet](https://chromewebstore.google.com/detail/thru-wallet/ocahgpmgfeapjnceaknkikanjikhjgok)
 - Extension id: \`ocahgpmgfeapjnceaknkikanjikhjgok\`
-- Listing version: **1.2.0**, updated 2026-09-23, 209 KiB, offered by PWNX0
+- Listing version: **1.2.0**, updated 2026-09-23, 209 KiB, offered by PWNX0 — verified against the live page on 2026-10-03
+- Released in source: **v1.4.1**, the betanet build, merged as \`cee006e\` on 2026-10-03 — not yet uploaded to the store
 - Source: [buildbyravi/thru-wallet-ext](https://github.com/buildbyravi/thru-wallet-ext)
 - This site: [buildbyravi/thru-wallet-web](https://github.com/buildbyravi/thru-wallet-web)
 
@@ -42,20 +43,27 @@ Use the store unless you are auditing or rebuilding. The full steps live on the 
 
 Thru's own wallet architecture is an embedded, iframe-hosted wallet. There is no published standard yet for third-party extensions to plug into dApps built with Thru's SDKs. This project does **not** inject \`window.thru\`. Rabby, MetaMask, Phantom, and Keplr are UX references only. Thru is not EVM.
 
-## Baseline this site describes
+## Three artifacts, not one
 
-The extension status document audited on 2026-09-26 at commit \`4aa55ba\` is the source baseline:
+| | Chrome Web Store | Source \`main\` | Audited status doc |
+| --- | --- | --- | --- |
+| Version | 1.2.0, 2026-09-23 | **1.4.1**, released 2026-10-03 | describes \`4aa55ba\`, 2026-09-26 |
+| Commit | whatever 1.2.0 contains | \`cee006e\` (PR #16 merged) | \`4aa55ba\` |
+| Contract | whatever 1.2.0 contains | v15, 83 methods | claims v12, 81 methods |
+| Packages | alphanet era | @thru 0.4.1 | @thru 0.3.16 |
+| Network | alphanet RPC | betanet RPC, nothing else in CSP | alphanet RPC |
+| Permissions | 4 | 5, adding \`notifications\` | 4 |
+| State | what Chrome installs today | what the source builds | **behind the code it summarizes** |
 
-| Fact | Value |
-| --- | --- |
-| Contract | v12, 81 methods |
-| Routes | 14, one popup stack |
-| Vault | PBKDF2-SHA256, 600,000 rounds, AES-256-GCM |
-| DOM sinks | 0, ratchet closed |
-| Popup width | 400px |
-| Packages | @thru/sdk and @thru/programs, exact-pinned 0.3.16 |
+The store column is the only one anybody has installed. The betanet work merged on 2026-10-03 and shipped as GitHub release [v1.4.1](https://github.com/buildbyravi/thru-wallet-ext/releases/tag/v1.4.1); package **1.4.0 was submitted to the store earlier that day and never published**, which is why the release carries the 1.4.1 number. Uploading the 1.4.1 package is a separate, human step and it has not happened. Submission, merge, and publication are tracked as three events here because any one of them can move without the others.
 
-The store package and that source baseline are not the same artifact. Say which one you mean.
+Shared by all three: 14 routes, one popup stack, a 400px popup, 0 DOM sinks with the ratchet closed, and a vault built on PBKDF2-SHA256 at 600,000 rounds then AES-256-GCM.
+
+Say which artifact you mean. "Thru Wallet supports betanet" is true of the pending source and false of the extension Chrome installs today.
+
+## The chain moved underneath the store build
+
+The extension repository records a managed-genesis reset on 2026-09-26: the single-node alphanet is gone, betanet is Thru's final testnet before mainnet, and the old reverse-engineered program addresses no longer exist on-chain. The published 1.2.0 package still points at the alphanet RPC. The betanet build shipped as release v1.4.1 on 2026-10-03, but it has not been uploaded to the store, so a store install stays behind the chain. Build from \`main\` at \`cee006e\` and load unpacked if you need a wallet that talks to betanet today.
 `,
   },
   {
@@ -73,7 +81,9 @@ Two paths. Most people should take the first.
 3. Add it to Chrome. Pin it. The first run offers to create or import a wallet.
 4. Read the [privacy policy](https://github.com/buildbyravi/thru-wallet-ext/blob/main/PRIVACY.md). The developer discloses that the item does not collect or use your data.
 
-The listing is community software for alphanet. It is not an Unto Labs product and it has not been audited.
+The listing is community software. It is not an Unto Labs product and it has not been audited.
+
+> The packaged 1.2.0 build targets alphanet, and the extension repository records that chain as reset and replaced by betanet on 2026-09-26. The betanet build is release v1.4.1, merged as \`cee006e\` on 2026-10-03 and tagged on GitHub — but not yet uploaded to the store. If you need betanet before the package is published, build it from source.
 
 ## Load unpacked
 
@@ -108,12 +118,13 @@ Then:
 
 | | Store | Unpacked |
 | --- | --- | --- |
-| Who | Anyone trying alphanet | Someone auditing or patching |
+| Who | Anyone trying the wallet | Someone auditing, patching, or needing betanet now |
 | Version | Listing 1.2.0, 2026-09-23 | The commit you built |
 | Updates | Chrome updates the package | You rebuild dist/ |
-| Contract | Whatever that package contains | Status baseline is v12 if you are on the audited tree |
+| Contract | Whatever that package contains | v15 at \`main\` (\`cee006e\`) |
+| Network | alphanet RPC | betanet, since release v1.4.1 |
 
-If those two disagree, the repository status document wins for source claims. The listing wins for what Chrome will actually install today.
+If those two disagree, the source tree wins for source claims — including over \`docs/STATUS_AND_ROADMAP.md\`, which still describes contract v12. The listing wins for what Chrome will actually install today.
 `,
   },
   {
@@ -126,23 +137,26 @@ Status words on this site are narrow.
 
 - **STABLE** means the route and the background path exist, and the project treats them as the product.
 - **ALPHA** means the code is real, but a browser check or a live-chain measurement is still open.
+- **PENDING** means it is in the v1.4.1 source release but not in the published store package. Build it yourself and you get it; install from the store and you do not.
 - **PLANNED** means it is not a thing you can do in the extension today.
 
 ## Wallet core
 
 Create or import a phrase or a private key. Derive more HD accounts from a seed keyring. Keep several keyrings. Encrypt the vault with PBKDF2 (600,000 SHA-256 iterations) and AES-256-GCM. Ciphertext is in \`chrome.storage.local\`. Decrypted material is only in \`chrome.storage.session\`.
 
-Auto-lock defaults to 15 minutes. It is a fixed-period alarm, not an inactivity detector, despite some labels.
+Auto-lock defaults to 15 minutes and is configurable from 0 to 240, password-gated either way. In the packaged store build it is a fixed-period alarm despite the label. Release v1.4.1 stamps \`lastActivityAt\` on every API request and locks on measured idleness, with background sync explicitly not counting as activity — and it adds an immediate lock button plus Ctrl+L.
 
 ## Daily use
 
-Balances show human-scale THRU and the raw base units. 1 THRU = 1e9 base units. Account creation and faucet claim exist where the network supports them. Native send goes through review. History is one flat stream: block time when known, otherwise \`Block <slot>\`.
+Balances show human-scale THRU and the raw base units. 1 THRU = 1e9 base units. Account creation and faucet claim exist where the network supports them; contract v13 makes a faucet claim unlocked-only rather than signing-gated. Native send goes through review, and contract v15 catches a repeat transfer to the same recipient inside 30 seconds before it is signed. History is one flat stream: block time when known, otherwise \`Block <slot>\`, refreshed every 30 seconds since v1.4.1. Optional desktop notifications announce confirm or fail.
 
 The popup is 400px. The side panel is an explicit opt-in and does not steal the toolbar click.
 
 ## Token work
 
 \`token.getBalances\` and \`token.transfer\` are implemented on official \`@thru/programs/token\` bindings. A missing token account is a proven zero. A failed read is unknown. The token-program fee is unmeasured, and the UI is supposed to say so rather than quote the native 1-base-unit fee.
+
+Since v1.4.1 the token list lives in a drawer opened from the balance box, and a custom token is added by contract address: \`token.readMint\` reads the mint from the chain and uses its own symbol and decimals, because typed metadata is what made an added token spend the wrong number of base units.
 
 Contacts CRUD is not a shipped screen. Account pin, hide, and order exist on the account routes.
 
@@ -181,11 +195,15 @@ The UI does not call \`chrome.runtime.sendMessage\` except through the bridge. B
 
 ## API router
 
-The manifest is the allowlist. Auth tiers include password and signing. \`tx.registerAccount\` is the narrow unlocked-only signing exception, and only for an exact vault-owned address.
+The manifest is the allowlist. Auth tiers include password and signing. \`tx.registerAccount\` is the narrow unlocked-only signing exception, and only for an exact vault-owned address. The pending v13 step adds a second, equally narrow one: a faucet claim is an incoming credit, so it is unlocked-only too.
+
+## Networks
+
+\`networks.js\` is the only place an RPC URL, explorer URL, or program address is allowed to live, and anything stored that is meaningful on one chain only is namespaced by network id. Since v1.4.1 betanet is the one enabled entry; localnet, testnet, and mainnet are declared and disabled so the storage-scoping machinery has something to exercise. A build check fails if the enabled list and the manifest's \`connect-src\` ever disagree.
 
 ## Sacred files
 
-Do not casually edit \`src/lib/vault.js\`, \`src/lib/thru-client.js\`, or \`src/lib/networks.js\`. Derivation has golden tests. Program addresses that were reverse-engineered should be doubted first if a transaction fails with a low-level format error.
+Do not casually edit \`src/lib/vault.js\`, \`src/lib/thru-client.js\`, or \`src/lib/networks.js\`. Derivation has golden tests. Release v1.4.1 had to touch \`thru-client.js\` for the 0.4.x package shapes and the betanet move — the rename of \`ALPHANET_RPC\` to \`BETANET_RPC\` is the one intentional export change, and the PDA vectors stayed pinned. Program addresses now come from the managed-genesis registry in \`@thru/programs\` rather than from reverse-engineered marker bytes, so a redeployment lands as a version bump instead of a pasted string.
 
 ## Website
 
@@ -218,7 +236,11 @@ Do not extend the v12 registration exception to send, faucet, token transfer, ex
 
 ## Networks
 
-Custom endpoints cannot become active, including by a direct bridge call or by stale storage. Re-enabling them requires HTTPS policy, host permission, a verified capability record, and password re-auth — together, not one at a time.
+Custom endpoints cannot become active, including by a direct bridge call or by stale storage. Re-enabling them requires HTTPS policy, host permission, a verified capability record, and password re-auth — together, not one at a time. Localnet was removed from the shipped wallet for the same reason: selecting it bound the extension to a localhost endpoint the user may not control.
+
+## Permissions
+
+Release v1.4.1 requests five: \`storage\`, \`alarms\`, \`sidePanel\`, \`clipboardRead\`, and \`notifications\`. The fifth is new, it is a Settings toggle, and the notification body says only that a transfer confirmed or failed — no amount, address, or signature. The CSP remains \`default-src 'none'\` with \`script-src 'self'\` and a single \`connect-src\` origin.
 
 ## What tests do not prove
 
@@ -235,10 +257,11 @@ Remaining work is independent. Custom networks and a dApp provider stay blocked 
 
 ## Open
 
-1. Run the Chrome smoke checklist for both popup and side panel.
-2. Exercise v12 account activation and owned-recipient just-in-time registration on a safe network.
-3. Probe token transfer: fee, and a never-registered recipient owner.
-4. Confirm history block-time, fee availability, and explorer routes.
+1. Get v1.4.1 into the store: the source is merged and tagged, the manual smoke checklist is unrun, and the listing copy in \`extension.md\` has to match whatever the dashboard actually holds. Track the upload, the review, and the publication as separate events.
+2. Run the Chrome smoke checklist for both popup and side panel, including desktop notifications.
+3. Exercise v12 account activation and owned-recipient just-in-time registration on betanet.
+4. Probe token transfer: fee, and a never-registered recipient owner. Run the token lab against a live chain.
+5. Confirm betanet block-time availability, fee source, and the \`?network=betanet\` explorer routes.
 
 ## Blocked
 
@@ -248,7 +271,7 @@ An extension provider waits on a published Thru contract. The hosted iframe meth
 
 ## Already done
 
-Launchpad quarantine, route lifecycle coverage, custom-network quarantine, token transfer code, and contract v12 registration plus history cache. Done does not mean live-certified.
+Launchpad quarantine, route lifecycle coverage, custom-network quarantine, token transfer code, and contract v12 registration plus history cache. Merged and released as v1.4.1 on 2026-10-03: the whole betanet adaptation — @thru 0.4.1 packages, managed-genesis addresses, contract v13 to v15, the token drawer, and inactivity-based auto-lock. Done does not mean live-certified, and released does not mean installed: none of it is in the store package yet.
 `,
   },
   {
@@ -257,15 +280,17 @@ Launchpad quarantine, route lifecycle coverage, custom-network quarantine, token
     description: "How to read listing versions, contract versions, and desk notes as different objects.",
     tag: "updates",
     markdown: `
-This site keeps three clocks.
+This site keeps several clocks and refuses to merge them.
 
-- **Listing version**, such as Chrome Web Store 1.2.0 on 2026-09-23.
-- **Contract version**, such as v12 on the audited source tree.
+- **Listing version**, such as Chrome Web Store 1.2.0 on 2026-09-23. What Chrome installs.
+- **Contract version**, such as v15 at \`main\`, or v12 in a status document that has not caught up.
+- **Package version**, such as 1.4.1 — released in source and tagged on GitHub, not yet on the store.
+- **Submission state**, which is not a version at all: submitted, approved, or rejected.
 - **Desk notes**, which are rows in Postgres and can be added without a code change.
 
 The rendered history is on the [changelog](/changelog). Authored entries live in \`src/content/changelog.ts\`. Desk notes are not a release. They are a ledger.
 
-When you add a release, say which artifact moved. A store update that does not bump the contract is still a release. A contract bump that is not in the listing is not yet what Chrome will install.
+When you add a release, say which artifact moved. A store update that does not bump the contract is still a release. A contract bump that is not in the listing is not yet what Chrome will install. A reviewed pull request is not a release at all — it is a promise with CI attached.
 `,
   },
   {
@@ -329,7 +354,8 @@ For this website, start with [\`/llms.txt\`](/llms.txt) and [\`/llms-full.txt\`]
 
 - Do not request, store, print, or reveal a mnemonic, private key, or password.
 - Do not invent protocol behavior, token fees, explorer routes, or a \`window.thru\` provider.
-- Do not treat the store listing's inactivity-lock sentence as more precise than the source.
+- Do not collapse the published package, the released \`main\` tree, and the stale status document into one "current version".
+- Do not quote \`docs/STATUS_AND_ROADMAP.md\` version numbers without checking \`src/shared/contract/manifest.js\`; on \`main\` at \`cee006e\` the doc still says v12 while the code exports 15.
 - Do not mark a smoke check passed because a Node test passed.
 - Use official SDK and program surfaces when they exist. The pinned packages are the implementation authority for a checkout.
 
@@ -356,7 +382,7 @@ Authored product copy is TypeScript, so a change is reviewable.
 
 | File | What it feeds |
 | --- | --- |
-| src/content/site.ts | Name, warning, store link, listing facts, contract facts, nav |
+| src/content/site.ts | Name, warning, store link, listing facts, contract facts, the pending-release block and the three release tracks, nav |
 | src/content/features.ts | Feature groups and status badges |
 | src/content/routes.ts | The 14-route table |
 | src/content/security.ts | Principles, gaps, signing notes |
@@ -376,6 +402,18 @@ Do not put secrets in a desk note. Notes are rendered publicly on the changelog.
 ## Store link
 
 The canonical install URL is exported as \`chromeStoreUrl\` from \`src/content/site.ts\`. Header, homepage, install page, footer, JSON-LD, llms files, and \`/api/catalog\` all read that constant. If the listing moves, change it once.
+
+## Release tracks
+
+\`site.ts\` exports three things that must not be edited as if they were one:
+
+- \`site.listing\` — only ever what the live Chrome Web Store page says. Re-read the page before touching it, and record the date in \`verifiedOn\`. A submitted package does not belong here.
+- \`storeStatus\` — the package in front of the store: built, maybe submitted, not published. Move its numbers into \`site.listing\` on the day the public page changes, not when a submission is filed or an email arrives.
+- \`site.contract\` — the audited baseline on the extension's \`main\` branch.
+- \`release\` — the merged, tagged source release, with its PR number, merge commit, and tag. Its numbers flow into \`site.contract\` when the merge lands; they reach \`site.listing\` only when the store publishes.
+- \`auditedDoc\` — what \`docs/STATUS_AND_ROADMAP.md\` still claims. Kept as its own track while the document trails the code, so nobody has to guess which number a reader is quoting.
+
+\`releaseTracks\` renders all three on the status page and the homepage. Adding a fourth clock is cheaper than letting two of them blur.
 `,
   },
 ];

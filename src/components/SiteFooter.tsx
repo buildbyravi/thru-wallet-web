@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { site } from "@/content/site";
+import { release, site } from "@/content/site";
 
 const columns = [
   {
@@ -31,6 +31,8 @@ const columns = [
       { href: site.repos.website, label: "Website source", external: true },
       { href: site.links.thruDocs, label: "Thru docs", external: true },
       { href: site.links.explorer, label: "Thru explorer", external: true },
+      { href: site.links.release, label: "Release v1.4.1", external: true },
+      { href: site.links.telegramGroup, label: "Telegram group", external: true },
       { href: site.links.license, label: "MIT license", external: true },
     ],
   },
@@ -71,8 +73,8 @@ export function SiteFooter() {
         </div>
         <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-rule pt-6">
           <p className="label text-warm">
-            Baseline {site.baselineCommit} · {site.baselineDate} · contract {site.contract.version} · {site.contract.methods} methods ·{" "}
-            {site.routesCount} routes
+            Main {site.baselineCommit} · {site.baselineDate} · contract {site.contract.version} · {site.contract.methods} methods ·{" "}
+            {site.routesCount} routes · release {release.tag} · store {site.listing.version}
           </p>
           <Link href="/desk" className="label text-dim no-underline hover:text-ink">
             Desk

@@ -1,4 +1,4 @@
-export type FeatureStatus = "STABLE" | "ALPHA" | "PLANNED";
+export type FeatureStatus = "STABLE" | "ALPHA" | "PENDING" | "PLANNED";
 export type FeatureGroup = "Wallet Core" | "Daily Use" | "Token Work" | "Future Modules";
 
 export interface Feature {
@@ -42,8 +42,20 @@ export const features: Feature[] = [
   },
   {
     title: "Configurable auto-lock",
-    body: "Default is 15 minutes. The extension's own notes are precise: this is a fixed-period alarm, not an inactivity timer, even where a settings label or the store listing says otherwise. Changing the timer is password-gated.",
+    body: "Default is 15 minutes, user-configurable from 0 to 240, and changing it is password-gated. The packaged 1.2.0 build on the store runs a fixed-period alarm despite the label. Release v1.4.1 stamps every API request and locks on measured idleness — background sync no longer counts as activity.",
     status: "STABLE",
+    group: "Wallet Core",
+  },
+  {
+    title: "Lock on demand",
+    body: "Release v1.4.1 adds an explicit lock button in Settings and a Ctrl+L shortcut, so clearing decrypted keys does not mean waiting out the timer or closing the browser.",
+    status: "PENDING",
+    group: "Wallet Core",
+  },
+  {
+    title: "Security posture, computed not promised",
+    body: "Release v1.4.1 replaces the dashboard's coming-soon security tile with checks derived from state the background already owns: signing re-auth, auto-lock window, keyring origin, backup state. A value that cannot be read says unknown instead of grading itself.",
+    status: "PENDING",
     group: "Wallet Core",
   },
   {
@@ -54,14 +66,26 @@ export const features: Feature[] = [
   },
   {
     title: "Account creation and faucet claims",
-    body: "Create the on-chain account and claim from the faucet where the active network supports one. Historical alphanet observations treated faucet amounts as raw base units. Treat those constants as well-sourced, not newly certified.",
+    body: "Create the on-chain account and claim from the faucet where the active network supports one. Betanet's faucet is a managed program whose vault credited 10,000 base units on the reset chain. Contract v13 drops the signing-password demand from a claim: an incoming credit is not a spend.",
     status: "STABLE",
     group: "Daily Use",
   },
   {
     title: "Native sends and decoded history",
-    body: "Review precedes send. History is one flat stream: a known time comes from the containing block, otherwise the row shows Block <slot> instead of an invented date. No per-card fee line is shipped.",
+    body: "Review precedes send. History is one flat stream: a known time comes from the containing block, otherwise the row shows Block <slot> instead of an invented date. No per-card fee line is shipped. Release v1.4.1 refreshes the feed every 30 seconds while it is open.",
     status: "STABLE",
+    group: "Daily Use",
+  },
+  {
+    title: "Repeat-transfer detection",
+    body: "Contract v15 adds tx.checkDuplicate: the same recipient and amount inside 30 seconds, or still in flight, is caught before signing. v1.4.1 moved the tracking to submission time, so the Repeated Transaction card covers the whole pending window, and the send proceeds only with an explicit allowDuplicate the backend enforces.",
+    status: "PENDING",
+    group: "Daily Use",
+  },
+  {
+    title: "Desktop notifications",
+    body: "Release v1.4.1 posts a native notification when a transaction confirms or fails, so a closed popup is not a blind spot. It is the fifth manifest permission, it is a Settings toggle, and the message carries no amount, address, or signature.",
+    status: "PENDING",
     group: "Daily Use",
   },
   {
@@ -72,7 +96,7 @@ export const features: Feature[] = [
   },
   {
     title: "Receive address and QR",
-    body: "The receive route shows the address and a canvas QR. Explorer links point at scan.thru.org. Canvas paint, clipboard prompts, and the exact explorer path are still manual browser checks.",
+    body: "The receive route shows the address and a canvas QR. Explorer links point at scan.thru.org and carry ?network=betanet since v1.4.1. Canvas paint, clipboard prompts, and the exact explorer path are still manual browser checks.",
     status: "ALPHA",
     group: "Daily Use",
   },
@@ -86,6 +110,18 @@ export const features: Feature[] = [
     title: "Token balances, honestly",
     body: "token.getBalances reads official @thru/programs/token bindings. A missing token account is a proven zero. A failed read is unknown — never a fabricated 0. Decimals come from the mint when a balance exists.",
     status: "ALPHA",
+    group: "Token Work",
+  },
+  {
+    title: "Token drawer from the balance box",
+    body: "Release v1.4.1 makes the whole balance box the token entry: click it, press Enter, or use the token strip and a drawer slides up with the full list and a live search. The inline dashboard token ledger is gone rather than duplicated.",
+    status: "PENDING",
+    group: "Token Work",
+  },
+  {
+    title: "Custom tokens, verified on-chain",
+    body: "Contract v14 adds token.readMint, so a pasted contract address is read from the chain and the mint's own symbol and decimals are used. Free-typed metadata is what made an added token burn the wrong number of base units.",
+    status: "PENDING",
     group: "Token Work",
   },
   {
