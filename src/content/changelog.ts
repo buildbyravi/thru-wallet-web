@@ -11,9 +11,25 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.4.1",
+    date: "2026-10-03",
+    title: "Merged and released — the betanet build is tagged v1.4.1",
+    tag: "RELEASE",
+    summary:
+      "PR #16 merged into main as cee006e and shipped as GitHub release v1.4.1. The source is betanet now; the store package is not.",
+    changes: [
+      "Merged at 13:56 UTC and tagged thirteen seconds later, carrying Design System v2, betanet, @thru 0.4.1, the token drawer, chain-verified custom tokens, desktop notifications, and the send hardening pass.",
+      "Numbered 1.4.1 rather than 1.4.0 because 1.4.0 was submitted to the store and never published, so no released version is skipped.",
+      "Contract v15 with 83 declared methods is what main exports. This site reads its source facts from cee006e.",
+      "Gate at merge: 20 suites and 1,641 assertions green, plus the CI build-and-test job.",
+      "Still not installable from the store. The listing serves 1.2.0 until someone uploads the 1.4.1 package and a reviewer approves it.",
+      "docs/STATUS_AND_ROADMAP.md was not touched by the merge and still claims contract v12 with 81 methods at 4aa55ba.",
+    ],
+  },
+  {
     version: "1.4.0",
     date: "2026-10-03",
-    title: "Submitted to the Chrome Web Store — in review",
+    title: "Submitted to the Chrome Web Store — never published",
     tag: "RELEASE",
     summary:
       "The betanet package is with Chrome's reviewers. Submitted is not published: the listing keeps serving 1.2.0 until a reviewer approves, and the public page is the only thing this site treats as proof.",

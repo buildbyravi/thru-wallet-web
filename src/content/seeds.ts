@@ -55,4 +55,25 @@ export const noteSeed = [
     author: "dossier",
     createdAt: new Date("2026-10-03T09:45:00Z"),
   },
+  {
+    title: "PR #16 merged as cee006e and released as v1.4.1",
+    body: "Merged 13:56 UTC on 2026-10-03, tagged v1.4.1 thirteen seconds later. Main is contract v15, 83 methods, @thru 0.4.1, and a CSP whose only connect-src is the betanet RPC. Store listing re-read the same day: 1.2.0, 209 KiB, September 23, alphanet copy. Released is not installed.",
+    tag: "RELEASE",
+    author: "dossier",
+    createdAt: new Date("2026-10-03T14:05:00Z"),
+  },
+  {
+    title: "1.4.0 was never published, so the release is 1.4.1",
+    body: "The package submitted this morning did not reach the public page, and the release notes say so outright. Uploading the 1.4.1 package is still a human step, recorded as pending in extension.md, which is why the store track on this site did not move when the source track did.",
+    tag: "RELEASE",
+    author: "dossier",
+    createdAt: new Date("2026-10-03T14:10:00Z"),
+  },
+  {
+    title: "The merge did not fix the status doc",
+    body: "docs/STATUS_AND_ROADMAP.md on main at cee006e still opens with contract v12 and 81 methods audited at 4aa55ba on 2026-09-26, three contract steps behind the manifest sitting next to it. The site now renders it as its own track on /status instead of treating it as the baseline.",
+    tag: "DOCS",
+    author: "dossier",
+    createdAt: new Date("2026-10-03T14:15:00Z"),
+  },
 ] as const;

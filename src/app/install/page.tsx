@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CodeBlock } from "@/components/CodeBlock";
 import { PageHeader } from "@/components/Section";
 import { StoreButton } from "@/components/StoreButton";
-import { chromeStoreUrl, extensionId, pendingRelease, site, storeReview } from "@/content/site";
+import { chromeStoreUrl, extensionId, release, site, storeStatus } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Install",
@@ -78,14 +78,15 @@ export default function InstallPage() {
         <p className="mt-2 max-w-3xl text-sm text-warm">
           Package {site.listing.version} targets the {site.listing.network} RPC. The extension repository records that
           chain as reset and replaced by betanet on 2026-09-26, so a store install today is behind the chain. The
-          betanet build is package {storeReview.version} — contract {pendingRelease.contract}, @thru 0.4.1, and{" "}
-          <span className="mono">{pendingRelease.rpc}</span> as the only allowed connect-src. It is{" "}
-          {storeReview.sentenceLabel} and its source is{" "}
-          <a className="text-link" href={pendingRelease.prUrl}>
-            PR #{pendingRelease.pr}
-          </a>
-          , merging today. Until a reviewer approves the package, Chrome keeps installing {site.listing.version} — load
-          unpacked if you need betanet now.
+          betanet build shipped as source release{" "}
+          <a className="text-link" href={release.url}>
+            {release.tag}
+          </a>{" "}
+          on {release.publishedOn} — contract {release.contract}, @thru 0.4.1, and{" "}
+          <span className="mono">{release.rpc}</span> as the only allowed connect-src — merged as{" "}
+          <span className="mono">{release.mergeCommit}</span>. Package {storeStatus.version} is{" "}
+          {storeStatus.sentenceLabel}, so Chrome keeps installing {site.listing.version}. Load unpacked if you need
+          betanet now.
         </p>
       </section>
 

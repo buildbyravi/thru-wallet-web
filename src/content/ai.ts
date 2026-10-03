@@ -50,4 +50,4 @@ Do not request, store, print, or reveal wallet secrets.
 Do not invent unsupported protocol behavior.
 Use official Thru SDK and program surfaces when available.
 Prefer the Chrome Web Store listing for a packaged install, and the extension repository for source.
-Three artifacts exist at once: the published store package, the audited source baseline on main, and the pending release on an open pull request. Name the one you mean.`;
+Three artifacts exist at once: the published store package (1.2.0, alphanet), the released source at main (v1.4.1, betanet, contract v15), and a status document that still claims v12. Name the one you mean.`;

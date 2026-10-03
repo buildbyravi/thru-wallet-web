@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Badge } from "@/components/Badge";
 import { PageHeader } from "@/components/Section";
 import { completed, roadmap } from "@/content/roadmap";
-import { pendingRelease, releaseTracks, site, storeReview } from "@/content/site";
+import { auditedDoc, release, releaseTracks, site, storeStatus } from "@/content/site";
 import { listSmoke } from "@/lib/catalog";
 import { formatStamp } from "@/lib/format";
 
@@ -23,7 +23,7 @@ export default async function StatusPage() {
       <PageHeader
         kicker="Status"
         title="Three clocks, all visible."
-        lede="The store listing is what Chrome will install. The status document is what the audited source tree claims. The pending branch is what has been reviewed but not shipped. None of the three closes the browser checklist."
+        lede="The store listing is what Chrome installs. The tagged release is what the source produces. The status document is what the repository still claims about itself. None of the three closes the browser checklist."
         meta={`${passed} of ${checks.length} smoke rows marked pass in the desk database`}
       />
 
@@ -34,9 +34,9 @@ export default async function StatusPage() {
             className={
               track.key === "store"
                 ? "rounded-2xl bg-plate p-5 text-paper"
-                : track.key === "pending"
+                : track.key === "release"
                   ? "rounded-2xl border border-accent-dark bg-accent-light/40 p-5"
-                  : "rounded-2xl border border-rule p-5"
+                  : "rounded-2xl border border-dashed border-alert/60 p-5"
             }
           >
             <p className={`label ${track.key === "store" ? "text-paper/50" : "text-warm"}`}>{track.label}</p>
@@ -56,38 +56,38 @@ export default async function StatusPage() {
 
       <section className="mt-6 grid gap-4 md:grid-cols-2">
         <div className="rounded-2xl border border-rule p-5">
-          <p className="label text-warm">Pending release detail</p>
+          <p className="label text-warm">Source release detail</p>
           <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
             <div>
-              <dt className="label text-dim">Branch head</dt>
-              <dd className="mono mt-1">{pendingRelease.headCommit}</dd>
+              <dt className="label text-dim">Merge commit</dt>
+              <dd className="mono mt-1">{release.mergeCommit}</dd>
             </div>
             <div>
               <dt className="label text-dim">Contract</dt>
               <dd className="mt-1">
-                {pendingRelease.contract} · {pendingRelease.methods} methods
+                {release.contract} · {release.methods} methods
               </dd>
             </div>
             <div>
               <dt className="label text-dim">Packages</dt>
               <dd className="mt-1">
-                {pendingRelease.sdk} · {pendingRelease.programs}
+                {release.sdk} · {release.programs}
               </dd>
             </div>
             <div>
               <dt className="label text-dim">Network</dt>
-              <dd className="mono mt-1">{pendingRelease.rpc}</dd>
+              <dd className="mono mt-1">{release.rpc}</dd>
             </div>
             <div>
               <dt className="label text-dim">Permissions</dt>
-              <dd className="mt-1">{pendingRelease.permissions.join(", ")}</dd>
+              <dd className="mt-1">{release.permissions.join(", ")}</dd>
             </div>
             <div>
-              <dt className="label text-dim">CI</dt>
-              <dd className="mt-1">{pendingRelease.ci}</dd>
+              <dt className="label text-dim">Suite at release</dt>
+              <dd className="mt-1">{release.tests}</dd>
             </div>
           </dl>
-          <p className="mt-4 text-sm text-warm">{pendingRelease.note}</p>
+          <p className="mt-4 text-sm text-warm">{release.note}</p>
         </div>
         <div className="rounded-2xl border-l-2 border-alert bg-alert-soft/50 p-5">
           <p className="label text-alert">What a store install gets you today</p>
@@ -97,9 +97,15 @@ export default async function StatusPage() {
             describes alphanet and four permissions.
           </p>
           <p className="mt-3 text-sm text-warm">
-            Package {storeReview.version} is{" "}
-            <strong className="font-normal text-ink">{storeReview.sentenceLabel}</strong> as of {storeReview.reportedOn}. {storeReview.note} Until a reviewer approves it, the betanet wallet is a
-            source build.
+            Package {storeStatus.version} is{" "}
+            <strong className="font-normal text-ink">{storeStatus.sentenceLabel}</strong> as of {storeStatus.reportedOn}.{" "}
+            {storeStatus.note}
+          </p>
+          <p className="mt-3 text-sm text-warm">
+            Until that package is uploaded and approved, the betanet wallet is a source build: clone the extension
+            repository at <span className="mono">{release.mergeCommit}</span>, run the suite, and load{" "}
+            <span className="mono">dist/</span> unpacked. The repository&rsquo;s own status document is still at{" "}
+            {auditedDoc.version} and does not describe this release.
           </p>
           <p className="mt-3 text-sm text-warm">
             Listing facts re-read from the live store page on {site.listing.verifiedOn}.

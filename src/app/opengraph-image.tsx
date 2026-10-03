@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { pendingRelease, site } from "@/content/site";
+import { release, site } from "@/content/site";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -29,7 +29,7 @@ export default function OpenGraphImage() {
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 24 }}>
           <span>Chrome Web Store · v{site.listing.version}</span>
-          <span>v{pendingRelease.version} pending · unofficial</span>
+          <span>Source {release.tag} · unofficial</span>
         </div>
       </div>
     ),

@@ -63,11 +63,11 @@ export function WalletMock() {
             <span className="live-dot h-1.5 w-1.5 rounded-full bg-accent" />
             Betanet
           </p>
-          <p className="label text-paper/50">contract v15 · pending</p>
+          <p className="label text-paper/50">contract v15 · v1.4.1</p>
         </div>
       </div>
       <figcaption className="mt-3 text-sm text-warm">
-        Static study of the pending 1.4.0 build, where the balance box is the token-drawer entry. Not connected. Sample
+        Static study of the v1.4.1 build, where the balance box is the token-drawer entry. Not connected. Sample
         figures only — not a balance, not an address format certification.
       </figcaption>
     </figure>
