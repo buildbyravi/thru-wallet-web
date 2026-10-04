@@ -31,8 +31,9 @@ export const securityPrinciples = [
 
 export const gaps = [
   "Run the browser smoke checklist for popup and side-panel layout, focus, canvas QR, clipboard, desktop notifications, and worker eviction.",
-  "The published 1.4.1 package has no recorded manual verification. All 36 rows of docs/MANUAL_SMOKE_CHECKLIST.md are unticked, and the build reached the store one day after merging on automated evidence alone. Users are the first browser run.",
-  "The repository's own docs/STATUS_AND_ROADMAP.md still describes contract v12 with 81 methods at 4aa55ba. Main is contract v15 with 83. A reader who trusts the document over the source will be wrong about auth tiers, the faucet, and duplicate detection.",
+  "The published 1.4.1 package has no recorded manual verification. All 36 rows of docs/MANUAL_SMOKE_CHECKLIST.md are unticked — 95 individual checks once popup and side panel are counted separately — and the build reached the store one day after merging on automated evidence alone. Users are the first browser run.",
+  "The repository's own docs/STATUS_AND_ROADMAP.md still describes contract v12 with 81 methods at 4aa55ba. Main is contract v15 with 83. A rewrite is written and mergeable on the open #17 to #18 chain, where the document describes v16 — so the fix for the stale document arrives attached to another contract change.",
+  "The v16 chain changes the contract without changing the package number. If it merges as-is, a build from main calls itself 1.4.1 and speaks contract v16, while the 1.4.1 in the Chrome Web Store speaks v15. Two different builds would answer to one version string.",
   "The changes freshest to the package are the ones no browser has confirmed: duplicate detection across the whole pending window, desktop notification delivery, and the dark-mode action grid, drawer ledger, and connection footer.",
   "Betanet itself is unaudited infrastructure and Thru's last testnet before mainnet. A 1-base-unit transfer fee was measured once, on one amount and one size.",
   "Live v12 activation — multi-account creation and owned-recipient just-in-time registration — still needs a safe network-reachable pass.",

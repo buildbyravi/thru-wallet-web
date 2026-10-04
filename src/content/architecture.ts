@@ -53,4 +53,9 @@ export const contractBreaks = [
   { version: "v13", change: "tx.claimFaucet drops to unlocked auth and sheds its vestigial password param. Shipped in 1.4.1." },
   { version: "v14", change: "token.readMint verifies a pasted contract address on-chain before it becomes a custom token. Shipped in 1.4.1." },
   { version: "v15", change: "tx.checkDuplicate plus an optional allowDuplicate on the send methods. Shipped in 1.4.1." },
+  {
+    version: "v16",
+    change:
+      "Removes tx.send and token.transfer, the unbound mutation paths left after every caller moved to the checked methods. 83 methods become 81 — the first time the count has gone down. Written on the open #17 to #18 chain, not merged, not in any package.",
+  },
 ] as const;

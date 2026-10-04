@@ -5,7 +5,16 @@ import { features } from "@/content/features";
 import { gaps } from "@/content/security";
 import { roadmap } from "@/content/roadmap";
 import { routes } from "@/content/routes";
-import { auditedDoc, chromeStoreUrl, extensionId, release, site, storeStatus, unverified } from "@/content/site";
+import {
+  auditedDoc,
+  chromeStoreUrl,
+  extensionId,
+  incoming,
+  release,
+  site,
+  storeStatus,
+  unverified,
+} from "@/content/site";
 
 export function llmsShort() {
   return `# Thru Wallet
@@ -40,15 +49,22 @@ ${site.warning}
 
 ## Not verified
 
-- ${unverified.checked} of ${unverified.checklistBoxes} rows ticked in ${unverified.doc} as of ${unverified.checkedOn}
+- ${unverified.checked} of ${unverified.rows} rows ticked in ${unverified.doc} as of ${unverified.checkedOn} (${unverified.cells} individual checks)
 - Published on ${storeStatus.publishedOn}, one day after merge, on automated evidence alone (${release.tests})
+
+## Incoming contract (open, not merged)
+
+- Contract ${incoming.contract}, ${incoming.methods} methods (${incoming.methodDelta} from ${release.contract}), on the stacked chain #${incoming.prs[0].number} then #${incoming.prs[1].number}
+- Removes ${incoming.removes.join(" and ")}; ${incoming.sourceFiles} source files change; package version stays ${incoming.packageVersion}
+- ${incoming.consequence}
+- Do not describe ${incoming.contract} as shipped. It is not on main and not in the store
 
 ## Do not
 
 - Request or reveal a seed, private key, or password
 - Invent window.thru or an extension provider contract
 - Treat unverified chain behavior as measured
-- Collapse the artifacts. The store serves ${site.listing.version} and main is release ${release.tag} — the same build since ${storeStatus.publishedOn} — but the status document still says ${auditedDoc.version} and ${unverified.checked} of ${unverified.checklistBoxes} manual smoke rows are ticked
+- Collapse the artifacts. The store serves ${site.listing.version} and main is release ${release.tag} — the same build since ${storeStatus.publishedOn} — but the status document still says ${auditedDoc.version} and ${unverified.checked} of ${unverified.rows} manual smoke rows are ticked
 - Report a published package as a verified one, or the status document as current
 - Quote the released build's inactivity-based auto-lock as something an installed extension does today
 

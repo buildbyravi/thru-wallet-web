@@ -17,10 +17,10 @@ export const roadmap: RoadmapItem[] = [
   },
   {
     step: "02",
-    title: "Rewrite the status document",
+    title: "Merge the v16 chain with a package bump",
     status: "open",
     detail:
-      "docs/STATUS_AND_ROADMAP.md still opens with contract v12 and 81 methods audited at 4aa55ba on 2026-09-26. It now describes neither the store build nor the source tree beside it, and it is the file this site and every agent is told to read first. extension.md also still records 2026-09-30 as the last listing sync; the real one is 2026-10-04.",
+      "Pull requests #17 and #18 are stacked and mergeable, and they carry contract v16: tx.send and token.transfer are retired, 19 source files change, a storage-migrations suite is added, and docs/STATUS_AND_ROADMAP.md is finally rewritten to describe the code. What the chain does not do is bump the package number. Merging it as-is leaves main describing contract v16 under the same 1.4.1 string the store serves as contract v15. Bump the version in the same change.",
   },
   {
     step: "03",

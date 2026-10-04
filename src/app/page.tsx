@@ -14,6 +14,7 @@ import {
   chromeStoreUrl,
   extensionId,
   heroMetrics,
+  incoming,
   release,
   releaseTracks,
   site,
@@ -84,8 +85,8 @@ export default async function HomePage() {
                 built from — contract {release.contract}, betanet, five permissions. It replaced{" "}
                 {site.listing.previousVersion}, the {site.listing.network === "betanet" ? "alphanet" : site.listing.network}-era
                 package that had been the only installable version since {formatDay(site.listing.previousUpdated)}. What
-                it has not had is a human in a browser: {unverified.checked} of {unverified.checklistBoxes} manual smoke
-                rows are ticked.
+                it has not had is a human in a browser: {unverified.checked} of {unverified.rows} manual smoke rows are
+                ticked.
               </p>
               <p className="mono mt-4 text-xs break-all text-paper/55">{chromeStoreUrl}</p>
             </div>
@@ -107,6 +108,11 @@ export default async function HomePage() {
               Status detail
             </Link>
           </div>
+          <p className="mt-3 max-w-3xl text-sm text-warm">
+            Temporarily. Contract {incoming.contract} is already written on the open #{incoming.prs[0].number} to #
+            {incoming.prs[1].number} chain, and it retires {incoming.removes.join(" and ")}. The day that merges, the
+            source stops matching the package you can install.
+          </p>
           <div className="mt-5 grid gap-4 md:grid-cols-3">
             {releaseTracks.map((track) => (
               <article

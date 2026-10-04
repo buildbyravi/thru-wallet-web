@@ -104,4 +104,25 @@ export const noteSeed = [
     author: "dossier",
     createdAt: new Date("2026-10-04T14:55:00Z"),
   },
+  {
+    title: "Smoke count reconciled: 36 rows, 95 checks, 0 ticked",
+    body: "The extension repo counts 95 checkbox cells; this site counted 36 rows. Same file, same tree, same answer — most rows carry more than one cell because popup and side panel are checked separately, narrow and wide. Both numbers now appear with their units so neither reads as a correction of the other.",
+    tag: "SMOKE",
+    author: "dossier",
+    createdAt: new Date("2026-10-04T18:10:00Z"),
+  },
+  {
+    title: "Contract v16 is written and removes two methods",
+    body: "Read from the heads of #17 (7883219) and #18 (97276a7) on 2026-10-04: CONTRACT_VERSION 16 with 81 methods, down from 83, retiring tx.send and token.transfer now that every shipped caller uses the checked methods. 19 source files change and a storage-migrations suite joins the gate. It is the first contract step that subtracts.",
+    tag: "RELEASE",
+    author: "dossier",
+    createdAt: new Date("2026-10-04T18:15:00Z"),
+  },
+  {
+    title: "Merging the v16 chain re-opens the gap it closes",
+    body: "The chain rewrites STATUS_AND_ROADMAP.md to describe v16, which fixes the third clock. It does not bump the package number. Merge it as-is and main is contract v16 under the string 1.4.1, while the 1.4.1 in the store is contract v15 — one version string, two builds. Flagged upstream; the fix is a bump in the same change.",
+    tag: "DOCS",
+    author: "dossier",
+    createdAt: new Date("2026-10-04T18:20:00Z"),
+  },
 ] as const;

@@ -154,14 +154,57 @@ export const auditedDoc = {
 } as const;
 
 // What nobody has done yet. The published package has no recorded browser verification:
-// docs/MANUAL_SMOKE_CHECKLIST.md has 36 boxes and none of them are ticked.
+// docs/MANUAL_SMOKE_CHECKLIST.md has 36 rows that expand to 95 individual checkbox cells
+// (most rows are checked twice, popup and side panel, narrow and wide) and none are ticked.
+// Both counts are the same file; quote the unit you mean.
 export const unverified = {
-  checklistBoxes: 36,
+  rows: 36,
+  cells: 95,
   checked: 0,
   doc: "docs/MANUAL_SMOKE_CHECKLIST.md",
   checkedOn: "2026-10-04",
   note:
     "Shipping is not verifying. The betanet build went from merge to store in a day on the strength of 20 automated suites, and no manual run through a real Chrome profile is recorded in the repository. The rows most worth a human are the ones newest to the package: duplicate detection while a transfer is still pending, desktop notification delivery, side-panel and popup mutual exclusion, and the dark-mode action grid, drawer ledger, and connection footer.",
+} as const;
+
+// The next contract, already written and not yet merged. Two stacked pull requests in the
+// extension repository carry it: #18 is branched from #17, so they land together or not at
+// all. Read from the PR heads on 2026-10-04 — contract v16 with 81 methods, down from 83,
+// because it retires two mutation endpoints.
+export const incoming = {
+  state: "open" as "open" | "merged",
+  contract: "v16",
+  methods: 81,
+  methodDelta: -2,
+  removes: ["tx.send", "token.transfer"],
+  sourceFiles: 19,
+  suites: 21,
+  packageVersion: "1.4.1",
+  checkedOn: "2026-10-04",
+  prs: [
+    {
+      number: 17,
+      title: "docs: establish mainnet-ready engineering directive",
+      head: "7883219",
+      base: "main",
+      files: 40,
+      commits: 8,
+      url: "https://github.com/buildbyravi/thru-wallet-ext/pull/17",
+    },
+    {
+      number: 18,
+      title: "audit: 2026-10-04 production-rules conformance audit + targeted remediation",
+      head: "97276a7",
+      base: "#17",
+      files: 29,
+      commits: 16,
+      url: "https://github.com/buildbyravi/thru-wallet-ext/pull/18",
+    },
+  ],
+  note:
+    "v16 removes tx.send and token.transfer, the unbound mutation paths left over after every shipped caller moved to the checked methods that bind account and network at the background boundary. The chain also rewrites docs/STATUS_AND_ROADMAP.md to describe v16 with 81 methods, which is the fix for the third clock on this page.",
+  consequence:
+    "Merging it closes the documentation gap and opens a different one. main would describe contract v16 while the package in the Chrome Web Store is contract v15 — and the chain does not bump the package number, so both would be called 1.4.1. A build from main after the merge would answer to the same version string as the store build while speaking a different contract. The fix is a version bump in the same change that merges the chain.",
 } as const;
 
 // Three clocks. Two of them finally agree; the third is the repository's own documentation.
@@ -195,7 +238,7 @@ export const releaseTracks = [
     pill: auditedDoc.state,
     meta: `${auditedDoc.methods} methods · ${auditedDoc.date} · ${auditedDoc.commit}`,
     detail:
-      "STATUS_AND_ROADMAP.md was not rewritten for the merge or the release, so the repository's own summary now describes neither the store build nor the code sitting next to it. Quote the source, not the summary.",
+      "STATUS_AND_ROADMAP.md was not rewritten for the merge or the release, so the repository's own summary describes neither the store build nor the code beside it. A rewrite exists on the open #17 to #18 chain and has not merged.",
     href: site.links.statusDoc,
     hrefLabel: "STATUS_AND_ROADMAP.md",
   },
@@ -204,6 +247,6 @@ export const releaseTracks = [
 export const heroMetrics = [
   { label: "Chrome installs", value: site.listing.version, note: `Betanet build · ${site.listing.updated}` },
   { label: "Contract", value: release.contract, note: `${release.methods} methods · append-only` },
-  { label: "Smoke rows run", value: `${unverified.checked} of ${unverified.checklistBoxes}`, note: "Manual checklist, unticked" },
+  { label: "Smoke rows run", value: `${unverified.checked} of ${unverified.rows}`, note: `${unverified.cells} checks, none ticked` },
   { label: "Vault", value: "600k", note: "PBKDF2 rounds, then AES-GCM" },
 ] as const;

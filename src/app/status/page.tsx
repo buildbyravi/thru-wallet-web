@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Badge } from "@/components/Badge";
 import { PageHeader } from "@/components/Section";
 import { completed, roadmap } from "@/content/roadmap";
-import { auditedDoc, release, releaseTracks, site, storeStatus, unverified } from "@/content/site";
+import { auditedDoc, incoming, release, releaseTracks, site, storeStatus, unverified } from "@/content/site";
 import { listSmoke } from "@/lib/catalog";
 import { formatStamp } from "@/lib/format";
 
@@ -101,13 +101,55 @@ export default async function StatusPage() {
             Two things are still true. The repository&rsquo;s own status document describes contract {auditedDoc.version}{" "}
             at {auditedDoc.commit} and was not touched by either the merge or the release. And{" "}
             <strong className="font-normal text-ink">
-              {unverified.checked} of {unverified.checklistBoxes} rows
+              {unverified.checked} of {unverified.rows} rows
             </strong>{" "}
-            in {unverified.doc} are ticked: the package went from merge to store in a day on automated evidence alone.
+            in {unverified.doc} are ticked — {unverified.cells} individual checks once each row is counted for popup and side panel — because the package went from merge to store in a day on automated evidence alone.
           </p>
           <p className="mt-3 text-sm text-warm">
             Listing facts re-read from the live store page on {site.listing.verifiedOn}.
           </p>
+        </div>
+      </section>
+
+      <section className="mt-14">
+        <div className="rounded-2xl border border-accent-dark/40 bg-accent-light/25 p-6">
+          <p className="label text-accent-dark">Already written, not yet merged</p>
+          <h2 className="mt-3 font-serif text-2xl font-light tracking-[-0.03em]">
+            Contract {incoming.contract} retires {incoming.removes.join(" and ")}.
+          </h2>
+          <p className="mt-3 max-w-3xl text-sm text-warm">{incoming.note}</p>
+          <dl className="mt-5 grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <dt className="label text-dim">Contract</dt>
+              <dd className="mt-1">
+                {incoming.contract} · {incoming.methods} methods ({incoming.methodDelta})
+              </dd>
+            </div>
+            <div>
+              <dt className="label text-dim">Source files</dt>
+              <dd className="mt-1">{incoming.sourceFiles} changed</dd>
+            </div>
+            <div>
+              <dt className="label text-dim">Package version</dt>
+              <dd className="mt-1">{incoming.packageVersion} — unchanged</dd>
+            </div>
+            <div>
+              <dt className="label text-dim">Read on</dt>
+              <dd className="mt-1">{incoming.checkedOn}</dd>
+            </div>
+          </dl>
+          <ul className="mt-5 space-y-2 text-sm text-warm">
+            {incoming.prs.map((pr) => (
+              <li key={pr.number}>
+                <a className="text-link" href={pr.url}>
+                  #{pr.number}
+                </a>{" "}
+                {pr.title} — <span className="mono text-xs">{pr.head}</span>, base {pr.base}, {pr.files} files,{" "}
+                {pr.commits} commits
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 max-w-3xl border-l-2 border-alert pl-4 text-sm text-alert">{incoming.consequence}</p>
         </div>
       </section>
 

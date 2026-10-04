@@ -25,7 +25,7 @@ The packaged extension is listed on the Chrome Web Store:
 - Extension id: \`ocahgpmgfeapjnceaknkikanjikhjgok\`
 - Listing version: **1.4.1**, updated 2026-10-04, 272 KiB, five permissions — verified against the live page on 2026-10-04
 - Same build as source release **v1.4.1**, merged as \`cee006e\` on 2026-10-03 and published to the store a day later
-- Not verified: all 36 rows of \`docs/MANUAL_SMOKE_CHECKLIST.md\` are unticked
+- Not verified: all 36 rows of \`docs/MANUAL_SMOKE_CHECKLIST.md\` are unticked — 95 individual checks, since most rows are run twice for popup and side panel
 - Source: [buildbyravi/thru-wallet-ext](https://github.com/buildbyravi/thru-wallet-ext)
 - This site: [buildbyravi/thru-wallet-web](https://github.com/buildbyravi/thru-wallet-web)
 
@@ -58,7 +58,9 @@ Thru's own wallet architecture is an embedded, iframe-hosted wallet. There is no
 
 The first two columns finally agree. The betanet work merged on 2026-10-03 as [v1.4.1](https://github.com/buildbyravi/thru-wallet-ext/releases/tag/v1.4.1) and was published to the store on 2026-10-04 — package **1.4.0 had been submitted the day before and was never published**, which is why the release carries the 1.4.1 number. Submission, merge, and publication stayed three separate events, and this site only moved its listing facts when the public page moved.
 
-What the agreement does not include is verification: **0 of 36** rows in \`docs/MANUAL_SMOKE_CHECKLIST.md\` are ticked. The package reached users one day after merge on 20 automated suites and no recorded manual run.
+What the agreement does not include is verification: **0 of 36** rows in \`docs/MANUAL_SMOKE_CHECKLIST.md\` are ticked — **95** individual checks counting popup and side panel separately. The package reached users one day after merge on 20 automated suites and no recorded manual run.
+
+It also does not last. Contract **v16** is written on the stacked, mergeable chain [#17](https://github.com/buildbyravi/thru-wallet-ext/pull/17) → [#18](https://github.com/buildbyravi/thru-wallet-ext/pull/18): it retires \`tx.send\` and \`token.transfer\`, taking 83 methods down to 81, and rewrites the status document to match. The chain does not bump the package number, so merging it as-is would leave \`main\` describing contract v16 under the same **1.4.1** string the store serves as contract v15.
 
 Shared by all three: 14 routes, one popup stack, a 400px popup, 0 DOM sinks with the ratchet closed, and a vault built on PBKDF2-SHA256 at 600,000 rounds then AES-256-GCM.
 
@@ -260,8 +262,8 @@ Remaining work is independent. Custom networks and a dApp provider stay blocked 
 
 ## Open
 
-1. Verify what shipped: 1.4.1 is live on the store and all 36 rows of \`docs/MANUAL_SMOKE_CHECKLIST.md\` are unticked. Install the published package, not a local \`dist/\`, and run them.
-2. Run the Chrome smoke checklist for both popup and side panel, including desktop notifications.
+1. Verify what shipped. 1.4.1 is live on the store and all 36 rows of \`docs/MANUAL_SMOKE_CHECKLIST.md\` are unticked. Install the published package, not a local \`dist/\`, and run them for both popup and side panel, including desktop notifications.
+2. Merge the v16 chain with a version bump. #17 and #18 are mergeable and carry contract v16; landing them without a package bump puts two different contracts behind one version string.
 3. Exercise v12 account activation and owned-recipient just-in-time registration on betanet.
 4. Probe token transfer: fee, and a never-registered recipient owner. Run the token lab against a live chain.
 5. Confirm betanet block-time availability, fee source, and the \`?network=betanet\` explorer routes.
@@ -286,7 +288,7 @@ Launchpad quarantine, route lifecycle coverage, custom-network quarantine, token
 This site keeps several clocks and refuses to merge them.
 
 - **Listing version**, such as Chrome Web Store 1.4.1 on 2026-10-04. What Chrome installs.
-- **Contract version**, such as v15 in the published build, or v12 in a status document that has not caught up.
+- **Contract version**, such as v15 in the published build, v12 in a status document that has not caught up, or v16 on an open pull request. Three live numbers; say which.
 - **Package version**, such as 1.4.1 — merged, tagged, and published, but not manually verified.
 - **Submission state**, which is not a version at all: submitted, approved, or rejected.
 - **Desk notes**, which are rows in Postgres and can be added without a code change.
