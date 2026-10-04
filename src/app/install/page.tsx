@@ -3,7 +3,8 @@ import Link from "next/link";
 import { CodeBlock } from "@/components/CodeBlock";
 import { PageHeader } from "@/components/Section";
 import { StoreButton } from "@/components/StoreButton";
-import { chromeStoreUrl, extensionId, release, site, storeStatus } from "@/content/site";
+import { chromeStoreUrl, extensionId, release, site, unverified } from "@/content/site";
+import { formatDay } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Install",
@@ -47,8 +48,8 @@ export default function InstallPage() {
                 <dd className="mt-1">{site.listing.size}</dd>
               </div>
               <div>
-                <dt className="label text-paper/45">Offered by</dt>
-                <dd className="mt-1">{site.listing.offeredBy}</dd>
+                <dt className="label text-paper/45">Permissions</dt>
+                <dd className="mt-1">{site.listing.permissions}</dd>
               </div>
             </dl>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -62,7 +63,7 @@ export default function InstallPage() {
             <p className="label text-paper/50">Verify the listing</p>
             <ul className="mt-4 space-y-3 text-sm text-paper/80">
               <li>Extension id matches <span className="mono text-paper">{extensionId}</span>.</li>
-              <li>Publisher is {site.listing.offeredBy}.</li>
+              <li>The developer website resolves to <span className="mono text-paper">thruwallet.vercel.app</span>.</li>
               <li>Privacy policy points at the extension repository, not a random host.</li>
               <li>The page says it is not affiliated with Unto Labs.</li>
             </ul>
@@ -74,19 +75,21 @@ export default function InstallPage() {
       </section>
 
       <section className="mt-6 border-l-2 border-alert bg-alert-soft/50 px-5 py-4">
-        <p className="label text-alert">Which chain the store build talks to</p>
+        <p className="label text-alert">What the store build is, as of {site.listing.updated}</p>
         <p className="mt-2 max-w-3xl text-sm text-warm">
-          Package {site.listing.version} targets the {site.listing.network} RPC. The extension repository records that
-          chain as reset and replaced by betanet on 2026-09-26, so a store install today is behind the chain. The
-          betanet build shipped as source release{" "}
+          Package {site.listing.version} is the betanet build — contract {release.contract}, @thru 0.4.1, and{" "}
+          <span className="mono">{release.rpc}</span> as the only allowed connect-src. It is the same code as source
+          release{" "}
           <a className="text-link" href={release.url}>
             {release.tag}
-          </a>{" "}
-          on {release.publishedOn} — contract {release.contract}, @thru 0.4.1, and{" "}
-          <span className="mono">{release.rpc}</span> as the only allowed connect-src — merged as{" "}
-          <span className="mono">{release.mergeCommit}</span>. Package {storeStatus.version} is{" "}
-          {storeStatus.sentenceLabel}, so Chrome keeps installing {site.listing.version}. Load unpacked if you need
-          betanet now.
+          </a>
+          , merged as <span className="mono">{release.mergeCommit}</span> a day earlier, so building from{" "}
+          <span className="mono">main</span> and installing from the store now get you the same wallet. Until{" "}
+          {formatDay(site.listing.updated)} the store served {site.listing.previousVersion}, an alphanet package pointing
+          at a chain that was reset on 2026-09-26.
+        </p>
+        <p className="mt-3 max-w-3xl text-sm text-warm">
+          What that does not mean: verified. {unverified.note}
         </p>
       </section>
 

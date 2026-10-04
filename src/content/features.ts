@@ -1,4 +1,4 @@
-export type FeatureStatus = "STABLE" | "ALPHA" | "PENDING" | "PLANNED";
+export type FeatureStatus = "STABLE" | "ALPHA" | "NEW" | "PLANNED";
 export type FeatureGroup = "Wallet Core" | "Daily Use" | "Token Work" | "Future Modules";
 
 export interface Feature {
@@ -42,20 +42,20 @@ export const features: Feature[] = [
   },
   {
     title: "Configurable auto-lock",
-    body: "Default is 15 minutes, user-configurable from 0 to 240, and changing it is password-gated. The packaged 1.2.0 build on the store runs a fixed-period alarm despite the label. Release v1.4.1 stamps every API request and locks on measured idleness — background sync no longer counts as activity.",
+    body: "Default is 15 minutes, user-configurable from 0 to 240, and changing it is password-gated. 1.4.1 stamps every API request and locks on measured idleness, so background sync no longer counts as activity. It is the first packaged build whose behavior matches the listing's inactivity-lock wording — 1.2.0 ran a fixed-period alarm under that same sentence.",
     status: "STABLE",
     group: "Wallet Core",
   },
   {
     title: "Lock on demand",
-    body: "Release v1.4.1 adds an explicit lock button in Settings and a Ctrl+L shortcut, so clearing decrypted keys does not mean waiting out the timer or closing the browser.",
-    status: "PENDING",
+    body: "1.4.1 adds an explicit lock button in Settings and a Ctrl+L shortcut, so clearing decrypted keys does not mean waiting out the timer or closing the browser. The store listing advertises the shortcut.",
+    status: "NEW",
     group: "Wallet Core",
   },
   {
     title: "Security posture, computed not promised",
-    body: "Release v1.4.1 replaces the dashboard's coming-soon security tile with checks derived from state the background already owns: signing re-auth, auto-lock window, keyring origin, backup state. A value that cannot be read says unknown instead of grading itself.",
-    status: "PENDING",
+    body: "1.4.1 replaces the dashboard's coming-soon security tile with checks derived from state the background already owns: signing re-auth, auto-lock window, keyring origin, backup state. A value that cannot be read says unknown instead of grading itself.",
+    status: "NEW",
     group: "Wallet Core",
   },
   {
@@ -72,20 +72,20 @@ export const features: Feature[] = [
   },
   {
     title: "Native sends and decoded history",
-    body: "Review precedes send. History is one flat stream: a known time comes from the containing block, otherwise the row shows Block <slot> instead of an invented date. No per-card fee line is shipped. Release v1.4.1 refreshes the feed every 30 seconds while it is open.",
+    body: "Review precedes send. History is one flat stream: a known time comes from the containing block, otherwise the row shows Block <slot> instead of an invented date. No per-card fee line is shipped. 1.4.1 refreshes the feed every 30 seconds while it is open, which the listing now advertises as live auto-sync.",
     status: "STABLE",
     group: "Daily Use",
   },
   {
     title: "Repeat-transfer detection",
     body: "Contract v15 adds tx.checkDuplicate: the same recipient and amount inside 30 seconds, or still in flight, is caught before signing. v1.4.1 moved the tracking to submission time, so the Repeated Transaction card covers the whole pending window, and the send proceeds only with an explicit allowDuplicate the backend enforces.",
-    status: "PENDING",
+    status: "NEW",
     group: "Daily Use",
   },
   {
     title: "Desktop notifications",
-    body: "Release v1.4.1 posts a native notification when a transaction confirms or fails, so a closed popup is not a blind spot. It is the fifth manifest permission, it is a Settings toggle, and the message carries no amount, address, or signature.",
-    status: "PENDING",
+    body: "1.4.1 posts a native notification when a transaction confirms or fails, so a closed popup is not a blind spot. It is the fifth manifest permission, it is a Settings toggle, and the message carries no amount, address, or signature.",
+    status: "NEW",
     group: "Daily Use",
   },
   {
@@ -96,7 +96,7 @@ export const features: Feature[] = [
   },
   {
     title: "Receive address and QR",
-    body: "The receive route shows the address and a canvas QR. Explorer links point at scan.thru.org and carry ?network=betanet since v1.4.1. Canvas paint, clipboard prompts, and the exact explorer path are still manual browser checks.",
+    body: "The receive route shows the address and a canvas QR. Explorer links point at scan.thru.org and carry ?network=betanet. Canvas paint, clipboard prompts, and the exact explorer path are still manual browser checks.",
     status: "ALPHA",
     group: "Daily Use",
   },
@@ -114,14 +114,14 @@ export const features: Feature[] = [
   },
   {
     title: "Token drawer from the balance box",
-    body: "Release v1.4.1 makes the whole balance box the token entry: click it, press Enter, or use the token strip and a drawer slides up with the full list and a live search. The inline dashboard token ledger is gone rather than duplicated.",
-    status: "PENDING",
+    body: "1.4.1 makes the whole balance box the token entry: click it, press Enter, or use the token strip and a drawer slides up with the full list and a live search. The inline dashboard token ledger is gone rather than duplicated.",
+    status: "NEW",
     group: "Token Work",
   },
   {
     title: "Custom tokens, verified on-chain",
     body: "Contract v14 adds token.readMint, so a pasted contract address is read from the chain and the mint's own symbol and decimals are used. Free-typed metadata is what made an added token burn the wrong number of base units.",
-    status: "PENDING",
+    status: "NEW",
     group: "Token Work",
   },
   {

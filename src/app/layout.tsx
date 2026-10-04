@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   description: `${site.summary} Add it from the Chrome Web Store: ${chromeStoreUrl}`,
   applicationName: site.name,
-  authors: [{ name: site.listing.offeredBy }],
+  authors: [{ name: "buildbyravi", url: site.repos.extension }],
   keywords: ["Thru Wallet", "Thru", "betanet", "Chrome extension", "self-custody"],
   openGraph: {
     title: "Thru Wallet — Betanet extension",

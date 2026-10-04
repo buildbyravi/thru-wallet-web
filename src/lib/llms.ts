@@ -5,7 +5,7 @@ import { features } from "@/content/features";
 import { gaps } from "@/content/security";
 import { roadmap } from "@/content/roadmap";
 import { routes } from "@/content/routes";
-import { auditedDoc, chromeStoreUrl, extensionId, release, site, storeStatus } from "@/content/site";
+import { auditedDoc, chromeStoreUrl, extensionId, release, site, storeStatus, unverified } from "@/content/site";
 
 export function llmsShort() {
   return `# Thru Wallet
@@ -14,8 +14,8 @@ export function llmsShort() {
 
 Chrome Web Store: ${chromeStoreUrl}
 Extension id: ${extensionId}
-Listing: ${site.listing.version} · updated ${site.listing.updated} · offered by ${site.listing.offeredBy} · ${site.listing.size}
-Store pipeline: ${storeStatus.version} ${storeStatus.sentenceLabel} (${storeStatus.supersededSubmission} was submitted and never published) — the listing page still serves ${site.listing.version}
+Listing: ${site.listing.version} · updated ${site.listing.updated} · ${site.listing.size} · ${site.listing.permissions} permissions · ${site.listing.network}
+Store state: ${storeStatus.version} ${storeStatus.sentenceLabel} since ${storeStatus.publishedOn}. It is the same build as source release ${release.tag}. Verified against the live page on ${site.listing.verifiedOn}
 Extension source: ${site.repos.extension}
 Website source: ${site.repos.website}
 Privacy: ${site.links.privacy}
@@ -33,18 +33,23 @@ ${site.warning}
 - Suite at release: ${release.tests}
 - ${release.note}
 
-## Audited status document (behind the code)
+## Audited status document (behind both)
 
 - docs/STATUS_AND_ROADMAP.md still says contract ${auditedDoc.version}, ${auditedDoc.methods} methods, audited ${auditedDoc.date} at ${auditedDoc.commit}
-- The code at main exports contract ${release.contract} with ${release.methods} methods. Prefer src/ over the document
+- The published package and the code both run contract ${release.contract} with ${release.methods} methods. Prefer src/ over the document
+
+## Not verified
+
+- ${unverified.checked} of ${unverified.checklistBoxes} rows ticked in ${unverified.doc} as of ${unverified.checkedOn}
+- Published on ${storeStatus.publishedOn}, one day after merge, on automated evidence alone (${release.tests})
 
 ## Do not
 
 - Request or reveal a seed, private key, or password
 - Invent window.thru or an extension provider contract
 - Treat unverified chain behavior as measured
-- Collapse the artifacts. The store serves ${site.listing.version} built for ${site.listing.network}; main is release ${release.tag} with contract ${release.contract}; the status document still says ${auditedDoc.version}
-- Report a tagged release as something users have installed, or the status document as current
+- Collapse the artifacts. The store serves ${site.listing.version} and main is release ${release.tag} — the same build since ${storeStatus.publishedOn} — but the status document still says ${auditedDoc.version} and ${unverified.checked} of ${unverified.checklistBoxes} manual smoke rows are ticked
+- Report a published package as a verified one, or the status document as current
 - Quote the released build's inactivity-based auto-lock as something an installed extension does today
 
 ## Read

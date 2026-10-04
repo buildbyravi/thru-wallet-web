@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Badge } from "@/components/Badge";
 import { PageHeader } from "@/components/Section";
 import { completed, roadmap } from "@/content/roadmap";
-import { auditedDoc, release, releaseTracks, site, storeStatus } from "@/content/site";
+import { auditedDoc, release, releaseTracks, site, storeStatus, unverified } from "@/content/site";
 import { listSmoke } from "@/lib/catalog";
 import { formatStamp } from "@/lib/format";
 
@@ -22,8 +22,8 @@ export default async function StatusPage() {
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">
       <PageHeader
         kicker="Status"
-        title="Three clocks, all visible."
-        lede="The store listing is what Chrome installs. The tagged release is what the source produces. The status document is what the repository still claims about itself. None of the three closes the browser checklist."
+        title="Two clocks agree. One does not."
+        lede="The store listing and the tagged release finally describe the same build. The repository’s own status document does not. And nothing here has been through a browser."
         meta={`${passed} of ${checks.length} smoke rows marked pass in the desk database`}
       />
 
@@ -92,20 +92,18 @@ export default async function StatusPage() {
         <div className="rounded-2xl border-l-2 border-alert bg-alert-soft/50 p-5">
           <p className="label text-alert">What a store install gets you today</p>
           <p className="mt-3 text-sm text-warm">
-            Package {site.listing.version} from {site.listing.updated}, built for {site.listing.network}. The extension
-            repository records that chain as reset and replaced by betanet on 2026-09-26, and the listing copy still
-            describes alphanet and four permissions.
+            Package {site.listing.version} from {site.listing.updated}, {site.listing.size}, built for{" "}
+            {site.listing.network}: contract {release.contract}, @thru 0.4.1, the token drawer, chain-verified custom
+            tokens, optional desktop notifications, and an auto-lock that measures real inactivity. The listing copy
+            describes that build rather than the previous one — the first time those two have matched here.
           </p>
           <p className="mt-3 text-sm text-warm">
-            Package {storeStatus.version} is{" "}
-            <strong className="font-normal text-ink">{storeStatus.sentenceLabel}</strong> as of {storeStatus.reportedOn}.{" "}
-            {storeStatus.note}
-          </p>
-          <p className="mt-3 text-sm text-warm">
-            Until that package is uploaded and approved, the betanet wallet is a source build: clone the extension
-            repository at <span className="mono">{release.mergeCommit}</span>, run the suite, and load{" "}
-            <span className="mono">dist/</span> unpacked. The repository&rsquo;s own status document is still at{" "}
-            {auditedDoc.version} and does not describe this release.
+            Two things are still true. The repository&rsquo;s own status document describes contract {auditedDoc.version}{" "}
+            at {auditedDoc.commit} and was not touched by either the merge or the release. And{" "}
+            <strong className="font-normal text-ink">
+              {unverified.checked} of {unverified.checklistBoxes} rows
+            </strong>{" "}
+            in {unverified.doc} are ticked: the package went from merge to store in a day on automated evidence alone.
           </p>
           <p className="mt-3 text-sm text-warm">
             Listing facts re-read from the live store page on {site.listing.verifiedOn}.

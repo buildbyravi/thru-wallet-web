@@ -76,4 +76,32 @@ export const noteSeed = [
     author: "dossier",
     createdAt: new Date("2026-10-03T14:15:00Z"),
   },
+  {
+    title: "1.4.1 is live — the listing finally matches the source",
+    body: "Live page read 2026-10-04: version 1.4.1, updated October 4, 272 KiB, five screenshots, betanet description naming the token drawer, verified custom tokens, desktop notifications, and Ctrl+L. The store and main at cee006e are the same build. The 1.2.0 alphanet package is gone from the install path.",
+    tag: "RELEASE",
+    author: "dossier",
+    createdAt: new Date("2026-10-04T14:40:00Z"),
+  },
+  {
+    title: "The auto-lock contradiction closed from both sides",
+    body: "The 2026-09-26 note said the source wins until a build changes the behavior and the listing together. That is what happened: 1.4.1 locks on measured inactivity and the listing still says inactivity lock, so for the first time the sentence and the code agree. Keeping the old note on the record — it described the package that was installable at the time.",
+    tag: "SECURITY",
+    author: "dossier",
+    createdAt: new Date("2026-10-04T14:45:00Z"),
+  },
+  {
+    title: "Published is not verified: 0 of 36",
+    body: "docs/MANUAL_SMOKE_CHECKLIST.md has 36 rows and none are ticked. The package went merge to store in a day on 20 automated suites. Until someone installs the published package and walks the list, the people installing it are the first browser run — duplicate detection across the pending window, notification delivery, and the dark-mode surfaces most of all.",
+    tag: "SMOKE",
+    author: "dossier",
+    createdAt: new Date("2026-10-04T14:50:00Z"),
+  },
+  {
+    title: "Offered by PWNX0 is gone from the listing page",
+    body: "The Details block no longer carries a publisher row; it now shows a developer website link to thruwallet.vercel.app and the contact email. This site stopped asserting a publisher name rather than quoting a row that is no longer there. extension.md still records the last listing sync as 2026-09-30, which is wrong by five days.",
+    tag: "DOCS",
+    author: "dossier",
+    createdAt: new Date("2026-10-04T14:55:00Z"),
+  },
 ] as const;

@@ -10,7 +10,16 @@ import { WalletMock } from "@/components/WalletMock";
 import { changelog } from "@/content/changelog";
 import { featureGroups, features } from "@/content/features";
 import { securityPrinciples } from "@/content/security";
-import { chromeStoreUrl, extensionId, heroMetrics, release, releaseTracks, site, storeStatus } from "@/content/site";
+import {
+  chromeStoreUrl,
+  extensionId,
+  heroMetrics,
+  release,
+  releaseTracks,
+  site,
+  storeStatus,
+  unverified,
+} from "@/content/site";
 import { listNotes } from "@/lib/catalog";
 import { formatDay, formatStamp } from "@/lib/format";
 
@@ -49,8 +58,8 @@ export default async function HomePage() {
               </Link>
             </div>
             <p className="mt-4 max-w-xl text-sm text-warm">
-              Listing {site.listing.version} · {site.listing.size} · offered by {site.listing.offeredBy}. Extension id{" "}
-              <span className="mono text-ink">{extensionId}</span>.
+              Listing {site.listing.version} · {site.listing.size} · updated {formatDay(site.listing.updated)}. Extension
+              id <span className="mono text-ink">{extensionId}</span>.
             </p>
             <div className="mt-6 max-w-xl border-l-2 border-alert bg-alert-soft/70 px-4 py-3 text-sm text-alert">
               {site.warning}
@@ -64,16 +73,19 @@ export default async function HomePage() {
             <div>
               <p className="label text-paper/55">Extension · Chrome Web Store</p>
               <h2 className="mt-3 font-serif text-3xl leading-tight font-light tracking-[-0.03em] sm:text-4xl">
-                The packaged wallet is already listed.
+                The store build is the betanet build.
               </h2>
               <p className="mt-3 max-w-xl text-paper/75">
                 {site.listing.blurb} Version {site.listing.version}, updated {formatDay(site.listing.updated)}. Use this
                 link unless you are loading <span className="mono text-paper">dist/</span> from source.
               </p>
               <p className="mt-3 max-w-xl text-sm text-paper/60">
-                That package is the {site.listing.network}-era build. The betanet work shipped as source release{" "}
-                {release.tag} on {release.publishedOn}, and package {storeStatus.version} is {storeStatus.sentenceLabel}.
-                Check the three tracks below before you quote a version.
+                Published {formatDay(storeStatus.publishedOn)}, one day after the source release {release.tag} it was
+                built from — contract {release.contract}, betanet, five permissions. It replaced{" "}
+                {site.listing.previousVersion}, the {site.listing.network === "betanet" ? "alphanet" : site.listing.network}-era
+                package that had been the only installable version since {formatDay(site.listing.previousUpdated)}. What
+                it has not had is a human in a browser: {unverified.checked} of {unverified.checklistBoxes} manual smoke
+                rows are ticked.
               </p>
               <p className="mono mt-4 text-xs break-all text-paper/55">{chromeStoreUrl}</p>
             </div>
@@ -89,7 +101,7 @@ export default async function HomePage() {
         <section className="mt-8">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <h2 className="font-serif text-3xl leading-tight font-light tracking-[-0.03em]">
-              Three artifacts, kept apart.
+              Three artifacts. Two of them now agree.
             </h2>
             <Link className="label text-accent-dark" href="/status">
               Status detail

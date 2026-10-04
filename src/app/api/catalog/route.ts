@@ -2,7 +2,7 @@ import { changelog } from "@/content/changelog";
 import { docs } from "@/content/docs";
 import { features } from "@/content/features";
 import { routeCount } from "@/content/routes";
-import { auditedDoc, chromeStoreUrl, extensionId, release, site, storeStatus } from "@/content/site";
+import { auditedDoc, chromeStoreUrl, extensionId, release, site, storeStatus, unverified } from "@/content/site";
 import { listNotes, listSmoke } from "@/lib/catalog";
 
 export const dynamic = "force-dynamic";
@@ -19,7 +19,7 @@ export async function GET() {
       listingUpdated: site.listing.updated,
       listingNetwork: site.listing.network,
       listingVerifiedOn: site.listing.verifiedOn,
-      offeredBy: site.listing.offeredBy,
+      developerSite: site.listing.developerSite,
       size: site.listing.size,
       privacy: site.links.privacy,
       source: site.repos.extension,
@@ -29,6 +29,7 @@ export async function GET() {
     storeStatus,
     release,
     auditedDoc,
+    unverified,
     routes: routeCount,
     features: features.length,
     docs: docs.map((doc) => ({ slug: doc.slug, title: doc.title, tag: doc.tag })),

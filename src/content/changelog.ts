@@ -12,6 +12,22 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     version: "1.4.1",
+    date: "2026-10-04",
+    title: "Live on the Chrome Web Store",
+    tag: "RELEASE",
+    summary:
+      "Package 1.4.1 was approved and published. For the first time since this site started tracking it, the store build and the source tree are the same build.",
+    changes: [
+      "Listing now reads 1.4.1, updated 2026-10-04, 272 KiB, with five screenshots and a linked developer website at thruwallet.vercel.app. It replaced 1.2.0 from 2026-09-23, which was 209 KiB.",
+      "The description was replaced along with the package: betanet rather than alphanet, plus the token drawer, verified custom tokens by contract address, live 30-second activity auto-sync, desktop notifications, and Ctrl+L.",
+      "The Offered by PWNX0 row is no longer shown on the listing page, so this site no longer asserts a publisher name.",
+      "Auto-lock is the one claim that used to be wrong in both directions: the listing had always advertised an inactivity lock while 1.2.0 ran a fixed-period alarm. 1.4.1 is the first package where the behavior and the sentence match.",
+      "Published one day after the source release — merged 2026-10-03 as cee006e, tagged v1.4.1, approved 2026-10-04. Submission, merge, and publication stayed three separate events to the end.",
+      "Unchanged: docs/STATUS_AND_ROADMAP.md still claims contract v12 with 81 methods, and all 36 rows of docs/MANUAL_SMOKE_CHECKLIST.md are still unticked.",
+    ],
+  },
+  {
+    version: "1.4.1",
     date: "2026-10-03",
     title: "Merged and released — the betanet build is tagged v1.4.1",
     tag: "RELEASE",

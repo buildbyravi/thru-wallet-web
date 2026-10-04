@@ -50,7 +50,7 @@ export const contractBreaks = [
   { version: "v10", change: "History detail." },
   { version: "v11", change: "Checked sends. Reviewed account and network bind at the background." },
   { version: "v12", change: "Unlocked-only tx.registerAccount for an owned address, plus storage-only history cache." },
-  { version: "v13", change: "tx.claimFaucet drops to unlocked auth and sheds its vestigial password param. Pending." },
-  { version: "v14", change: "token.readMint verifies a pasted contract address on-chain before it becomes a custom token. Pending." },
-  { version: "v15", change: "tx.checkDuplicate plus an optional allowDuplicate on the send methods. Pending." },
+  { version: "v13", change: "tx.claimFaucet drops to unlocked auth and sheds its vestigial password param. Shipped in 1.4.1." },
+  { version: "v14", change: "token.readMint verifies a pasted contract address on-chain before it becomes a custom token. Shipped in 1.4.1." },
+  { version: "v15", change: "tx.checkDuplicate plus an optional allowDuplicate on the send methods. Shipped in 1.4.1." },
 ] as const;

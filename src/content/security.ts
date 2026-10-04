@@ -5,7 +5,7 @@ export const securityPrinciples = [
   },
   {
     title: "Manifest-first API",
-    body: "The contract declares the methods the UI can call — v15 with 83 methods at main, v12 with 81 in a status document that has not caught up. Unknown methods fail closed. Contract tests keep route callers and background handlers aligned, and the surface is append-only except for documented, versioned breaks.",
+    body: "The contract declares the methods the UI can call — v15 with 83 methods in the published build, v12 with 81 in a status document that has not caught up. Unknown methods fail closed. Contract tests keep route callers and background handlers aligned, and the surface is append-only except for documented, versioned breaks.",
   },
   {
     title: "No unsafe DOM sinks",
@@ -17,7 +17,7 @@ export const securityPrinciples = [
   },
   {
     title: "One network, enforced twice",
-    body: "Betanet is the only enabled network since v1.4.1. Localnet is declared but disabled, testnet and mainnet are reserved slots, and a CSP check fails the build if connect-src and the enabled network list ever disagree in either direction.",
+    body: "Betanet is the only enabled network in 1.4.1. Localnet is declared but disabled, testnet and mainnet are reserved slots, and a CSP check fails the build if connect-src and the enabled network list ever disagree in either direction.",
   },
   {
     title: "Quarantined custom networks",
@@ -31,9 +31,9 @@ export const securityPrinciples = [
 
 export const gaps = [
   "Run the browser smoke checklist for popup and side-panel layout, focus, canvas QR, clipboard, desktop notifications, and worker eviction.",
-  "The packaged store build is 1.2.0 and still points at the alphanet RPC. Release v1.4.1 fixes that in source, but 1.4.0 was submitted and never published and 1.4.1 has not been uploaded yet, so every store install stays behind the chain in the meantime.",
+  "The published 1.4.1 package has no recorded manual verification. All 36 rows of docs/MANUAL_SMOKE_CHECKLIST.md are unticked, and the build reached the store one day after merging on automated evidence alone. Users are the first browser run.",
   "The repository's own docs/STATUS_AND_ROADMAP.md still describes contract v12 with 81 methods at 4aa55ba. Main is contract v15 with 83. A reader who trusts the document over the source will be wrong about auth tiers, the faucet, and duplicate detection.",
-  "Release v1.4.1 has not been through the manual Chrome smoke checklist. The freshest changes — duplicate detection across the pending window and the dark-mode surfaces — are exactly the ones no browser has confirmed.",
+  "The changes freshest to the package are the ones no browser has confirmed: duplicate detection across the whole pending window, desktop notification delivery, and the dark-mode action grid, drawer ledger, and connection footer.",
   "Betanet itself is unaudited infrastructure and Thru's last testnet before mainnet. A 1-base-unit transfer fee was measured once, on one amount and one size.",
   "Live v12 activation — multi-account creation and owned-recipient just-in-time registration — still needs a safe network-reachable pass.",
   "Token transfer code is shipped; the token-program fee and never-registered owner case are not yet measured. The pending token lab exercises deploy, add, send, and receive, but on a chain nobody has certified.",

@@ -50,4 +50,4 @@ Do not request, store, print, or reveal wallet secrets.
 Do not invent unsupported protocol behavior.
 Use official Thru SDK and program surfaces when available.
 Prefer the Chrome Web Store listing for a packaged install, and the extension repository for source.
-Three artifacts exist at once: the published store package (1.2.0, alphanet), the released source at main (v1.4.1, betanet, contract v15), and a status document that still claims v12. Name the one you mean.`;
+The published store package (1.4.1, betanet, contract v15) and the source at main (cee006e) are the same build as of 2026-10-04. Two things still differ from it: docs/STATUS_AND_ROADMAP.md, which claims v12 with 81 methods, and verification — 0 of 36 manual smoke rows are ticked. Shipped, released, and verified are three different words.`;
