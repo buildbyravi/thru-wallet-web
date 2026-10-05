@@ -24,7 +24,7 @@ export default async function StatusPage() {
         kicker="Status"
         title="Two clocks agree. One does not."
         lede="The store listing and the tagged release finally describe the same build. The repository’s own status document does not. And nothing here has been through a browser."
-        meta={`${passed} of ${checks.length} smoke rows marked pass in the desk database`}
+        meta={`${passed} of ${checks.length} desk rows marked pass · ${unverified.checked} of ${unverified.rows} rows in the extension's own checklist`}
       />
 
       <section className="mt-10 grid gap-4 md:grid-cols-3">
@@ -160,6 +160,14 @@ export default async function StatusPage() {
             Canonical runbook
           </a>
         </div>
+        <p className="mt-3 max-w-3xl text-sm text-warm">
+          These {checks.length} rows are this desk&rsquo;s own tracking subset, editable from{" "}
+          <Link className="text-link" href="/desk">
+            the desk
+          </Link>
+          . They are not a second opinion on the extension&rsquo;s {unverified.doc}, which holds {unverified.rows} rows
+          and {unverified.cells} individual checks and is the runbook that has to be signed off. Both are at zero.
+        </p>
         <ul className="mt-6 divide-y divide-rule border-y border-rule">
           {checks.map((check) => (
             <li key={check.itemKey} className="grid gap-3 py-4 sm:grid-cols-[8rem_1fr]">

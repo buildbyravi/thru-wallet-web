@@ -109,11 +109,11 @@ export const smokeSeed = [
 export const docSlots = [
   {
     title: "Per-listing release note",
-    detail: "When 1.4.0 is submitted, record the store's review status and the exact package version separately from the contract version. Three clocks, three rows.",
+    detail: "1.4.1 ran submitted 2026-10-03, merged 2026-10-03, published 2026-10-04. Keep recording those as three dates, not one: the next release will not necessarily collapse them either.",
   },
   {
     title: "Store copy diff",
-    detail: "The listing text still describes alphanet and four permissions. Mirror extension.md into the dashboard in the same release that adds notifications, and note the date it went live.",
+    detail: "Closed on 2026-10-04: the betanet copy, five permissions, and the new screenshots went live with the package rather than after it. Re-open it the next time extension.md changes without the dashboard changing — extension.md still records the last sync as 2026-09-30.",
   },
   {
     title: "Smoke run transcript",
