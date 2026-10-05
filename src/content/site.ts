@@ -49,6 +49,7 @@ export const site = {
     updated: "2026-10-04",
     previousVersion: "1.2.0",
     previousUpdated: "2026-09-23",
+    previousNetwork: "alphanet",
     developerSite: "https://thruwallet.vercel.app/",
     size: "272 KiB",
     languages: "English",
@@ -115,7 +116,6 @@ export const storeStatus = {
 // The source release. PR #16 merged as `cee006e` and shipped as tag v1.4.1 on 2026-10-03.
 export const release = {
   state: "published" as "open" | "merged" | "released" | "published",
-  stateLabel: "In the store since 2026-10-04",
   version: "1.4.1",
   tag: "v1.4.1",
   url: "https://github.com/buildbyravi/thru-wallet-ext/releases/tag/v1.4.1",

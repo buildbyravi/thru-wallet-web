@@ -19,6 +19,10 @@ export async function GET() {
       listingUpdated: site.listing.updated,
       listingNetwork: site.listing.network,
       listingVerifiedOn: site.listing.verifiedOn,
+      // Retired 2026-10-04: the listing page stopped showing an "Offered by" row. The key
+      // stays on the wire as null rather than vanishing, so existing readers see an explicit
+      // "no longer asserted" instead of a missing field.
+      offeredBy: null,
       developerSite: site.listing.developerSite,
       size: site.listing.size,
       privacy: site.links.privacy,

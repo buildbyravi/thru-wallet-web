@@ -67,7 +67,10 @@ export default function InstallPage() {
               <li>Privacy policy points at the extension repository, not a random host.</li>
               <li>The page says it is not affiliated with Unto Labs.</li>
             </ul>
-            <a className="mt-5 block text-sm break-all text-paper/60 underline underline-offset-4" href={chromeStoreUrl}>
+            <a
+              className="mt-5 block text-sm break-all text-paper/60 underline underline-offset-4"
+              href={chromeStoreUrl} target="_blank" rel="noopener noreferrer"
+            >
               {chromeStoreUrl}
             </a>
           </div>
@@ -80,7 +83,7 @@ export default function InstallPage() {
           Package {site.listing.version} is the betanet build — contract {release.contract}, @thru 0.4.1, and{" "}
           <span className="mono">{release.rpc}</span> as the only allowed connect-src. It is the same code as source
           release{" "}
-          <a className="text-link" href={release.url}>
+          <a className="text-link" href={release.url} target="_blank" rel="noopener noreferrer">
             {release.tag}
           </a>
           , merged as <span className="mono">{release.mergeCommit}</span> a day earlier, so building from{" "}

@@ -83,8 +83,7 @@ export default async function HomePage() {
               <p className="mt-3 max-w-xl text-sm text-paper/60">
                 Published {formatDay(storeStatus.publishedOn)}, one day after the source release {release.tag} it was
                 built from — contract {release.contract}, betanet, five permissions. It replaced{" "}
-                {site.listing.previousVersion}, the {site.listing.network === "betanet" ? "alphanet" : site.listing.network}-era
-                package that had been the only installable version since {formatDay(site.listing.previousUpdated)}. What
+                {site.listing.previousVersion}, the {site.listing.previousNetwork}-era package that had been the only installable version since {formatDay(site.listing.previousUpdated)}. What
                 it has not had is a human in a browser: {unverified.checked} of {unverified.rows} manual smoke rows are
                 ticked.
               </p>
@@ -92,7 +91,10 @@ export default async function HomePage() {
             </div>
             <div className="flex flex-col items-start gap-3">
               <StoreButton variant="ghost" label="Add extension" />
-              <a className="text-sm text-paper/70 underline underline-offset-4" href={site.links.privacy}>
+              <a
+                className="text-sm text-paper/70 underline underline-offset-4"
+                href={site.links.privacy} target="_blank" rel="noopener noreferrer"
+              >
                 Privacy policy
               </a>
             </div>
@@ -126,7 +128,10 @@ export default async function HomePage() {
                 <p className="label mt-2 text-accent-dark">{track.pill}</p>
                 <p className="mono mt-2 text-xs text-dim">{track.meta}</p>
                 <p className="mt-3 text-sm text-warm">{track.detail}</p>
-                <a className="text-link mt-4 inline-block text-sm" href={track.href}>
+                <a
+                  className="text-link mt-4 inline-block text-sm"
+                  href={track.href} target="_blank" rel="noopener noreferrer"
+                >
                   {track.hrefLabel}
                 </a>
               </article>

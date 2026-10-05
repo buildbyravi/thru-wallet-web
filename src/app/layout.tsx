@@ -8,7 +8,10 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { chromeStoreUrl, site } from "@/content/site";
 import "./globals.css";
 
+// Verified 2026-10-04: thruwallet.vercel.app serves this site and is the developer website
+// linked from the Chrome Web Store listing. Override per-environment with NEXT_PUBLIC_SITE_URL.
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://thruwallet.vercel.app"),
   title: {
     default: "Thru Wallet — Betanet extension",
     template: "%s — Thru Wallet",

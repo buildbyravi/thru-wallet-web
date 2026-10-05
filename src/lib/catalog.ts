@@ -61,12 +61,17 @@ async function ensureCatalog(database: NonNullable<typeof db>) {
       .onConflictDoNothing();
   }
 
-  const notes = await database.select({ id: fieldNotes.id }).from(fieldNotes).limit(1);
-  if (notes.length === 0) {
+  // Seeded notes are backfilled by title, the same way smoke rows are backfilled by itemKey.
+  // An all-or-nothing "is the table empty" check would strand every note authored after the
+  // first deploy, which is most of them: the desk is an append-only ledger of dated findings.
+  const existingNotes = await database.select({ title: fieldNotes.title }).from(fieldNotes);
+  const haveTitles = new Set(existingNotes.map((row) => row.title));
+  const missingNotes = noteSeed.filter((note) => !haveTitles.has(note.title));
+  if (missingNotes.length > 0) {
     await database
       .insert(fieldNotes)
       .values(
-        noteSeed.map((note) => ({
+        missingNotes.map((note) => ({
           title: note.title,
           body: note.body,
           tag: note.tag,

@@ -125,4 +125,11 @@ export const noteSeed = [
     author: "dossier",
     createdAt: new Date("2026-10-04T18:20:00Z"),
   },
+  {
+    title: "The deployed dossier is itself a stale clock",
+    body: "thruwallet.vercel.app — the developer website linked from the Chrome Web Store listing — still serves the pre-merge build of this site as of 2026-10-04: alphanet framing, listing 1.2.0, offered by PWNX0, contract v12, and the auto-lock entry that calls the timer a fixed-period alarm. A reader who clicks Website from the store lands on a page that contradicts the listing above it. The corrected dossier exists only on the open website branch until it merges and redeploys.",
+    tag: "DOCS",
+    author: "dossier",
+    createdAt: new Date("2026-10-04T19:30:00Z"),
+  },
 ] as const;

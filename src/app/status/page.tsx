@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Badge } from "@/components/Badge";
 import { PageHeader } from "@/components/Section";
 import { completed, roadmap } from "@/content/roadmap";
-import { auditedDoc, incoming, release, releaseTracks, site, storeStatus, unverified } from "@/content/site";
+import { auditedDoc, incoming, release, releaseTracks, site, unverified } from "@/content/site";
 import { listSmoke } from "@/lib/catalog";
 import { formatStamp } from "@/lib/format";
 
@@ -46,7 +46,7 @@ export default async function StatusPage() {
             <p className={`mt-3 text-sm ${track.key === "store" ? "text-paper/70" : "text-warm"}`}>{track.detail}</p>
             <a
               className={`mt-4 inline-block text-sm ${track.key === "store" ? "underline underline-offset-4" : "text-link"}`}
-              href={track.href}
+              href={track.href} target="_blank" rel="noopener noreferrer"
             >
               {track.hrefLabel}
             </a>
@@ -141,7 +141,7 @@ export default async function StatusPage() {
           <ul className="mt-5 space-y-2 text-sm text-warm">
             {incoming.prs.map((pr) => (
               <li key={pr.number}>
-                <a className="text-link" href={pr.url}>
+                <a className="text-link" href={pr.url} target="_blank" rel="noopener noreferrer">
                   #{pr.number}
                 </a>{" "}
                 {pr.title} — <span className="mono text-xs">{pr.head}</span>, base {pr.base}, {pr.files} files,{" "}
@@ -156,7 +156,7 @@ export default async function StatusPage() {
       <section className="mt-14">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <h2 className="font-serif text-3xl font-light tracking-[-0.03em]">Browser smoke checklist</h2>
-          <a className="label text-accent-dark" href={site.links.smokeDoc}>
+          <a className="label text-accent-dark" href={site.links.smokeDoc} target="_blank" rel="noopener noreferrer">
             Canonical runbook
           </a>
         </div>
