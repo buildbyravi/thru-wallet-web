@@ -1,6 +1,7 @@
 const tones: Record<string, string> = {
   STABLE: "bg-ink text-paper",
   ALPHA: "bg-accent-light text-accent-dark",
+  NEW: "border border-accent-dark text-accent-dark",
   PLANNED: "bg-paper-3 text-warm",
   RELEASE: "bg-ink text-paper",
   FIX: "bg-paper-3 text-ink",

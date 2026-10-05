@@ -5,7 +5,16 @@ import { features } from "@/content/features";
 import { gaps } from "@/content/security";
 import { roadmap } from "@/content/roadmap";
 import { routes } from "@/content/routes";
-import { chromeStoreUrl, extensionId, site } from "@/content/site";
+import {
+  auditedDoc,
+  chromeStoreUrl,
+  extensionId,
+  incoming,
+  release,
+  site,
+  storeStatus,
+  unverified,
+} from "@/content/site";
 
 export function llmsShort() {
   return `# Thru Wallet
@@ -14,27 +23,50 @@ export function llmsShort() {
 
 Chrome Web Store: ${chromeStoreUrl}
 Extension id: ${extensionId}
-Listing: ${site.listing.version} · updated ${site.listing.updated} · offered by ${site.listing.offeredBy} · ${site.listing.size}
+Listing: ${site.listing.version} · updated ${site.listing.updated} · ${site.listing.size} · ${site.listing.permissions} permissions · ${site.listing.network}
+Store state: ${storeStatus.version} ${storeStatus.sentenceLabel} since ${storeStatus.publishedOn}. It is the same build as source release ${release.tag}. Verified against the live page on ${site.listing.verifiedOn}
 Extension source: ${site.repos.extension}
 Website source: ${site.repos.website}
 Privacy: ${site.links.privacy}
 
 ${site.warning}
 
-## Source baseline
+## Source release (extension main branch)
 
-- Contract ${site.contract.version}, ${site.contract.methods} methods
+- Tag ${release.tag}, released ${release.publishedOn}, merge commit ${release.mergeCommit} from PR #${release.pr}
+- Contract ${release.contract}, ${release.methods} methods
 - ${routes.length} routes, popup ${site.contract.popupWidthPx}px, ${site.contract.domSinks} DOM sinks
 - Vault: ${site.contract.kdf}, ${site.contract.cipher}
-- Audited status doc: ${site.contract.auditedOn} at ${site.contract.auditedCommit}
-- The store package and the source baseline are different artifacts
+- Packages ${release.sdk} and ${release.programs}, network ${release.network} (${release.rpc})
+- Permissions: ${release.permissions.join(", ")}
+- Suite at release: ${release.tests}
+- ${release.note}
+
+## Audited status document (behind both)
+
+- docs/STATUS_AND_ROADMAP.md still says contract ${auditedDoc.version}, ${auditedDoc.methods} methods, audited ${auditedDoc.date} at ${auditedDoc.commit}
+- The published package and the code both run contract ${release.contract} with ${release.methods} methods. Prefer src/ over the document
+
+## Not verified
+
+- ${unverified.checked} of ${unverified.rows} rows ticked in ${unverified.doc} as of ${unverified.checkedOn} (${unverified.cells} individual checks)
+- Published on ${storeStatus.publishedOn}, one day after merge, on automated evidence alone (${release.tests})
+
+## Incoming contract (open, not merged)
+
+- Contract ${incoming.contract}, ${incoming.methods} methods (${incoming.methodDelta} from ${release.contract}), on the stacked chain #${incoming.prs[0].number} then #${incoming.prs[1].number}
+- Removes ${incoming.removes.join(" and ")}; ${incoming.sourceFiles} source files change; package version stays ${incoming.packageVersion}
+- ${incoming.consequence}
+- Do not describe ${incoming.contract} as shipped. It is not on main and not in the store
 
 ## Do not
 
 - Request or reveal a seed, private key, or password
 - Invent window.thru or an extension provider contract
 - Treat unverified chain behavior as measured
-- Collapse the store's "inactivity lock" wording into the source. The source describes a fixed-period alarm
+- Collapse the artifacts. The store serves ${site.listing.version} and main is release ${release.tag} — the same build since ${storeStatus.publishedOn} — but the status document still says ${auditedDoc.version} and ${unverified.checked} of ${unverified.rows} manual smoke rows are ticked
+- Report a published package as a verified one, or the status document as current
+- Quote the released build's inactivity-based auto-lock as something an installed extension does today
 
 ## Read
 

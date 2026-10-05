@@ -19,7 +19,8 @@ export function SoftwareJsonLd() {
     },
     author: {
       "@type": "Person",
-      name: site.listing.offeredBy,
+      name: "buildbyravi",
+      url: site.repos.extension,
     },
     sameAs: [chromeStoreUrl, site.repos.extension, site.repos.website],
   };

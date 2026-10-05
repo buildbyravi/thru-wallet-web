@@ -3,7 +3,8 @@ import Link from "next/link";
 import { CodeBlock } from "@/components/CodeBlock";
 import { PageHeader } from "@/components/Section";
 import { StoreButton } from "@/components/StoreButton";
-import { chromeStoreUrl, extensionId, site } from "@/content/site";
+import { chromeStoreUrl, extensionId, release, site, unverified } from "@/content/site";
+import { formatDay } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Install",
@@ -47,8 +48,8 @@ export default function InstallPage() {
                 <dd className="mt-1">{site.listing.size}</dd>
               </div>
               <div>
-                <dt className="label text-paper/45">Offered by</dt>
-                <dd className="mt-1">{site.listing.offeredBy}</dd>
+                <dt className="label text-paper/45">Permissions</dt>
+                <dd className="mt-1">{site.listing.permissions}</dd>
               </div>
             </dl>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -62,15 +63,37 @@ export default function InstallPage() {
             <p className="label text-paper/50">Verify the listing</p>
             <ul className="mt-4 space-y-3 text-sm text-paper/80">
               <li>Extension id matches <span className="mono text-paper">{extensionId}</span>.</li>
-              <li>Publisher is {site.listing.offeredBy}.</li>
+              <li>The developer website resolves to <span className="mono text-paper">thruwallet.vercel.app</span>.</li>
               <li>Privacy policy points at the extension repository, not a random host.</li>
               <li>The page says it is not affiliated with Unto Labs.</li>
             </ul>
-            <a className="mt-5 block text-sm break-all text-paper/60 underline underline-offset-4" href={chromeStoreUrl}>
+            <a
+              className="mt-5 block text-sm break-all text-paper/60 underline underline-offset-4"
+              href={chromeStoreUrl} target="_blank" rel="noopener noreferrer"
+            >
               {chromeStoreUrl}
             </a>
           </div>
         </div>
+      </section>
+
+      <section className="mt-6 border-l-2 border-alert bg-alert-soft/50 px-5 py-4">
+        <p className="label text-alert">What the store build is, as of {site.listing.updated}</p>
+        <p className="mt-2 max-w-3xl text-sm text-warm">
+          Package {site.listing.version} is the betanet build — contract {release.contract}, @thru 0.4.1, and{" "}
+          <span className="mono">{release.rpc}</span> as the only allowed connect-src. It is the same code as source
+          release{" "}
+          <a className="text-link" href={release.url} target="_blank" rel="noopener noreferrer">
+            {release.tag}
+          </a>
+          , merged as <span className="mono">{release.mergeCommit}</span> a day earlier, so building from{" "}
+          <span className="mono">main</span> and installing from the store now get you the same wallet. Until{" "}
+          {formatDay(site.listing.updated)} the store served {site.listing.previousVersion}, an alphanet package pointing
+          at a chain that was reset on 2026-09-26.
+        </p>
+        <p className="mt-3 max-w-3xl text-sm text-warm">
+          What that does not mean: verified. {unverified.note}
+        </p>
       </section>
 
       <section className="mt-14 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
@@ -79,7 +102,7 @@ export default function InstallPage() {
           <h2 className="mt-2 font-serif text-3xl font-light tracking-[-0.03em]">Build dist/, then point Chrome at it.</h2>
           <ol className="mt-5 list-decimal space-y-3 pl-5 text-warm">
             <li>Clone the extension repository and install dependencies.</li>
-            <li>Run the test suite. It is local. It does not certify Chrome or alphanet.</li>
+            <li>Run the test suite. It is local. It does not certify Chrome or the chain.</li>
             <li>Build, then load the dist/ folder as an unpacked extension.</li>
             <li>After a code change, reload the extension so the service worker updates too.</li>
           </ol>
@@ -104,7 +127,7 @@ export default function InstallPage() {
           </thead>
           <tbody className="text-warm">
             {[
-              ["Who", "Anyone trying alphanet", "Someone reading or patching the tree"],
+              ["Who", "Anyone trying the wallet", "Someone auditing, patching, or needing betanet now"],
               ["Artifact", `Listing ${site.listing.version}, ${site.listing.updated}`, "The commit you just built"],
               ["Contract", "Whatever that package contains", `Status baseline ${site.contract.version} on the audited tree`],
               ["Updates", "Chrome updates the listing", "You rebuild dist/ and reload the extension"],

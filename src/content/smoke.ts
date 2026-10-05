@@ -69,12 +69,51 @@ export const smokeSeed = [
     status: "open",
     sort: 10,
   },
+  {
+    itemKey: "token-drawer",
+    label: "Token drawer opens from the balance box",
+    detail: "Shipped in 1.4.1, unverified in a browser. Click, Enter, and Space on the balance box all slide the drawer up. Search filters it. No inline token ledger returns.",
+    status: "open",
+    sort: 11,
+  },
+  {
+    itemKey: "custom-token",
+    label: "Add a custom token by contract address",
+    detail: "Shipped in 1.4.1, unverified in a browser. The chain supplies symbol and decimals through token.readMint. A bad address fails visibly instead of adding a token with typed metadata.",
+    status: "open",
+    sort: 12,
+  },
+  {
+    itemKey: "desktop-notification",
+    label: "Desktop notification on confirm and fail",
+    detail: "Shipped in 1.4.1, unverified in a browser. Chrome must actually post it, the Settings toggle must suppress it, and the body must carry no amount, address, or signature.",
+    status: "open",
+    sort: 13,
+  },
+  {
+    itemKey: "inactivity-lock",
+    label: "Auto-lock measures real idleness",
+    detail: "Shipped in 1.4.1, unverified in a browser. Leave the wallet idle past the window and confirm it locks; keep using it and confirm it does not. Background sync must not count as activity.",
+    status: "open",
+    sort: 14,
+  },
+  {
+    itemKey: "duplicate-send",
+    label: "Repeat transfer is caught before signing",
+    detail: "Shipped in 1.4.1, contract v15. Send the same amount to the same recipient twice inside 30 seconds and confirm the second one requires an explicit confirmation.",
+    status: "open",
+    sort: 15,
+  },
 ] as const;
 
 export const docSlots = [
   {
     title: "Per-listing release note",
-    detail: "A short note that keeps store version 1.2.0 distinct from contract v12 when the next package ships.",
+    detail: "1.4.1 ran submitted 2026-10-03, merged 2026-10-03, published 2026-10-04. Keep recording those as three dates, not one: the next release will not necessarily collapse them either.",
+  },
+  {
+    title: "Store copy diff",
+    detail: "Closed on 2026-10-04: the betanet copy, five permissions, and the new screenshots went live with the package rather than after it. Re-open it the next time extension.md changes without the dashboard changing — extension.md still records the last sync as 2026-09-30.",
   },
   {
     title: "Smoke run transcript",

@@ -8,17 +8,20 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { chromeStoreUrl, site } from "@/content/site";
 import "./globals.css";
 
+// Verified 2026-10-04: thruwallet.vercel.app serves this site and is the developer website
+// linked from the Chrome Web Store listing. Override per-environment with NEXT_PUBLIC_SITE_URL.
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://thruwallet.vercel.app"),
   title: {
-    default: "Thru Wallet — Alphanet extension",
+    default: "Thru Wallet — Betanet extension",
     template: "%s — Thru Wallet",
   },
   description: `${site.summary} Add it from the Chrome Web Store: ${chromeStoreUrl}`,
   applicationName: site.name,
-  authors: [{ name: site.listing.offeredBy }],
-  keywords: ["Thru Wallet", "Thru", "alphanet", "Chrome extension", "self-custody"],
+  authors: [{ name: "buildbyravi", url: site.repos.extension }],
+  keywords: ["Thru Wallet", "Thru", "betanet", "Chrome extension", "self-custody"],
   openGraph: {
-    title: "Thru Wallet — Alphanet extension",
+    title: "Thru Wallet — Betanet extension",
     description: site.descriptor,
     type: "website",
   },

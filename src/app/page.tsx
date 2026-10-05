@@ -10,7 +10,17 @@ import { WalletMock } from "@/components/WalletMock";
 import { changelog } from "@/content/changelog";
 import { featureGroups, features } from "@/content/features";
 import { securityPrinciples } from "@/content/security";
-import { chromeStoreUrl, extensionId, heroMetrics, site } from "@/content/site";
+import {
+  chromeStoreUrl,
+  extensionId,
+  heroMetrics,
+  incoming,
+  release,
+  releaseTracks,
+  site,
+  storeStatus,
+  unverified,
+} from "@/content/site";
 import { listNotes } from "@/lib/catalog";
 import { formatDay, formatStamp } from "@/lib/format";
 
@@ -36,7 +46,7 @@ export default async function HomePage() {
               {site.status} · unofficial · {site.network}
             </p>
             <h1 className="mt-4 max-w-3xl font-serif text-[clamp(2.7rem,7vw,5.1rem)] leading-[0.94] font-light tracking-[-0.04em]">
-              A self-custody wallet extension, built for Thru’s <em className="verdict">alphanet</em>.
+              A self-custody wallet extension, built for Thru’s <em className="verdict">betanet</em>.
             </h1>
             <p className="mt-6 max-w-xl text-lg text-warm">{site.summary}</p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -49,8 +59,8 @@ export default async function HomePage() {
               </Link>
             </div>
             <p className="mt-4 max-w-xl text-sm text-warm">
-              Listing {site.listing.version} · {site.listing.size} · offered by {site.listing.offeredBy}. Extension id{" "}
-              <span className="mono text-ink">{extensionId}</span>.
+              Listing {site.listing.version} · {site.listing.size} · updated {formatDay(site.listing.updated)}. Extension
+              id <span className="mono text-ink">{extensionId}</span>.
             </p>
             <div className="mt-6 max-w-xl border-l-2 border-alert bg-alert-soft/70 px-4 py-3 text-sm text-alert">
               {site.warning}
@@ -64,24 +74,72 @@ export default async function HomePage() {
             <div>
               <p className="label text-paper/55">Extension · Chrome Web Store</p>
               <h2 className="mt-3 font-serif text-3xl leading-tight font-light tracking-[-0.03em] sm:text-4xl">
-                The packaged wallet is already listed.
+                The store build is the betanet build.
               </h2>
               <p className="mt-3 max-w-xl text-paper/75">
                 {site.listing.blurb} Version {site.listing.version}, updated {formatDay(site.listing.updated)}. Use this
                 link unless you are loading <span className="mono text-paper">dist/</span> from source.
               </p>
+              <p className="mt-3 max-w-xl text-sm text-paper/60">
+                Published {formatDay(storeStatus.publishedOn)}, one day after the source release {release.tag} it was
+                built from — contract {release.contract}, betanet, five permissions. It replaced{" "}
+                {site.listing.previousVersion}, the {site.listing.previousNetwork}-era package that had been the only installable version since {formatDay(site.listing.previousUpdated)}. What
+                it has not had is a human in a browser: {unverified.checked} of {unverified.rows} manual smoke rows are
+                ticked.
+              </p>
               <p className="mono mt-4 text-xs break-all text-paper/55">{chromeStoreUrl}</p>
             </div>
             <div className="flex flex-col items-start gap-3">
               <StoreButton variant="ghost" label="Add extension" />
-              <a className="text-sm text-paper/70 underline underline-offset-4" href={site.links.privacy}>
+              <a
+                className="text-sm text-paper/70 underline underline-offset-4"
+                href={site.links.privacy} target="_blank" rel="noopener noreferrer"
+              >
                 Privacy policy
               </a>
             </div>
           </div>
         </section>
 
-        <dl className="mt-8 grid grid-cols-2 border-y border-rule lg:grid-cols-4">
+        <section className="mt-8">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <h2 className="font-serif text-3xl leading-tight font-light tracking-[-0.03em]">
+              Three artifacts. Two of them now agree.
+            </h2>
+            <Link className="label text-accent-dark" href="/status">
+              Status detail
+            </Link>
+          </div>
+          <p className="mt-3 max-w-3xl text-sm text-warm">
+            Temporarily. Contract {incoming.contract} is already written on the open #{incoming.prs[0].number} to #
+            {incoming.prs[1].number} chain, and it retires {incoming.removes.join(" and ")}. The day that merges, the
+            source stops matching the package you can install.
+          </p>
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
+            {releaseTracks.map((track) => (
+              <article
+                key={track.key}
+                className={`rounded-2xl border p-5 ${
+                  track.key === "release" ? "border-accent-dark bg-accent-light/40" : "border-rule bg-paper-2/40"
+                }`}
+              >
+                <p className="label text-warm">{track.label}</p>
+                <p className="mt-3 font-serif text-4xl leading-none font-light tracking-[-0.04em]">{track.value}</p>
+                <p className="label mt-2 text-accent-dark">{track.pill}</p>
+                <p className="mono mt-2 text-xs text-dim">{track.meta}</p>
+                <p className="mt-3 text-sm text-warm">{track.detail}</p>
+                <a
+                  className="text-link mt-4 inline-block text-sm"
+                  href={track.href} target="_blank" rel="noopener noreferrer"
+                >
+                  {track.hrefLabel}
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <dl className="mt-10 grid grid-cols-2 border-y border-rule lg:grid-cols-4">
           {heroMetrics.map((metric) => (
             <div key={metric.label} className="border-rule px-1 py-5 sm:px-4 lg:border-l lg:first:border-l-0">
               <dt className="label text-warm">{metric.label}</dt>
