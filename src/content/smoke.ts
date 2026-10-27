@@ -153,7 +153,7 @@ export const docSlots = [
   {
     title: "Charged-fee ledger",
     detail:
-      "Nothing in the wallet reports what a transaction actually cost. Transaction detail says feeCharged: false; the send fee of 1 base unit is one historical observation. Capture native, token and registration fees before writing a fee page.",
+      "Nothing in the wallet reports what a transaction actually cost. Transaction detail says feeCharged: false, and the send fee is a single historical observation. Capture native, token and registration fees before writing a fee page.",
   },
   {
     title: "DeFi re-ship decision",

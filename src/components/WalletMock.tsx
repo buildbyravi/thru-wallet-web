@@ -29,9 +29,7 @@ export function WalletMock() {
             </span>
           </div>
           <p className="mt-6 font-serif text-5xl leading-none font-light tracking-[-0.04em]">12.480</p>
-          <p className="mt-2 text-sm text-paper/70">
-            THRU <span className="mono text-paper/45">· 12,480,000,000 base</span>
-          </p>
+          <p className="mt-2 text-sm text-paper/70">THRU</p>
           <p className="label mt-3 flex items-center gap-2 text-paper/45">
             <span>THRU · USDX · 2 more</span>
             <span aria-hidden="true">›</span>

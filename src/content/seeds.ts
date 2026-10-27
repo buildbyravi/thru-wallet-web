@@ -29,7 +29,7 @@ export const noteSeed = [
   },
   {
     title: "A real .thru registration is on chain",
-    body: "One unique .thru registration through the real background API router returned an on-chain execution result on 2026-10-27, and a follow-up Betanet read confirmed the selected test account as lease owner. The handler quoted 1,000 base units per year. Charged network fee was not returned and the rendered review sheet was not exercised, so this is backend evidence, not browser evidence.",
+    body: "One unique .thru registration through the real background API router returned an on-chain execution result on 2026-10-27, and a follow-up Betanet read confirmed the selected test account as lease owner. The handler quoted 0.000001 THRU per year. Charged network fee was not returned and the rendered review sheet was not exercised, so this is backend evidence, not browser evidence.",
     tag: "RELEASE",
     author: "dossier",
     createdAt: new Date("2026-10-27T11:00:00Z"),
@@ -43,7 +43,7 @@ export const noteSeed = [
   },
   {
     title: "The custom registrar is deployed, initialized, and proven",
-    body: "thru-custom-registrar is live on Betanet at ta2vDCBzzptN2qVZgz6PXsCp5cNB7Nef4yeQ3W-OqzZcfF, initialized with root 'thru', 1,000 base units/year and a treasury, and an end-to-end registration probe returned vmError 0 on 2026-10-25. The Domain screen derives every price and root fact from that on-chain config; if the config is unreadable, the provider simply disappears.",
+    body: "thru-custom-registrar is live on Betanet at ta2vDCBzzptN2qVZgz6PXsCp5cNB7Nef4yeQ3W-OqzZcfF, initialized with root 'thru', a 0.000001 THRU yearly price and a treasury, and an end-to-end registration probe returned vmError 0 on 2026-10-25. The Domain screen derives every price and root fact from that on-chain config; if the config is unreadable, the provider simply disappears.",
     tag: "RELEASE",
     author: "dossier",
     createdAt: new Date("2026-10-25T15:00:00Z"),

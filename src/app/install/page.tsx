@@ -65,9 +65,9 @@ export default function InstallPage() {
             </dl>
             <div className="mt-7 flex flex-wrap gap-3">
               <StoreButton variant="ghost" label="Add to Chrome" />
-              <a className="btn btn-ghost" href={site.links.privacy} target="_blank" rel="noopener noreferrer">
+              <Link className="btn btn-ghost" href="/privacy">
                 Privacy policy
-              </a>
+              </Link>
             </div>
           </div>
           <div className="rounded-2xl border border-white/10 bg-black/20 p-5">

@@ -90,12 +90,9 @@ export default async function HomePage() {
             </div>
             <div className="flex flex-col items-start gap-3">
               <StoreButton variant="ghost" label="Add extension" />
-              <a
-                className="text-sm text-paper/70 underline underline-offset-4"
-                href={site.links.privacy} target="_blank" rel="noopener noreferrer"
-              >
+              <Link className="text-sm text-paper/70 underline underline-offset-4" href="/privacy">
                 Privacy policy
-              </a>
+              </Link>
             </div>
           </div>
         </section>

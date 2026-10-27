@@ -41,7 +41,7 @@ export const roadmap: RoadmapItem[] = [
     title: "Fee provenance and explorer confirmation",
     status: "open",
     detail:
-      "The native fee of 1 base unit is a single historical observation, and transaction detail reports a declared fee with feeCharged: false. Capture a charged fee for a native send, a token transfer, and a name registration — the registration quote of 1,000 base units is the registrar's price, not the network's. Confirm the ?network=betanet explorer links and betanet block-time availability through the RPC.",
+      "The native transfer fee has been observed once, on one amount and one size, and transaction detail reports a declared fee with feeCharged: false. Capture a charged fee for a native send, a token transfer, and a name registration — the registration quote of 0.000001 THRU is the registrar's price, not the network's. Confirm the ?network=betanet explorer links and betanet block-time availability through the RPC.",
   },
   {
     step: "06",

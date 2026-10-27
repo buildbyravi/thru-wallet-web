@@ -17,6 +17,7 @@ const columns = [
     links: [
       { href: "/docs", label: "Docs" },
       { href: "/changelog", label: "Changelog" },
+      { href: "/privacy", label: "Privacy" },
       { href: "/agents", label: "Agents" },
       { href: "/llms.txt", label: "llms.txt" },
       { href: "/llms-full.txt", label: "llms-full.txt" },

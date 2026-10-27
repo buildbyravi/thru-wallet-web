@@ -68,7 +68,7 @@ export const features: Feature[] = [
   },
   {
     title: "Balances in human-scale THRU",
-    body: "1 THRU = 1e9 base units. The human amount is primary. Raw units stay visible underneath, so a small credit cannot be mistaken for whole THRU.",
+    body: "Amounts are shown in THRU at human scale. The vault holds them as integers internally and formats them for display, so a small credit cannot be mistaken for whole THRU.",
     status: "STABLE",
     group: "Daily Use",
   },
@@ -122,7 +122,7 @@ export const features: Feature[] = [
   },
   {
     title: "Register a .thru name",
-    body: "Type a label, pick 1 to 10 years, read a quote derived from the on-chain registrar config, confirm in a sheet, sign. On Betanet the deployed custom registrar is the live .thru route at 1,000 base units per year — 0.000001 THRU at nine decimals — and the official paid registry is not initialized. One registration through the real background router produced an on-chain result and a lease owned by the test account on 2026-10-27.",
+    body: "Type a label, pick 1 to 10 years, read a quote derived from the on-chain registrar config, confirm in a sheet, sign. On Betanet the deployed custom registrar is the live .thru route at 0.000001 THRU per year, and the official paid registry is not initialized. One registration through the real background router produced an on-chain result and a lease owned by the test account on 2026-10-27.",
     status: "NEW",
     group: "Name Service",
   },
@@ -164,7 +164,7 @@ export const features: Feature[] = [
   },
   {
     title: "Custom tokens, verified on-chain",
-    body: "token.readMint reads a pasted contract address from the chain and uses the mint's own symbol and decimals. Free-typed metadata is what once made an added token burn the wrong number of base units.",
+    body: "token.readMint reads a pasted contract address from the chain and uses the mint's own symbol and decimals. Free-typed metadata is what once made an added token spend the wrong amount.",
     status: "STABLE",
     group: "Token Work",
   },

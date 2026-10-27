@@ -45,7 +45,7 @@ export const gaps = [
   "Token transfer code is shipped; the token-program fee and the never-registered owner case are not measured. The UI says so instead of quoting the native 1-base-unit fee.",
   "The repository's own status document still opens with contract v18 and 124 methods against a 2026-10-03 baseline, while the code exports v28 with 144. Its 2026-10-27 Domain section is accurate and its headline identifiers are not. llms.txt in the same repo still says 14 routes and @thru 0.4.1.",
   "Charged fees are not reported. Transaction detail exposes the fee declared in the header and says feeCharged: false; the UI labels it Fee (declared). A declared value is not a debit.",
-  "Betanet itself is unaudited infrastructure and Thru's last testnet before mainnet. One native transfer fee of 1 base unit was measured on one amount and one size.",
+  "Betanet itself is unaudited infrastructure and Thru's last testnet before mainnet. The native transfer fee has been observed exactly once, on one amount and one size.",
   "The DeFi surface is 43 declared methods that no user can reach, and a swap screen that shipped and was withdrawn inside one day on 2026-10-26. Treat the flag state, not the changelog, as the product.",
   "Custom networks stay quarantined until HTTPS policy, narrow host permission, capability records, and password re-auth ship together.",
   "No injected dApp provider. Do not invent window.thru.",

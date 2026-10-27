@@ -36,7 +36,7 @@ export const changelog: ChangelogEntry[] = [
       "/name now offers one .thru registration path, selected from live registrar facts: the deployed custom registrar first, the official paid registry only when it is the available .thru route. .id stays lookup and resolution data.",
       "The signing request carries the reviewed network, account, price and expiry, and account switching is locked while a registration is pending. A reviewed quote cannot be swapped underneath a signature.",
       "One live .thru registration through the real background API router returned an on-chain execution result on 2026-10-27, and a follow-up Betanet read confirmed the test account as lease owner. The rendered sheet and the charged network fee remain unverified.",
-      "The quote is 1,000 base units per year — 0.000001 THRU at nine decimals — read from the registrar's on-chain config, never hardcoded. The header fee is 0n; the program charges its own configured price to a treasury.",
+      "The quote is 0.000001 THRU per year, read from the registrar's on-chain config and never hardcoded. The header fee is 0n; the program charges its own configured price to a treasury.",
       "The .id root resolves but is closed: its authority is a third-party key, and the chain refuses a foreign signer outright, so no mint call-to-action is rendered for it.",
     ],
   },
@@ -266,7 +266,7 @@ export const changelog: ChangelogEntry[] = [
       "Thru Wallet is listed as an experimental self-custody wallet for Thru alphanet. Version 1.2.0, 209 KiB, offered by PWNX0.",
     changes: [
       "Store id ocahgpmgfeapjnceaknkikanjikhjgok.",
-      "Disclosed privacy posture: data is not collected. Policy lives in the extension repository.",
+      "Disclosed privacy posture: data is not collected. The full policy is published on this site at /privacy.",
       "Listing copy mentions a 15-minute lock. The source describes that timer as a fixed-period alarm, not inactivity detection.",
       "The listing is explicit: not affiliated with Unto Labs, and not for real financial value.",
     ],

@@ -5,6 +5,10 @@ export const chromeStoreUrl =
 
 export const extensionId = "ocahgpmgfeapjnceaknkikanjikhjgok";
 
+// This site is the canonical home for the policy; the repository link is no longer used for it.
+export const siteUrl = "https://thruwallet.vercel.app";
+export const privacyUrl = `${siteUrl}/privacy`;
+
 export const site = {
   name: "Thru Wallet",
   shortName: "Thru",
@@ -26,7 +30,7 @@ export const site = {
   },
   links: {
     chromeStore: chromeStoreUrl,
-    privacy: "https://github.com/buildbyravi/thru-wallet-ext/blob/main/PRIVACY.md",
+    privacy: "/privacy",
     explorer: "https://scan.thru.org",
     thruDocs: "https://thru.org/docs",
     thruLlmTxt: "https://thru.org/docs/llm.txt",
@@ -95,7 +99,7 @@ export const site = {
     programs: "@thru/programs@0.4.2",
     kdf: "PBKDF2-SHA256 · 600,000",
     cipher: "AES-256-GCM",
-    unit: "1 THRU = 1,000,000,000 base units",
+    unit: "THRU is displayed at nine decimals",
     auditedCommit: "4aa55ba",
     auditedOn: "2026-09-26",
     network: "betanet",
@@ -282,13 +286,13 @@ export const domains = {
   provider: "custom registrar",
   root: "thru",
   registrarProgram: "ta2vDCBzzptN2qVZgz6PXsCp5cNB7Nef4yeQ3W-OqzZcfF",
-  feePerYear: "1,000 base units",
-  feePerYearHuman: "0.000001 THRU",
+  feePerYear: "0.000001 THRU",
+  feePerYearHuman: "per year, at nine decimals",
   deployedOn: "2026-10-25",
   firstLiveRegister: "2026-10-27",
   readProbe: "2026-10-26",
   officialRegistry: "not initialized on Betanet",
   idRoot: "resolves, authority is third-party",
   note:
-    "The Domain screen offers .thru only: the deployed custom registrar first, the official paid registry when it is the available .thru route. It does not mint beneath .id, whose root authority is another key and which the chain refuses foreign signers for. Registration is a signed broadcast with a 0n header fee; the registrar charges its own configured 1,000 base units per year into a treasury. One live registration through the real background API router produced an on-chain execution result and a lease owned by the test account on 2026-10-27; the rendered review sheet was not exercised, and the charged network fee was not captured.",
+    "The Domain screen offers .thru only: the deployed custom registrar first, the official paid registry when it is the available .thru route. It does not mint beneath .id, whose root authority is another key and which the chain refuses foreign signers for. Registration is a signed broadcast with a 0n header fee; the registrar charges its own configured 0.000001 THRU per year into a treasury. One live registration through the real background API router produced an on-chain execution result and a lease owned by the test account on 2026-10-27; the rendered review sheet was not exercised, and the charged network fee was not captured.",
 } as const;

@@ -1,4 +1,5 @@
 import { aiMcp, aiReadFirst } from "@/content/ai";
+import { privacy } from "@/content/privacy";
 import { changelog } from "@/content/changelog";
 import { docs } from "@/content/docs";
 import { drift, sinceStore } from "@/content/drift";
@@ -12,6 +13,7 @@ import {
   domains,
   extensionId,
   release,
+  privacyUrl,
   site,
   source,
   unverified,
@@ -28,7 +30,7 @@ Listing: ${site.listing.version} · updated ${site.listing.updated} · ${site.li
 Listing re-read: ${site.listing.verifiedOn} — unchanged since publication
 Extension source: ${site.repos.extension}
 Website source: ${site.repos.website}
-Privacy: ${site.links.privacy}
+Privacy policy: ${privacyUrl}
 
 ${site.warning}
 
@@ -77,10 +79,19 @@ ${sinceStore.map((item) => `- ${item.title} — ${item.detail}`).join("\n")}
 - Describe a gated DeFi method, or a swap screen withdrawn on 2026-10-26, as a shipped feature
 - Report the ${domains.feePerYear} registrar price as a network fee
 
+## Privacy
+
+- ${privacy.intro}
+- Nothing is collected: no analytics, telemetry, tracking, third-party scripts, or remote code.
+- Only the betanet RPC is contacted, directly from the browser (https://rpc.betanet.thru.org). The developer runs no relay or backend.
+- Keys never leave local memory; the vault is PBKDF2-SHA256 600,000 then AES-256-GCM, ciphertext in chrome.storage.local, unlocked session in memory-only session storage.
+- Full policy: ${privacyUrl}
+
 ## Read
 
 - /docs/overview
 - /docs/installation
+- /privacy — the full policy, published here
 - /docs/name-service
 - /docs/security-model
 - /docs/ai-and-mcp

@@ -36,7 +36,7 @@ Use the store unless you are auditing or rebuilding. The full steps live on the 
 
 - Create, import, lock, and unlock a local vault.
 - Hold multiple keyrings and accounts.
-- Read a THRU balance with raw units still visible, from cache first and the chain second.
+- Read a THRU balance, cache first and chain second.
 - Create an on-chain account and send native THRU after review.
 - Show a receive address and QR, plus decoded history when the shape is known.
 - Read token balances, discover incoming tokens, and prepare token transfers on official program bindings.
@@ -78,7 +78,7 @@ Two paths, and they no longer produce the same wallet.
 1. Open the listing: [Thru Wallet on the Chrome Web Store](https://chromewebstore.google.com/detail/thru-wallet/ocahgpmgfeapjnceaknkikanjikhjgok).
 2. Confirm the extension id \`ocahgpmgfeapjnceaknkikanjikhjgok\`, the developer website \`thruwallet.vercel.app\`, and version **1.4.1**.
 3. Add it to Chrome. Pin it. The first run offers to create or import a wallet.
-4. Read the [privacy policy](https://github.com/buildbyravi/thru-wallet-ext/blob/main/PRIVACY.md). The developer discloses that the item does not collect or use your data.
+4. Read the [privacy policy](/privacy). The developer discloses that the item does not collect or use your data.
 
 The listing is community software. It is not an Unto Labs product and it has not been audited.
 
@@ -149,7 +149,7 @@ Auto-lock defaults to 15 minutes, is configurable from 0 to 240, and is password
 
 ## Daily use
 
-Balances show human-scale THRU and the raw base units. 1 THRU = 1e9 base units. Account creation exists where the network supports it, and a faucet claim where that network declares a faucet.
+Balances show THRU at human scale. Account creation exists where the network supports it, and a faucet claim where that network declares a faucet.
 
 Native send goes through review, and contract v15 catches a repeat transfer to the same recipient inside 30 seconds before it is signed. History is one flat stream: block time when known, otherwise \`Block <slot>\`, refreshed every 30 seconds. Optional desktop notifications announce confirm or fail.
 
@@ -157,7 +157,7 @@ The popup is 400px. The side panel is an explicit opt-in and does not steal the 
 
 ## Name service
 
-The Domain screen is a real fifteenth route. One search field, a background availability check, a years stepper, a quote from the on-chain registrar config, a review sheet, a password prompt, a signed registration. On Betanet the deployed custom registrar is the live \`.thru\` route at 1,000 base units per year; the official paid registry is not initialized, and \`.id\` resolves but refuses a foreign signer.
+The Domain screen is a real fifteenth route. One search field, a background availability check, a years stepper, a quote from the on-chain registrar config, a review sheet, a password prompt, a signed registration. On Betanet the deployed custom registrar is the live \`.thru\` route at 0.000001 THRU per year; the official paid registry is not initialized, and \`.id\` resolves but refuses a foreign signer.
 
 Read [the name-service page](/docs/name-service) for what is verified and what is not.
 
@@ -190,14 +190,14 @@ The Domain screen registers **.thru** names and links one you already own. It is
 
 ## Two .thru providers
 
-- **Custom registrar (live).** \`contracts/thru-custom-registrar\`, our own ThruVM program, deployed at \`ta2vDCBzzptN2qVZgz6PXsCp5cNB7Nef4yeQ3W-OqzZcfF\` and initialized with root \`thru\`, 1,000 base units per year and a treasury. The screen prefers it and derives every displayed fact from the parsed config.
+- **Custom registrar (live).** \`contracts/thru-custom-registrar\`, our own ThruVM program, deployed at \`ta2vDCBzzptN2qVZgz6PXsCp5cNB7Nef4yeQ3W-OqzZcfF\` and initialized with root \`thru\`, a 0.000001 THRU yearly price and a treasury. The screen prefers it and derives every displayed fact from the parsed config.
 - **Official paid registry (absent on Betanet).** The reads and the purchase/renew/claim-expired methods are implemented from first-party formats. The registry is not initialized on Betanet, so those paths answer unsupported there.
 
 If neither provider is readable, the screen says why and renders nothing clickable.
 
 ## Fees, honestly
 
-- The header fee on a registration is \`0n\`. The registrar charges its own configured price — 1,000 base units per year on Betanet, which is 0.000001 THRU at nine decimals — into the config treasury.
+- The header fee on a registration is \`0n\`. The registrar charges its own configured price — 0.000001 THRU per year on Betanet — into the config treasury.
 - The **charged network fee is not reported** by any current response, and no live registration has captured one. Do not present the registrar's price as a network cost.
 - Amounts are BigInt until they cross the bridge, then strings. Registrar totals group matching assets only; two names are two transactions, not an atomic batch.
 
@@ -207,7 +207,7 @@ The \`.id\` root exists on Betanet and \`name.lookup\` resolves beneath it. Its 
 
 ## What is verified, and what is not
 
-**VERIFIED, read-only, 2026-10-26:** the official paid registry is absent; the custom registrar is present, root-matched, and quotes 1,000 base units per year; the \`.id\` root exists; a fresh label was unregistered under both routes.
+**VERIFIED, read-only, 2026-10-26:** the official paid registry is absent; the custom registrar is present, root-matched, and quotes 0.000001 THRU per year; the \`.id\` root exists; a fresh label was unregistered under both routes.
 
 **VERIFIED, write, 2026-10-27:** one unique \`.thru\` registration through the real background API router returned an on-chain execution result, and a follow-up read confirmed the test account as lease owner. This proves the backend write path. It does not prove the rendered screen, and it did not capture a charged fee.
 
@@ -464,6 +464,7 @@ Authored product copy is TypeScript, so a change is reviewable.
 | src/content/changelog.ts | Authored release history |
 | src/content/docs.ts | Docs hub markdown |
 | src/content/smoke.ts | Smoke checklist seed and open doc slots |
+| src/content/privacy.ts | The privacy policy, published at /privacy |
 
 ## Desk
 
