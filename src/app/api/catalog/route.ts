@@ -1,8 +1,19 @@
 import { changelog } from "@/content/changelog";
 import { docs } from "@/content/docs";
+import { drift } from "@/content/drift";
 import { features } from "@/content/features";
 import { routeCount } from "@/content/routes";
-import { auditedDoc, chromeStoreUrl, extensionId, release, site, storeStatus, unverified } from "@/content/site";
+import {
+  auditedDoc,
+  chromeStoreUrl,
+  domains,
+  extensionId,
+  release,
+  site,
+  source,
+  storeStatus,
+  unverified,
+} from "@/content/site";
 import { listNotes, listSmoke } from "@/lib/catalog";
 
 export const dynamic = "force-dynamic";
@@ -19,6 +30,7 @@ export async function GET() {
       listingUpdated: site.listing.updated,
       listingNetwork: site.listing.network,
       listingVerifiedOn: site.listing.verifiedOn,
+      listingUsers: site.listing.users,
       // Retired 2026-10-04: the listing page stopped showing an "Offered by" row. The key
       // stays on the wire as null rather than vanishing, so existing readers see an explicit
       // "no longer asserted" instead of a missing field.
@@ -29,11 +41,18 @@ export async function GET() {
       source: site.repos.extension,
       website: site.repos.website,
     },
-    contract: site.contract,
+    // What the store package contains, read from the package it was built from.
+    storeBuild: site.storeBuild,
     storeStatus,
+    // What main contains. Not what Chrome installs.
+    contract: site.contract,
+    source,
+    // The distance between the two, so a machine reader cannot average them.
+    drift,
     release,
     auditedDoc,
     unverified,
+    domains,
     routes: routeCount,
     features: features.length,
     docs: docs.map((doc) => ({ slug: doc.slug, title: doc.title, tag: doc.tag })),

@@ -18,7 +18,7 @@ const fallbackSmoke: SmokeCheck[] = smokeSeed.map((check, index) => ({
   id: `seed-smoke-${index + 1}`,
   ...check,
   note: null,
-  updatedAt: new Date("2026-09-26T00:00:00Z"),
+  updatedAt: new Date("2026-10-27T00:00:00Z"),
 }));
 
 function requireDatabase() {

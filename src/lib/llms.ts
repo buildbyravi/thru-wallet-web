@@ -1,6 +1,7 @@
 import { aiMcp, aiReadFirst } from "@/content/ai";
 import { changelog } from "@/content/changelog";
 import { docs } from "@/content/docs";
+import { drift, sinceStore } from "@/content/drift";
 import { features } from "@/content/features";
 import { gaps } from "@/content/security";
 import { roadmap } from "@/content/roadmap";
@@ -8,11 +9,11 @@ import { routes } from "@/content/routes";
 import {
   auditedDoc,
   chromeStoreUrl,
+  domains,
   extensionId,
-  incoming,
   release,
   site,
-  storeStatus,
+  source,
   unverified,
 } from "@/content/site";
 
@@ -23,55 +24,64 @@ export function llmsShort() {
 
 Chrome Web Store: ${chromeStoreUrl}
 Extension id: ${extensionId}
-Listing: ${site.listing.version} · updated ${site.listing.updated} · ${site.listing.size} · ${site.listing.permissions} permissions · ${site.listing.network}
-Store state: ${storeStatus.version} ${storeStatus.sentenceLabel} since ${storeStatus.publishedOn}. It is the same build as source release ${release.tag}. Verified against the live page on ${site.listing.verifiedOn}
+Listing: ${site.listing.version} · updated ${site.listing.updated} · ${site.listing.size} · ${site.listing.permissions} permissions · ${site.listing.network} · ${site.listing.users}
+Listing re-read: ${site.listing.verifiedOn} — unchanged since publication
 Extension source: ${site.repos.extension}
 Website source: ${site.repos.website}
 Privacy: ${site.links.privacy}
 
 ${site.warning}
 
-## Source release (extension main branch)
+## Three artifacts, one version string
 
-- Tag ${release.tag}, released ${release.publishedOn}, merge commit ${release.mergeCommit} from PR #${release.pr}
-- Contract ${release.contract}, ${release.methods} methods
-- ${routes.length} routes, popup ${site.contract.popupWidthPx}px, ${site.contract.domSinks} DOM sinks
+- Chrome Web Store: package ${drift.packageVersion}, published ${drift.storeDate}, contract ${drift.storeContract}, ${drift.storeMethods} methods, ${drift.storeRoutes} routes, ${drift.storePackages}. What Chrome installs. No Domain screen.
+- Source main at ${drift.sourceCommit} (${drift.sourceDate}): package still ${drift.packageVersion}, contract ${drift.sourceContract}, ${drift.sourceMethods} methods (${drift.sourceWalletCore} wallet-core + ${drift.sourceDefi} gated DeFi), ${drift.sourceRoutes} routes, ${drift.sourcePackages}. No tag after ${release.tag}.
+- docs/STATUS_AND_ROADMAP.md: still opens with contract ${auditedDoc.version}, ${auditedDoc.methods} methods against a ${auditedDoc.date} baseline.
+
+The store package was cut from the same commit as the source release (${drift.storeDate}). Contract v16 merged the same day, and main has been ${drift.contractVersions} contract versions ahead ever since — under one unchanged package number. Do not collapse them.
+
+## Source facts (main, read ${site.contract.checkedOn})
+
+- Contract ${source.contract}, ${source.methods} methods; 72 callable while locked, 51 unlocked, 12 password-gated, 9 signing-gated
+- ${source.routes} routes, popup ${site.contract.popupWidthPx}px, ${site.contract.domSinks} DOM sinks
 - Vault: ${site.contract.kdf}, ${site.contract.cipher}
-- Packages ${release.sdk} and ${release.programs}, network ${release.network} (${release.rpc})
-- Permissions: ${release.permissions.join(", ")}
-- Suite at release: ${release.tests}
-- ${release.note}
+- Packages ${source.sdk} and ${source.programs}; network ${source.network} (${source.rpc}) as the only connect-src
+- Permissions: ${source.permissions.join(", ")}
+- Local suite: ${source.tests} — deterministic, local, not a browser
+- The 43-method DeFi surface exists behind build-time flags that are all false. No swap, launchpad or prediction screen ships
+- AGENTS.md rule 15: the frontend never waits on a chain read before first paint
 
-## Audited status document (behind both)
+## Domains (.thru)
 
-- docs/STATUS_AND_ROADMAP.md still says contract ${auditedDoc.version}, ${auditedDoc.methods} methods, audited ${auditedDoc.date} at ${auditedDoc.commit}
-- The published package and the code both run contract ${release.contract} with ${release.methods} methods. Prefer src/ over the document
+- Route ${domains.route}: one search field, background availability check, years stepper, quote from the on-chain registrar config, review sheet, signed registration
+- Live provider: ${domains.provider}, root ${domains.root}, ${domains.feePerYear} per year (${domains.feePerYearHuman} at nine decimals)
+- The official paid .thru registry is ${domains.officialRegistry}; the .id root ${domains.idRoot}, so .id is lookup only
+- Backend registration verified on chain ${domains.firstLiveRegister}; the rendered flow and the charged network fee are not verified
 
 ## Not verified
 
-- ${unverified.checked} of ${unverified.rows} rows ticked in ${unverified.doc} as of ${unverified.checkedOn} (${unverified.cells} individual checks)
-- Published on ${storeStatus.publishedOn}, one day after merge, on automated evidence alone (${release.tests})
+- ${unverified.checked} of ${unverified.cells} checkbox cells ticked in ${unverified.doc} as of ${unverified.checkedOn} (${unverified.rows} lines with checks)
+- No recorded browser run of the published package at all
+- Token-program fee and the never-registered recipient owner case are unmeasured; no response reports a charged fee
 
-## Incoming contract (open, not merged)
+## Since the store build
 
-- Contract ${incoming.contract}, ${incoming.methods} methods (${incoming.methodDelta} from ${release.contract}), on the stacked chain #${incoming.prs[0].number} then #${incoming.prs[1].number}
-- Removes ${incoming.removes.join(" and ")}; ${incoming.sourceFiles} source files change; package version stays ${incoming.packageVersion}
-- ${incoming.consequence}
-- Do not describe ${incoming.contract} as shipped. It is not on main and not in the store
+${sinceStore.map((item) => `- ${item.title} — ${item.detail}`).join("\n")}
 
 ## Do not
 
 - Request or reveal a seed, private key, or password
 - Invent window.thru or an extension provider contract
-- Treat unverified chain behavior as measured
-- Collapse the artifacts. The store serves ${site.listing.version} and main is release ${release.tag} — the same build since ${storeStatus.publishedOn} — but the status document still says ${auditedDoc.version} and ${unverified.checked} of ${unverified.rows} manual smoke rows are ticked
-- Report a published package as a verified one, or the status document as current
-- Quote the released build's inactivity-based auto-lock as something an installed extension does today
+- Treat unverified chain behavior as measured, or a local suite as browser verification
+- Collapse the artifacts: the store speaks ${drift.storeContract} with ${drift.storeMethods} methods, main speaks ${drift.sourceContract} with ${drift.sourceMethods}, and the status document says ${auditedDoc.version} with ${auditedDoc.methods}
+- Describe a gated DeFi method, or a swap screen withdrawn on 2026-10-26, as a shipped feature
+- Report the ${domains.feePerYear} registrar price as a network fee
 
 ## Read
 
 - /docs/overview
 - /docs/installation
+- /docs/name-service
 - /docs/security-model
 - /docs/ai-and-mcp
 - /llms-full.txt

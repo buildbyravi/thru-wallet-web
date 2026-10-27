@@ -14,7 +14,8 @@ export const aiMcp = {
   protected: [
     "wallet_prepare_native_send",
     "wallet_prepare_token_transfer",
-    "wallet_prepare_swap — only after real Thru-native swap support exists",
+    "wallet_prepare_name_register — only after a person has reviewed the quote in the extension",
+    "wallet_prepare_swap — the backend exists, the screen does not, and every flag is off",
     "wallet_prepare_launchpad_create — only after verified launchpad semantics exist",
   ],
   forbidden: [
@@ -27,13 +28,14 @@ export const aiMcp = {
 } as const;
 
 export const aiReadFirst = [
-  "AGENTS.md — rules, commands, traps, reporting.",
+  "AGENTS.md — rules, commands, traps, reporting. Rule 15: the frontend never waits on RPC before first paint.",
   "docs/DOCS_INDEX.md — documentation map.",
-  "docs/PROJECT_LEDGER.md — past, present, and future identifiers.",
-  "docs/STATUS_AND_ROADMAP.md — audited baseline and open checks. Verify its version numbers against src/shared/contract/manifest.js before quoting them.",
+  "docs/PROJECT_LEDGER.md — past, present, and future identifiers. Dated 2026-10-04; verify its numbers.",
+  "docs/STATUS_AND_ROADMAP.md — audited baseline and open checks. It says v18 and 124 methods against a v28/144 tree, so check src/shared/contract/manifest.js before quoting it.",
+  "docs/DECISIONS.md — durable decisions, including D-016 (the custom registrar) and D-003 (signing re-auth is opt-in).",
+  "docs/BACKEND_GAPS.md — the exact supported/unsupported boundary per feature, including the domain registrar.",
   "extension.md — the Chrome Web Store listing copy, its permission justifications, and the listing changelog.",
   "CONTEXT.md — file-by-file repository map.",
-  "docs/MCP_AGENT_INTEGRATION.md — safe companion plan.",
   "https://thru.org/docs/llm.txt — official protocol entry point.",
   "/llms.txt on this site — short website context, including the store link.",
 ] as const;
@@ -42,12 +44,19 @@ export const aiContext = `Read first:
 1. AGENTS.md
 2. docs/DOCS_INDEX.md
 3. docs/STATUS_AND_ROADMAP.md
-4. CONTEXT.md
-5. docs/MCP_AGENT_INTEGRATION.md
-6. https://thru.org/docs/llm.txt
+4. docs/DECISIONS.md
+5. docs/BACKEND_GAPS.md
+6. CONTEXT.md
+7. https://thru.org/docs/llm.txt
 
 Do not request, store, print, or reveal wallet secrets.
 Do not invent unsupported protocol behavior.
 Use official Thru SDK and program surfaces when available.
 Prefer the Chrome Web Store listing for a packaged install, and the extension repository for source.
-The published store package (1.4.1, betanet, contract v15) and the source at main (cee006e) are the same build as of 2026-10-04. Two things still differ from it: docs/STATUS_AND_ROADMAP.md, which claims v12 with 81 methods, and verification — 0 of 36 manual smoke rows are ticked. Shipped, released, and verified are three different words. A fourth state exists: contract v16 is written on the open #17 to #18 chain, removes tx.send and token.transfer, and is in no package.`;
+
+Three artifacts, three states, one version string:
+- Chrome Web Store: 1.4.1, updated 2026-10-04, contract v15, 83 methods, @thru 0.4.1, 14 routes, three users. Re-read on 2026-10-27; unchanged.
+- main at 1b9d096 (2026-10-27): package still 1.4.1, contract v28, 144 methods (101 wallet-core + 43 gated DeFi), @thru 0.4.2, 15 routes including /name. No tag after v1.4.1.
+- docs/STATUS_AND_ROADMAP.md: still opens with contract v18 and 124 methods against a 2026-10-03 baseline.
+
+Verification: 1 of 100 manual smoke cells is ticked, from a popup-only partial run on 2026-10-04. A backend .thru registration is on chain (2026-10-27); its rendered review flow is not verified. 36 suites and 2,082 local checks pass on main. Do not describe a local suite or a backend probe as browser verification, and do not describe the store package as current.`;

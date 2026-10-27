@@ -37,7 +37,7 @@ export function WalletMock() {
             <span aria-hidden="true">›</span>
           </p>
           <div className="mt-5 grid grid-cols-3 gap-2">
-            {["Send", "Receive", "Faucet"].map((action, index) => (
+            {["Send", "Receive", "Swap", "History", "Security", "Faucet"].map((action, index) => (
               <div
                 key={action}
                 className={`rounded-xl px-2 py-3 text-center ${index === 0 ? "bg-accent text-white" : "bg-plate-3 text-paper"}`}
@@ -45,6 +45,11 @@ export function WalletMock() {
                 <p className="label">{action}</p>
               </div>
             ))}
+          </div>
+          <div className="mt-2 grid grid-cols-3 gap-2">
+            <div className="rounded-xl bg-plate-3 px-2 py-3 text-center">
+              <p className="label">Domain</p>
+            </div>
           </div>
           <div className="mt-5 border-t border-white/10 pt-4">
             <div className="flex items-center justify-between">
@@ -63,12 +68,13 @@ export function WalletMock() {
             <span className="live-dot h-1.5 w-1.5 rounded-full bg-accent" />
             Betanet
           </p>
-          <p className="label text-paper/50">contract v15 · v1.4.1</p>
+          <p className="label text-paper/50">store v15 · main v28</p>
         </div>
       </div>
       <figcaption className="mt-3 text-sm text-warm">
-        Static study of the v1.4.1 build, where the balance box is the token-drawer entry. Not connected. Sample
-        figures only — not a balance, not an address format certification.
+        Static study of the source build: the balance box is the token-drawer entry, the Domain tile sits in its own
+        services row, and Swap still shows a roadmap toast because the swap screen was withdrawn. Not connected.
+        Sample figures only — not a balance, not an address format certification.
       </figcaption>
     </figure>
   );

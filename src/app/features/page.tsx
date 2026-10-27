@@ -14,7 +14,7 @@ export default function FeaturesPage() {
       <PageHeader
         kicker="Features"
         title="A narrow wallet, labeled honestly."
-        lede="Stable means it is the product. Alpha means the code exists and a live or browser check is still open. New means it arrived in the 1.4.1 package on 2026-10-04 and no manual browser run is recorded against it yet. Planned means you cannot do it in the extension at all."
+        lede="Stable means it is the product. Alpha means the code exists and a live or browser check is still open. New means the source has it and the 1.4.1 package in the store does not — you can build it, not install it. Planned means the extension cannot do it today."
       />
       <div className="mt-12 space-y-14">
         {featureGroups.map((group) => (

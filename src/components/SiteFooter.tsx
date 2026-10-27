@@ -73,8 +73,9 @@ export function SiteFooter() {
         </div>
         <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-rule pt-6">
           <p className="label text-warm">
-            Main {site.baselineCommit} · {site.baselineDate} · contract {site.contract.version} · {site.contract.methods} methods ·{" "}
-            {site.routesCount} routes · release {release.tag} · store {site.listing.version}
+            Store {site.listing.version} · contract {site.storeBuild.contract} · {site.storeBuild.routes} routes ·{" "}
+            {release.tag} · main {site.baselineCommit} · contract {site.contract.version} ·{" "}
+            {site.contract.methods} methods · {site.routesCount} routes
           </p>
           <Link href="/desk" className="label text-dim no-underline hover:text-ink">
             Desk

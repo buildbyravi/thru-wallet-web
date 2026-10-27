@@ -1,3 +1,5 @@
+import { drift } from "@/content/drift";
+
 export const chromeStoreUrl =
   "https://chromewebstore.google.com/detail/thru-wallet/ocahgpmgfeapjnceaknkikanjikhjgok";
 
@@ -9,12 +11,12 @@ export const site = {
   tagline: "Betanet",
   descriptor: "An experimental, self-custody browser extension for Thru's native Layer 1 betanet.",
   summary:
-    "Thru Wallet is an unofficial, high-performance browser extension for personal key management and basic account operations against the Thru betanet — built on the real @thru/sdk and @thru/programs packages.",
+    "Thru Wallet is an unofficial, high-performance browser extension for personal key management, transfers, and .thru name registration on the Thru betanet — built on the real @thru/sdk and @thru/programs packages.",
   disclaimer:
     "Community-built, open-source software for the Thru betanet testnet. Not affiliated with or endorsed by Unto Labs. Not audited. Do not use with real financial value.",
-  baselineCommit: "cee006e",
-  baselineDate: "2026-10-03",
-  routesCount: 14,
+  baselineCommit: drift.sourceCommit,
+  baselineDate: drift.sourceDate,
+  routesCount: drift.sourceRoutes,
   status: "ALPHA" as const,
   warning:
     "Not production-ready and not security-reviewed. Use betanet testnet funds only. This is community software, not affiliated with or endorsed by Unto Labs. Do not use it with real financial value.",
@@ -34,16 +36,21 @@ export const site = {
       "https://github.com/buildbyravi/thru-wallet-ext/blob/main/docs/STATUS_AND_ROADMAP.md",
     smokeDoc:
       "https://github.com/buildbyravi/thru-wallet-ext/blob/main/docs/MANUAL_SMOKE_CHECKLIST.md",
+    decisions: "https://github.com/buildbyravi/thru-wallet-ext/blob/main/docs/DECISIONS.md",
+    backendGaps: "https://github.com/buildbyravi/thru-wallet-ext/blob/main/docs/BACKEND_GAPS.md",
+    contractManifest:
+      "https://github.com/buildbyravi/thru-wallet-ext/blob/main/src/shared/contract/manifest.js",
     license: "https://github.com/buildbyravi/thru-wallet-ext/blob/main/LICENSE",
     releasedPr: "https://github.com/buildbyravi/thru-wallet-ext/pull/16",
+    latestMerge: "https://github.com/buildbyravi/thru-wallet-ext/pull/20",
     release: "https://github.com/buildbyravi/thru-wallet-ext/releases/tag/v1.4.1",
     telegramChannel: "https://t.me/walletext",
     telegramGroup: "https://t.me/+dA8TwsOECcIxZWZl",
   },
-  // Verified against the live Chrome Web Store page on 2026-10-04: the listing finally moved.
-  // 1.4.1, 272 KiB, betanet description, five screenshots, and a linked developer website.
-  // The "Offered by PWNX0" row is gone from the page, so this site stopped claiming it.
-  // Only a changed public page may write to this block — that is what happened here.
+  // Re-read against the live Chrome Web Store page on 2026-10-27. Only a changed public page may
+  // write to this block. Everything below is what that page showed: still 1.4.1, still the
+  // October 4 update, and still the October 4 description — no mention of domains, faucet
+  // policy, token discovery or 0.4.2, because none of those are in this package.
   listing: {
     version: "1.4.1",
     updated: "2026-10-04",
@@ -55,31 +62,47 @@ export const site = {
     languages: "English",
     blurb: "High-performance self-custody wallet and key manager for Thru.",
     network: "betanet",
-    verifiedOn: "2026-10-04",
+    verifiedOn: "2026-10-27",
     permissions: 5,
     screenshots: 5,
+    users: "3 users",
+    rating: "no ratings",
+    dataCollection: "declares no data collected",
   },
-  // The extension's `main` branch after PR #16 merged as `cee006e` on 2026-10-03.
-  // These are the CODE facts, read from src/ at that commit. `auditedCommit`/`auditedOn`
-  // deliberately still point at 4aa55ba: docs/STATUS_AND_ROADMAP.md has not been rewritten
-  // and still opens with "Contract v12, 81 methods". Two artifacts, two fields — see
-  // `auditedDoc` below, which the site renders as its own track rather than hiding.
+  // What that listing contains, read from the package it was built from. The gap between this
+  // block and `site.contract` below is the entire point of this site.
+  storeBuild: {
+    contract: drift.storeContract,
+    methods: drift.storeMethods,
+    routes: drift.storeRoutes,
+    sdk: drift.storePackages,
+    commit: "cee006e",
+    publishedOn: drift.storeDate,
+  },
+  // The extension's `main` branch on 2026-10-27 at 1b9d096. These are CODE facts, read from
+  // src/. `auditedCommit`/`auditedOn` deliberately still point at 4aa55ba: the repository's own
+  // status document has not been rewritten to describe v28, and this site refuses to launder
+  // that. The package number has not moved either — it is still 1.4.1.
   contract: {
-    version: "v15",
-    methods: 83,
+    version: drift.sourceContract,
+    methods: drift.sourceMethods,
+    walletCore: drift.sourceWalletCore,
+    defi: drift.sourceDefi,
+    name: 17,
     popupWidthPx: 400,
     domSinks: 0,
-    sdk: "@thru/sdk@0.4.1",
-    programs: "@thru/programs@0.4.1",
+    sdk: "@thru/sdk@0.4.2",
+    programs: "@thru/programs@0.4.2",
     kdf: "PBKDF2-SHA256 · 600,000",
     cipher: "AES-256-GCM",
     unit: "1 THRU = 1,000,000,000 base units",
     auditedCommit: "4aa55ba",
     auditedOn: "2026-09-26",
     network: "betanet",
-    package: "1.4.1",
-    commit: "cee006e",
-    mergedOn: "2026-10-03",
+    package: drift.packageVersion,
+    commit: drift.sourceCommit,
+    mergedOn: drift.sourceDate,
+    checkedOn: "2026-10-27",
   },
   network: "Betanet testnet only",
   nav: [
@@ -95,10 +118,9 @@ export const site = {
   ],
 } as const;
 
-// The store caught up. Package 1.4.1 was published on 2026-10-04 — the same build as the
-// source release, the same contract, the same network. This block exists to record that the
-// publication is a distinct event with its own date, and to hold the one thing publication
-// does not prove: that anybody ran the package through a browser checklist.
+// The store caught up on 2026-10-04 and then stopped. The package published that day is still
+// the only installable one: same version string, same update date, same description, same 3
+// users on the listing. It is 13 contract versions and 23 days behind main.
 export const storeStatus = {
   state: "published" as "upload-pending" | "in-review" | "published",
   stateLabel: "Published 2026-10-04",
@@ -107,13 +129,15 @@ export const storeStatus = {
   supersededSubmission: "1.4.0",
   publishedOn: "2026-10-04",
   submittedOn: "2026-10-03",
-  daysBehindSource: 1,
-  verifiedOn: "2026-10-04",
+  daysBehindSource: drift.days,
+  contractVersionsBehind: drift.contractVersions,
+  verifiedOn: "2026-10-27",
   note:
-    "Submitted as 1.4.0 on 2026-10-03, never published under that number, re-cut as 1.4.1 after the merge, and approved on 2026-10-04. The live page now carries the betanet description, five screenshots, the token drawer and notification lines, and a linked developer website. Chrome and the source tree describe the same build for the first time since this site started tracking them.",
+    "The listing was re-read on 2026-10-27 and has not moved: version 1.4.1, updated 2026-10-04, 272 KiB, five screenshots, three users, and the same description that shipped with the betanet package. Nothing in the last three weeks of source work — the Domain screen, the faucet policy reads, token discovery, the 0.4.2 packages, any of contract v16 through v28 — is in the package Chrome installs.",
 } as const;
 
-// The source release. PR #16 merged as `cee006e` and shipped as tag v1.4.1 on 2026-10-03.
+// The last source release. PR #16 merged as `cee006e` and shipped as tag v1.4.1 on 2026-10-03.
+// No later tag exists, which is why the store and main still answer to the same version string.
 export const release = {
   state: "published" as "open" | "merged" | "released" | "published",
   version: "1.4.1",
@@ -124,129 +148,147 @@ export const release = {
   pr: 16,
   prUrl: "https://github.com/buildbyravi/thru-wallet-ext/pull/16",
   headline: "Design System v2, betanet + @thru 0.4.1, token drawer, send hardening",
-  contract: "v15",
-  methods: 83,
+  contract: drift.storeContract,
+  methods: drift.storeMethods,
   sdk: "@thru/sdk@0.4.1",
   programs: "@thru/programs@0.4.1",
   network: "betanet",
   rpc: "https://rpc.betanet.thru.org",
   blockSeconds: 6,
   permissions: ["storage", "alarms", "sidePanel", "clipboardRead", "notifications"],
-  routes: 14,
-  tests: "20 suites · 1,641 assertions",
-  checkedOn: "2026-10-04",
+  routes: drift.storeRoutes,
+  tests: "20 suites · 1,641 assertions at release",
+  checkedOn: "2026-10-27",
   note:
-    "Read from the extension repository at cee006e: package 1.4.1, contract v15 with 83 declared methods, @thru packages at 0.4.1, and a CSP whose only connect-src is the betanet RPC. Merged 2026-10-03, tagged the same minute, published to the store the next day.",
+    "Read from the extension repository at cee006e: package 1.4.1, contract v15 with 83 methods, @thru packages at 0.4.1, and a CSP whose only connect-src is the betanet RPC. Merged 2026-10-03, tagged the same minute, published to the store the next day. No tag has been cut since.",
+  stillLatestTag: true,
 } as const;
 
-// The one clock still wrong. `docs/STATUS_AND_ROADMAP.md` was not touched by the merge or the
-// release, so the repository's own summary now describes neither the store build nor its own
-// source tree. Re-read on 2026-10-04: unchanged.
+// Main as of 1b9d096. The package version did not move with the code; this is the block that
+// says so with numbers rather than adjectives.
+export const source = {
+  commit: drift.sourceCommit,
+  mergedOn: drift.sourceDate,
+  package: drift.packageVersion,
+  latestTag: drift.latestTag,
+  contract: drift.sourceContract,
+  methods: drift.sourceMethods,
+  walletCore: drift.sourceWalletCore,
+  defi: drift.sourceDefi,
+  routes: drift.sourceRoutes,
+  sdk: "@thru/sdk@0.4.2",
+  programs: "@thru/programs@0.4.2",
+  network: "betanet",
+  rpc: "https://rpc.betanet.thru.org",
+  permissions: ["storage", "alarms", "sidePanel", "clipboardRead", "notifications"],
+  tests: "36 suites · 2,082 checks",
+  checkedOn: "2026-10-27",
+  note:
+    "Ran locally on 2026-10-27: npm test green across 36 suites (route lifecycle 1,041 checks over 15 routes, contract 157, launchpad quarantine 66, DeFi M0 99, name service 67, DOM 130, and 2,082 `ok` lines in total), and npm run build produced dist/ without warnings. All of that is deterministic and local. It says nothing about a browser.",
+} as const;
+
+// The repository's own status document, re-read on 2026-10-27. It gained a Domain section on
+// 2026-10-27 but still opens with the 2026-10-09 baseline: contract v18, 124 methods.
 export const auditedDoc = {
-  version: "v12",
-  methods: 81,
-  commit: "4aa55ba",
-  date: "2026-09-26",
-  state: "behind both",
-  checkedOn: "2026-10-04",
+  version: "v18",
+  methods: 124,
+  commit: "7883219",
+  date: "2026-10-03",
+  state: "ten versions behind",
+  checkedOn: "2026-10-27",
   note:
-    "docs/STATUS_AND_ROADMAP.md still opens with \"Contract v12, 81 methods\" and names 4aa55ba as the audited baseline. The code beside it exports CONTRACT_VERSION 15 with 83 methods, and the package in the store is built from that code. Until the document is rewritten, this site quotes src/ for behavior and the document only for what the document says.",
+    "docs/STATUS_AND_ROADMAP.md still opens with \"Contract v18, 124 methods\" against a baseline reviewed on 2026-10-03, while src/shared/contract/manifest.js exports CONTRACT_VERSION 28 with 144 methods. The document did get a 2026-10-27 Domain section — real evidence, correctly scoped — but the headline identifiers were not refreshed with it. llms.txt in the same repository still says 14 routes and @thru 0.4.1. This site quotes src/ for code facts and the document only for what the document says.",
 } as const;
 
-// What nobody has done yet. The published package has no recorded browser verification:
-// docs/MANUAL_SMOKE_CHECKLIST.md has 36 rows that expand to 95 individual checkbox cells
-// (most rows are checked twice, popup and side panel, narrow and wide) and none are ticked.
-// Both counts are the same file; quote the unit you mean.
+// What nobody has done yet. Re-read on 2026-10-27: the runbook now holds 100 checkbox cells
+// across 64 lines, and exactly one is ticked — the `/send` popup cell from the 2026-10-04
+// partial run. The recording block at the end of the file still says "routes: 14/14" while the
+// wallet has 15 routes, which is its own small evidence of drift.
 export const unverified = {
-  rows: 36,
-  cells: 95,
-  checked: 0,
+  rows: 64,
+  cells: 100,
+  checked: 1,
   doc: "docs/MANUAL_SMOKE_CHECKLIST.md",
-  checkedOn: "2026-10-04",
+  checkedOn: "2026-10-27",
   note:
-    "Shipping is not verifying. The betanet build went from merge to store in a day on the strength of 20 automated suites, and no manual run through a real Chrome profile is recorded in the repository. The rows most worth a human are the ones newest to the package: duplicate detection while a transfer is still pending, desktop notification delivery, side-panel and popup mutual exclusion, and the dark-mode action grid, drawer ledger, and connection footer.",
+    "One ticked cell out of one hundred. The single pass is a popup-only native betanet send to the tester's own account on 2026-10-04, recorded honestly as a partial run with the charged fee uncaptured. Everything since — the Domain screen and its signed registration, the faucet policy reads, token discovery, cached-first painting, notification delivery, the side panel at any width — has never been opened in a browser by anyone who recorded it.",
 } as const;
 
-// The next contract, already written and not yet merged. Two stacked pull requests in the
-// extension repository carry it: #18 is branched from #17, so they land together or not at
-// all. Read from the PR heads on 2026-10-04 — contract v16 with 81 methods, down from 83,
-// because it retires two mutation endpoints.
-export const incoming = {
-  state: "open" as "open" | "merged",
-  contract: "v16",
-  methods: 81,
-  methodDelta: -2,
-  removes: ["tx.send", "token.transfer"],
-  sourceFiles: 19,
-  suites: 21,
-  packageVersion: "1.4.1",
-  checkedOn: "2026-10-04",
-  prs: [
-    {
-      number: 17,
-      title: "docs: establish mainnet-ready engineering directive",
-      head: "7883219",
-      base: "main",
-      files: 40,
-      commits: 8,
-      url: "https://github.com/buildbyravi/thru-wallet-ext/pull/17",
-    },
-    {
-      number: 18,
-      title: "audit: 2026-10-04 production-rules conformance audit + targeted remediation",
-      head: "97276a7",
-      base: "#17",
-      files: 29,
-      commits: 16,
-      url: "https://github.com/buildbyravi/thru-wallet-ext/pull/18",
-    },
-  ],
-  note:
-    "v16 removes tx.send and token.transfer, the unbound mutation paths left over after every shipped caller moved to the checked methods that bind account and network at the background boundary. The chain also rewrites docs/STATUS_AND_ROADMAP.md to describe v16 with 81 methods, which is the fix for the third clock on this page.",
-  consequence:
-    "Merging it closes the documentation gap and opens a different one. main would describe contract v16 while the package in the Chrome Web Store is contract v15 — and the chain does not bump the package number, so both would be called 1.4.1. A build from main after the merge would answer to the same version string as the store build while speaking a different contract. The fix is a version bump in the same change that merges the chain.",
-} as const;
-
-// Three clocks. Two of them finally agree; the third is the repository's own documentation.
+// Three artifacts, and the two that used to agree no longer do. This is the replacement for the
+// "incoming chain" block: the PRs merged, the chain landed, and nobody bumped the package.
 export const releaseTracks = [
   {
     key: "store",
     label: "Chrome Web Store",
     value: site.listing.version,
     pill: storeStatus.stateLabel,
-    meta: `Updated ${site.listing.updated} · ${site.listing.size} · ${site.listing.permissions} permissions`,
+    meta: `Contract ${drift.storeContract} · ${drift.storeMethods} methods · ${drift.storePackages} · ${drift.storeRoutes} routes`,
     detail:
-      "What Chrome installs today: the betanet build, with listing copy that finally describes it — token drawer, verified custom tokens, desktop notifications, Ctrl+L. It replaced 1.2.0, which had been the only installable version since 2026-09-23.",
+      "What Chrome installs today. Published 2026-10-04 and untouched since: the listing still carries the October description and the October screenshots, and it reports three users. Thirteen contract versions of work are not in it.",
     href: chromeStoreUrl,
     hrefLabel: "Open the listing",
   },
   {
-    key: "release",
-    label: "Source release",
-    value: release.tag,
-    pill: `Merged ${release.mergeCommit} · contract ${release.contract}`,
-    meta: `${release.methods} methods · @thru 0.4.1 · released ${release.publishedOn}`,
+    key: "source",
+    label: "Source · main",
+    value: drift.sourceContract,
+    pill: `${drift.sourceCommit} · package still ${drift.packageVersion}`,
+    meta: `${drift.sourceMethods} methods · ${drift.sourcePackages} · ${drift.sourceRoutes} routes · ${drift.days} days after the store build`,
     detail:
-      "The same build, one day earlier. Clone main at cee006e, run the suite, build dist/, and you get what the store is serving — which is the first time that sentence has been true here.",
-    href: release.url,
-    hrefLabel: `Release ${release.tag}`,
+      "The tree itself: a Domain screen, a faucet that reads the on-chain policy, token auto-discovery, cached-first painting, and contract v16 through v28. The package manifest never moved past 1.4.1 and no tag was cut, so a build from main calls itself the same version as the store build.",
+    href: `https://github.com/buildbyravi/thru-wallet-ext/commit/${drift.sourceCommit}`,
+    hrefLabel: `Commit ${drift.sourceCommit}`,
   },
   {
     key: "audited",
     label: "Audited status doc",
     value: auditedDoc.version,
     pill: auditedDoc.state,
-    meta: `${auditedDoc.methods} methods · ${auditedDoc.date} · ${auditedDoc.commit}`,
+    meta: `${auditedDoc.methods} methods · baseline ${auditedDoc.date} · ${auditedDoc.commit}`,
     detail:
-      "STATUS_AND_ROADMAP.md was not rewritten for the merge or the release, so the repository's own summary describes neither the store build nor the code beside it. A rewrite exists on the open #17 to #18 chain and has not merged.",
+      "The repository's own summary, which now describes a contract ten versions old while claiming a baseline from 2026-10-03. It is not the shipped build and it is not main. It is a third clock, and it is the slowest.",
     href: site.links.statusDoc,
     hrefLabel: "STATUS_AND_ROADMAP.md",
   },
 ] as const;
 
 export const heroMetrics = [
-  { label: "Chrome installs", value: site.listing.version, note: `Betanet build · ${site.listing.updated}` },
-  { label: "Contract", value: release.contract, note: `${release.methods} methods · append-only` },
-  { label: "Smoke rows run", value: `${unverified.checked} of ${unverified.rows}`, note: `${unverified.cells} checks, none ticked` },
-  { label: "Vault", value: "600k", note: "PBKDF2 rounds, then AES-GCM" },
+  {
+    label: "Store build",
+    value: site.listing.version,
+    note: `Contract ${drift.storeContract} · published ${site.listing.updated}`,
+  },
+  {
+    label: "Source contract",
+    value: drift.sourceContract,
+    note: `${drift.sourceMethods} methods · ${drift.sourceRoutes} routes · unreleased`,
+  },
+  {
+    label: "Smoke cells ticked",
+    value: `${unverified.checked} of ${unverified.cells}`,
+    note: "One popup send, 2026-10-04, charged fee unknown",
+  },
+  {
+    label: "Vault",
+    value: "600k",
+    note: "PBKDF2 rounds, then AES-GCM",
+  },
 ] as const;
+
+// The one new product surface a person can name. Numbers are chain facts from the extension's
+// own evidence files, not from the store description, which has never heard of domains.
+export const domains = {
+  route: "/name",
+  provider: "custom registrar",
+  root: "thru",
+  registrarProgram: "ta2vDCBzzptN2qVZgz6PXsCp5cNB7Nef4yeQ3W-OqzZcfF",
+  feePerYear: "1,000 base units",
+  feePerYearHuman: "0.000001 THRU",
+  deployedOn: "2026-10-25",
+  firstLiveRegister: "2026-10-27",
+  readProbe: "2026-10-26",
+  officialRegistry: "not initialized on Betanet",
+  idRoot: "resolves, authority is third-party",
+  note:
+    "The Domain screen offers .thru only: the deployed custom registrar first, the official paid registry when it is the available .thru route. It does not mint beneath .id, whose root authority is another key and which the chain refuses foreign signers for. Registration is a signed broadcast with a 0n header fee; the registrar charges its own configured 1,000 base units per year into a treasury. One live registration through the real background API router produced an on-chain execution result and a lease owned by the test account on 2026-10-27; the rendered review sheet was not exercised, and the charged network fee was not captured.",
+} as const;
