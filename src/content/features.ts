@@ -188,7 +188,7 @@ export const features: Feature[] = [
   },
   {
     title: "A DeFi backend, unreachable by design",
-    body: "Contract v17 and v18 declare 43 methods: program discovery, market reads, risk, launchpad drafts, dex quotes, prepared intents, and one signing method that refuses while gated. Every DEFI_* flag is false in this build, with no URL or storage override. A real AMM swap was executed on Betanet on 2026-10-26 and the swap screen was withdrawn the same day; the dashboard shows no swap tile.",
+    body: "Contract v17 and v18 declare 43 methods: program discovery, market reads, risk, launchpad drafts, dex quotes, prepared intents, and one signing method that refuses while gated. Every DEFI_* flag is false in this build, with no URL or storage override. A real AMM swap was executed on Betanet on 2026-10-26 and the swap screen was withdrawn the same day; the dashboard tile is back to a roadmap toast.",
     status: "PLANNED",
     group: "DeFi (gated)",
   },

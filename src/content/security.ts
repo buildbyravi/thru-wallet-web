@@ -8,8 +8,8 @@ export const securityPrinciples = [
     body: "The contract declares the methods the UI can call — v28 with 144 methods on main, v15 with 83 in the package Chrome installs, v18 with 124 in a status document that has not caught up. Unknown methods fail closed. Contract tests keep route callers and background handlers aligned in both directions, and the surface is append-only except for documented, versioned breaks.",
   },
   {
-    title: "Nine signing methods, one reviewed intent",
-    body: "Signing is a small, named set: native sends, checked token transfers, account registration, the faucet's narrow unlocked path, name registration, and intent.submit — which refuses FEATURE_DISABLED in every shipped build. Contract v28 carries the reviewed network, account, price and expiry into the signing request itself rather than trusting a screen two documents away.",
+    title: "Nine signing methods, named",
+    body: "Signing is a small, enumerable set: tx.sendChecked, token.transferChecked, tx.autoCreateAccount, token.deploy, the four name writes (name.register, name.purchase, name.renewLease, name.claimExpired), and intent.submit — which refuses FEATURE_DISABLED in every shipped build. The faucet claim is deliberately not in it since v13, because an incoming credit is not a spend. Contract v28 carries the reviewed network, account, price and expiry into a name signing request rather than trusting a screen two documents away.",
   },
   {
     title: "No unsafe DOM sinks",
