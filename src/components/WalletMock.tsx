@@ -29,15 +29,13 @@ export function WalletMock() {
             </span>
           </div>
           <p className="mt-6 font-serif text-5xl leading-none font-light tracking-[-0.04em]">12.480</p>
-          <p className="mt-2 text-sm text-paper/70">
-            THRU <span className="mono text-paper/45">· 12,480,000,000 base</span>
-          </p>
+          <p className="mt-2 text-sm text-paper/70">THRU</p>
           <p className="label mt-3 flex items-center gap-2 text-paper/45">
             <span>THRU · USDX · 2 more</span>
             <span aria-hidden="true">›</span>
           </p>
           <div className="mt-5 grid grid-cols-3 gap-2">
-            {["Send", "Receive", "Faucet"].map((action, index) => (
+            {["Send", "Receive", "Swap", "History", "Security", "Faucet"].map((action, index) => (
               <div
                 key={action}
                 className={`rounded-xl px-2 py-3 text-center ${index === 0 ? "bg-accent text-white" : "bg-plate-3 text-paper"}`}
@@ -46,6 +44,11 @@ export function WalletMock() {
               </div>
             ))}
           </div>
+          <div className="mt-2 grid grid-cols-3 gap-2">
+            <div className="rounded-xl bg-plate-3 px-2 py-3 text-center">
+              <p className="label">Domain</p>
+            </div>
+          </div>
           <div className="mt-5 border-t border-white/10 pt-4">
             <div className="flex items-center justify-between">
               <p className="label text-paper/50">Activity</p>
@@ -53,7 +56,6 @@ export function WalletMock() {
             </div>
             <ul className="mt-3 space-y-3">
               <Activity kind="Sent" amount="−0.500 THRU" meta="Block 1,842,201" />
-              <Activity kind="Faucet" amount="+10,000 base" meta="Raw units, not 10,000 THRU" />
               <Activity kind="Received" amount="+2.000 THRU" meta="Block 1,841,994" />
             </ul>
           </div>
@@ -63,12 +65,13 @@ export function WalletMock() {
             <span className="live-dot h-1.5 w-1.5 rounded-full bg-accent" />
             Betanet
           </p>
-          <p className="label text-paper/50">contract v15 · v1.4.1</p>
+          <p className="label text-paper/50">store v15 · main v28</p>
         </div>
       </div>
       <figcaption className="mt-3 text-sm text-warm">
-        Static study of the v1.4.1 build, where the balance box is the token-drawer entry. Not connected. Sample
-        figures only — not a balance, not an address format certification.
+        Static study of the source build: the balance box is the token-drawer entry, the Domain tile sits in its own
+        services row, and Swap still shows a roadmap toast because the swap screen was withdrawn. Not connected.
+        Sample figures only — not a balance, not an address format certification.
       </figcaption>
     </figure>
   );

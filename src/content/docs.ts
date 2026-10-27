@@ -10,7 +10,7 @@ export const docs: Doc[] = [
   {
     slug: "overview",
     title: "Overview",
-    description: "What Thru Wallet is, what it refuses to be, and where to install it.",
+    description: "What Thru Wallet is, what it refuses to be, and which build you are actually installing.",
     tag: "start here",
     markdown: `
 Thru Wallet is an experimental Chrome extension for personal key management and basic account operations on Thru's native Layer 1 betanet. It is unofficial, self-custody, and deliberately narrower than a general dApp wallet.
@@ -23,9 +23,10 @@ The packaged extension is listed on the Chrome Web Store:
 
 - Listing: [Thru Wallet](https://chromewebstore.google.com/detail/thru-wallet/ocahgpmgfeapjnceaknkikanjikhjgok)
 - Extension id: \`ocahgpmgfeapjnceaknkikanjikhjgok\`
-- Listing version: **1.4.1**, updated 2026-10-04, 272 KiB, five permissions — verified against the live page on 2026-10-04
-- Same build as source release **v1.4.1**, merged as \`cee006e\` on 2026-10-03 and published to the store a day later
-- Not verified: all 36 rows of \`docs/MANUAL_SMOKE_CHECKLIST.md\` are unticked — 95 individual checks, since most rows are run twice for popup and side panel
+- Listing version: **1.4.1**, updated 2026-10-04, 272 KiB, five permissions, five screenshots, three users — re-read on the live page on 2026-10-27 and unchanged
+- Store package contract: **v15**, 83 methods, @thru 0.4.1, 14 routes
+- Source, main at \`1b9d096\` (2026-10-27): package **still 1.4.1**, contract **v28**, 144 methods, @thru 0.4.2, 15 routes
+- Not verified: one cell of 100 in \`docs/MANUAL_SMOKE_CHECKLIST.md\` is ticked
 - Source: [buildbyravi/thru-wallet-ext](https://github.com/buildbyravi/thru-wallet-ext)
 - This site: [buildbyravi/thru-wallet-web](https://github.com/buildbyravi/thru-wallet-web)
 
@@ -35,60 +36,53 @@ Use the store unless you are auditing or rebuilding. The full steps live on the 
 
 - Create, import, lock, and unlock a local vault.
 - Hold multiple keyrings and accounts.
-- Read a THRU balance with raw units still visible.
-- Create an on-chain account, claim a faucet where the network supports one, and send native THRU after review.
+- Read a THRU balance, cache first and chain second.
+- Create an on-chain account and send native THRU after review.
 - Show a receive address and QR, plus decoded history when the shape is known.
-- Read token balances and prepare token transfers on official program bindings, with live questions still open.
+- Read token balances, discover incoming tokens, and prepare token transfers on official program bindings.
+- Register a **.thru** name from the Domain screen, and link one you own to the dashboard.
 
 ## What it is not
 
 Thru's own wallet architecture is an embedded, iframe-hosted wallet. There is no published standard yet for third-party extensions to plug into dApps built with Thru's SDKs. This project does **not** inject \`window.thru\`. Rabby, MetaMask, Phantom, and Keplr are UX references only. Thru is not EVM.
 
-## Three artifacts, not one
+The 43-method DeFi surface exists in the contract and is unreachable: every \`DEFI_*\` flag is false. There is no swap tile, no launchpad, and no prediction market. A swap screen did ship on 2026-10-26 and was withdrawn the same day.
 
-| | Chrome Web Store | Source \`main\` | Audited status doc |
+## Three artifacts, one version string
+
+| | Chrome Web Store | Source \`main\` | Status document |
 | --- | --- | --- | --- |
-| Version | **1.4.1**, 2026-10-04 | **1.4.1**, released 2026-10-03 | describes \`4aa55ba\`, 2026-09-26 |
-| Commit | built from \`cee006e\` | \`cee006e\` (PR #16 merged) | \`4aa55ba\` |
-| Contract | v15, 83 methods | v15, 83 methods | claims v12, 81 methods |
-| Packages | @thru 0.4.1 | @thru 0.4.1 | @thru 0.3.16 |
-| Network | betanet RPC | betanet RPC, nothing else in CSP | alphanet RPC |
-| Permissions | 5, adding \`notifications\` | 5, adding \`notifications\` | 4 |
-| State | what Chrome installs today | what the source builds | **behind both** |
+| Version | **1.4.1**, 2026-10-04 | **1.4.1**, commit \`1b9d096\`, 2026-10-27 | baseline 2026-10-03 |
+| Contract | v15, 83 methods | **v28, 144 methods** | claims v18, 124 methods |
+| Routes | 14 | **15 — /name added** | says 14 |
+| Packages | @thru 0.4.1 | @thru 0.4.2 | says 0.4.1 |
+| Verification | never opened in a recorded browser run | 36 local suites, 1 of 100 smoke cells | older than both |
 
-The first two columns finally agree. The betanet work merged on 2026-10-03 as [v1.4.1](https://github.com/buildbyravi/thru-wallet-ext/releases/tag/v1.4.1) and was published to the store on 2026-10-04 — package **1.4.0 had been submitted the day before and was never published**, which is why the release carries the 1.4.1 number. Submission, merge, and publication stayed three separate events, and this site only moved its listing facts when the public page moved.
+The first two columns agree on exactly one thing: the package version. They have been 13 contract versions apart since contract v16 merged on 2026-10-04, hours after the 1.4.1 package was cut, and nobody bumped the number afterwards. A build from \`main\` and an install from the store both call themselves 1.4.1 while speaking v28 and v15.
 
-What the agreement does not include is verification: **0 of 36** rows in \`docs/MANUAL_SMOKE_CHECKLIST.md\` are ticked — **95** individual checks counting popup and side panel separately. The package reached users one day after merge on 20 automated suites and no recorded manual run.
+That is not a documentation bug. It is a release gap, and this site reports it as one.
 
-It also does not last. Contract **v16** is written on the stacked, mergeable chain [#17](https://github.com/buildbyravi/thru-wallet-ext/pull/17) → [#18](https://github.com/buildbyravi/thru-wallet-ext/pull/18): it retires \`tx.send\` and \`token.transfer\`, taking 83 methods down to 81, and rewrites the status document to match. The chain does not bump the package number, so merging it as-is would leave \`main\` describing contract v16 under the same **1.4.1** string the store serves as contract v15.
-
-Shared by all three: 14 routes, one popup stack, a 400px popup, 0 DOM sinks with the ratchet closed, and a vault built on PBKDF2-SHA256 at 600,000 rounds then AES-256-GCM.
-
-Say which artifact you mean. "Thru Wallet supports betanet" is true of the package Chrome installs today and of the source; "Thru Wallet is verified on betanet" is true of neither.
-
-## The chain moved underneath the store build
-
-The extension repository records a managed-genesis reset on 2026-09-26: the single-node alphanet is gone, betanet is Thru's final testnet before mainnet, and the old reverse-engineered program addresses no longer exist on-chain. The published 1.4.1 package points at the betanet RPC and nothing else: \`connect-src\` allows one origin. The alphanet-era 1.2.0 package left the install path on 2026-10-04. Building from \`main\` at \`cee006e\` gets you the same wallet the store serves.
+Say which artifact you mean. "Thru Wallet registers .thru names" is true of the source and false of the package Chrome installs. "Thru Wallet is verified on betanet" is true of neither.
 `,
   },
   {
     slug: "installation",
     title: "Installation",
-    description: "Chrome Web Store first. Unpacked source install when you need to audit the build.",
+    description: "Chrome Web Store first. Unpacked source when you need to audit the build — and know which contract you got.",
     tag: "setup",
     markdown: `
-Two paths. Most people should take the first.
+Two paths, and they no longer produce the same wallet.
 
 ## Chrome Web Store
 
 1. Open the listing: [Thru Wallet on the Chrome Web Store](https://chromewebstore.google.com/detail/thru-wallet/ocahgpmgfeapjnceaknkikanjikhjgok).
 2. Confirm the extension id \`ocahgpmgfeapjnceaknkikanjikhjgok\`, the developer website \`thruwallet.vercel.app\`, and version **1.4.1**.
 3. Add it to Chrome. Pin it. The first run offers to create or import a wallet.
-4. Read the [privacy policy](https://github.com/buildbyravi/thru-wallet-ext/blob/main/PRIVACY.md). The developer discloses that the item does not collect or use your data.
+4. Read the [privacy policy](/privacy). The developer discloses that the item does not collect or use your data.
 
 The listing is community software. It is not an Unto Labs product and it has not been audited.
 
-> The packaged 1.4.1 build targets betanet, which replaced the reset alphanet on 2026-09-26. It is the same code as release v1.4.1, merged as \`cee006e\`. Build from source if you want to audit it or patch it; otherwise the store package is the same thing.
+> The packaged 1.4.1 build targets betanet and speaks **contract v15**. It has no Domain screen, no token discovery, and no 0.4.2 packages. Everything this site documents as source-only is genuinely absent from it.
 
 ## Load unpacked
 
@@ -110,7 +104,7 @@ Then:
 4. Select the \`dist/\` folder, not the repository root.
 5. Pin the extension.
 
-\`npm test\` is deterministic and local. It does not close the browser smoke checklist or the live-chain probes.
+\`npm test\` is deterministic and local: 36 suites, 2,082 checks on 2026-10-27. It does not close the browser smoke checklist, and it does not make a chain fact measured.
 
 ## After it is installed
 
@@ -118,62 +112,114 @@ Then:
 - Select \`dist/\` again after every \`npm run build\`.
 - Do not import a phrase you also use anywhere with real value.
 - Custom networks cannot be activated. If a legacy row appears, Remove is the only action.
+- Register a .thru name on a throwaway account first. The registrar is a live program and the registration is irreversible.
 
 ## Listing versus source
 
-| | Store | Unpacked |
+| | Store | Unpacked \`main\` |
 | --- | --- | --- |
-| Who | Anyone trying the wallet | Someone auditing, patching, or needing betanet now |
-| Version | Listing 1.4.1, 2026-10-04 | The commit you built |
+| Contract | v15, 83 methods | v28, 144 methods |
+| Routes | 14 | 15, including /name |
+| Packages | @thru 0.4.1 | @thru 0.4.2 |
+| Domain screen | absent | present |
+| Version string | 1.4.1 | **also 1.4.1** |
 | Updates | Chrome updates the package | You rebuild dist/ |
-| Contract | v15, as built from \`cee006e\` | v15 at \`main\` (\`cee006e\`) |
-| Network | betanet RPC | betanet RPC |
 
-If those two disagree, the source tree wins for source claims — including over \`docs/STATUS_AND_ROADMAP.md\`, which still describes contract v12. The listing wins for what Chrome will actually install today.
+If those disagree, the source tree wins for source claims — including over \`docs/STATUS_AND_ROADMAP.md\`, which still describes contract v18. The listing wins for what Chrome will actually install today.
 `,
   },
   {
     slug: "features",
     title: "Features",
-    description: "What the extension actually does, grouped, with status that matches the source.",
+    description: "What the extension actually does, grouped, with status that matches the source rather than the listing.",
     tag: "reference",
     markdown: `
 Status words on this site are narrow.
 
 - **STABLE** means the route and the background path exist, and the project treats them as the product.
 - **ALPHA** means the code is real, but a browser check or a live-chain measurement is still open.
-- **NEW** means it arrived in the 1.4.1 package on 2026-10-04. You can install it today, and no manual browser run is recorded against it yet.
+- **NEW** means it is in the source tree and **not** in the 1.4.1 package the store serves. You can build it; you cannot install it.
 - **PLANNED** means it is not a thing you can do in the extension today.
 
 ## Wallet core
 
-Create or import a phrase or a private key. Derive more HD accounts from a seed keyring. Keep several keyrings. Encrypt the vault with PBKDF2 (600,000 SHA-256 iterations) and AES-256-GCM. Ciphertext is in \`chrome.storage.local\`. Decrypted material is only in \`chrome.storage.session\`.
+Create or import a phrase or a private key. Derive more HD accounts from a seed keyring. Keep several keyrings. Encrypt the vault with PBKDF2 (600,000 SHA-256 iterations) and AES-256-GCM, ciphertext in \`chrome.storage.local\`, decrypted material only in \`chrome.storage.session\`.
 
-Auto-lock defaults to 15 minutes and is configurable from 0 to 240, password-gated either way. In 1.2.0 it was a fixed-period alarm despite the label. 1.4.1 stamps \`lastActivityAt\` on every API request and locks on measured idleness, with background sync explicitly not counting as activity — and it adds an immediate lock button plus Ctrl+L.
+Auto-lock defaults to 15 minutes, is configurable from 0 to 240, and is password-gated either way. The 2026-10-26 performance directive went further than the timer: every route now paints from network-scoped cache first and hydrates when the chain replies, so a dead RPC produces labelled stale data instead of a spinner. That rule — the frontend never waits on RPC before first paint — is \`AGENTS.md\` rule 15, and contract v27 added the cached reads that let routes obey it.
 
 ## Daily use
 
-Balances show human-scale THRU and the raw base units. 1 THRU = 1e9 base units. Account creation and faucet claim exist where the network supports them; contract v13 makes a faucet claim unlocked-only rather than signing-gated. Native send goes through review, and contract v15 catches a repeat transfer to the same recipient inside 30 seconds before it is signed. History is one flat stream: block time when known, otherwise \`Block <slot>\`, refreshed every 30 seconds. Optional desktop notifications announce confirm or fail.
+Balances show THRU at human scale. Account creation exists where the network supports it, and a faucet claim where that network declares a faucet.
+
+Native send goes through review, and contract v15 catches a repeat transfer to the same recipient inside 30 seconds before it is signed. History is one flat stream: block time when known, otherwise \`Block <slot>\`, refreshed every 30 seconds. Optional desktop notifications announce confirm or fail.
 
 The popup is 400px. The side panel is an explicit opt-in and does not steal the toolbar click.
 
+## Name service
+
+The Domain screen is a real fifteenth route. One search field, a background availability check, a years stepper, a quote from the on-chain registrar config, a review sheet, a password prompt, a signed registration. On Betanet the deployed custom registrar is the live \`.thru\` route at 0.000001 THRU per year; the official paid registry is not initialized, and \`.id\` resolves but refuses a foreign signer.
+
+Read [the name-service page](/docs/name-service) for what is verified and what is not.
+
 ## Token work
 
-\`token.getBalances\` and \`token.transfer\` are implemented on official \`@thru/programs/token\` bindings. A missing token account is a proven zero. A failed read is unknown. The token-program fee is unmeasured, and the UI is supposed to say so rather than quote the native 1-base-unit fee.
+\`token.getBalances\` and \`token.transferChecked\` are implemented on official \`@thru/programs/token\` bindings. A missing token account is a proven zero. A failed read is unknown. The token-program fee is unmeasured, and the UI says so rather than quoting the native 1-base-unit fee.
 
-The token list lives in a drawer opened from the balance box, and a custom token is added by contract address: \`token.readMint\` reads the mint from the chain and uses its own symbol and decimals, because typed metadata is what made an added token spend the wrong number of base units.
-
-Contacts CRUD is not a shipped screen. Account pin, hide, and order exist on the account routes.
+The token list lives in a drawer opened from the balance box, a custom token is added by contract address with \`token.readMint\` supplying the chain's own symbol and decimals, and \`token.discover\` quietly adds incoming mints found in cached history after verifying each one on chain.
 
 ## Not shipping
 
-Launchpad, DEX, and prediction UI were deleted. A future version of any of them has to be a separate feature module. There is no injected provider.
+Launchpad, DEX, prediction, and any DeFi screen. The backend namespace exists — 43 methods — with every flag false. There is no injected provider. Custom networks stay quarantined.
+`,
+  },
+  {
+    slug: "name-service",
+    title: "The name service",
+    description: "What the Domain screen does, which facts are on-chain, and which parts are still unverified.",
+    tag: "reference",
+    markdown: `
+The Domain screen registers **.thru** names and links one you already own. It is source-only: the 1.4.1 package in the store has no such route.
+
+## What the screen does
+
+- One search field. Typing triggers a debounced availability check in the background; the field never blocks on the chain.
+- The suffix comes from the chain. \`.thru\` is offered when a registrar exists; \`.id\` is resolution data.
+- Registration is a paid lease of 1 to 10 years. The quote is \`fee per year × years\`, read from the on-chain registrar config each time — never a constant in the UI.
+- Review, then sign. Contract v28 carries the reviewed network, account, price and expiry into the signing request, and account switching is locked while a registration is pending.
+- After a confirmed registration the wallet offers to link the name as your primary. Linking verifies ownership and signs nothing.
+
+## Two .thru providers
+
+- **Custom registrar (live).** \`contracts/thru-custom-registrar\`, our own ThruVM program, deployed at \`ta2vDCBzzptN2qVZgz6PXsCp5cNB7Nef4yeQ3W-OqzZcfF\` and initialized with root \`thru\`, a 0.000001 THRU yearly price and a treasury. The screen prefers it and derives every displayed fact from the parsed config.
+- **Official paid registry (absent on Betanet).** The reads and the purchase/renew/claim-expired methods are implemented from first-party formats. The registry is not initialized on Betanet, so those paths answer unsupported there.
+
+If neither provider is readable, the screen says why and renders nothing clickable.
+
+## Fees, honestly
+
+- The header fee on a registration is \`0n\`. The registrar charges its own configured price — 0.000001 THRU per year on Betanet — into the config treasury.
+- The **charged network fee is not reported** by any current response, and no live registration has captured one. Do not present the registrar's price as a network cost.
+- Amounts are BigInt until they cross the bridge, then strings. Registrar totals group matching assets only; two names are two transactions, not an atomic batch.
+
+## .id is not a mint route
+
+The \`.id\` root exists on Betanet and \`name.lookup\` resolves beneath it. Its authority is a third-party key, and the chain refuses a foreign signer with an error rather than a silent failure. The wallet now verifies authority before broadcast and does not offer a registration it knows will be refused.
+
+## What is verified, and what is not
+
+**VERIFIED, read-only, 2026-10-26:** the official paid registry is absent; the custom registrar is present, root-matched, and quotes 0.000001 THRU per year; the \`.id\` root exists; a fresh label was unregistered under both routes.
+
+**VERIFIED, write, 2026-10-27:** one unique \`.thru\` registration through the real background API router returned an on-chain execution result, and a follow-up read confirmed the test account as lease owner. This proves the backend write path. It does not prove the rendered screen, and it did not capture a charged fee.
+
+**UNVERIFIED:** every pixel of the popup flow, the password prompt, the confirmation, a live renewal, custom lease renewal/claim (not wired), enumeration of owned names (unsupported), and any browser run at all.
+
+**TESTED locally:** formatting, validation, eligibility, reviewed account/network/price/expiry facts, unknown submission outcomes, and account-switch locking, in the name suites and the route lifecycle run.
 `,
   },
   {
     slug: "architecture",
     title: "Architecture",
-    description: "UI routes, the single bridge, the API router, services, and sacred adapters.",
+    description: "UI routes, the single bridge, the API router, services, feature modules, and sacred adapters.",
     tag: "reference",
     markdown: `
 The extension is one direction of calls, with the background holding authority.
@@ -184,6 +230,7 @@ src/ui/app/routes/*
 src/background/api-router.js
   -> auth + contract + dispatch
 src/background/services/*
+src/background/features/dex        # flag-gated, unreachable
   -> adapters
 src/lib/vault.js
 src/lib/thru-client.js
@@ -192,7 +239,7 @@ src/lib/networks.js
 
 ## UI route stack
 
-Fourteen routes share the kit, the router, the modal, and the focus trap: welcome, unlock, dashboard, accounts, account, add-account, keyring, export, send, receive, faucet, history, settings, reset.
+Fifteen routes share the kit, the router, the modal, and the focus trap: welcome, unlock, dashboard, accounts, account, add-account, keyring, export, send, receive, faucet, history, **name**, settings, reset. The route lifecycle test mounts all fifteen in no-vault, locked, and unlocked states — 1,041 checks.
 
 ## Bridge
 
@@ -200,7 +247,15 @@ The UI does not call \`chrome.runtime.sendMessage\` except through the bridge. B
 
 ## API router
 
-The manifest is the allowlist. Auth tiers include password and signing. \`tx.registerAccount\` is the narrow unlocked-only signing exception, and only for an exact vault-owned address. The pending v13 step adds a second, equally narrow one: a faucet claim is an incoming credit, so it is unlocked-only too.
+The manifest is the allowlist: 144 methods at v28 — 72 callable while locked, 51 unlocked-only, 12 password-gated, 9 signing-gated. \`tx.registerAccount\` remains the narrow unlocked-only registration exception and \`name.register\` is signing-gated since v23 because it broadcasts an irreversible write.
+
+## Services and cached reads
+
+Account, network, transaction, token, history, settings, name, registration, and vault orchestration live in the background. Contract v27 added storage-only counterparts for the read-heavy surfaces — \`token.getCachedBalances\` beside \`token.getBalances\` — so every route has something to paint before the chain answers. Fetches that fail are not cached, so a cache row is always a complete verified read.
+
+## Feature modules
+
+DeFi lives in \`src/background/features/dex\` and \`src/background/services/defi\`, behind \`DEFI_*\` build-time constants that are all false. There is no query-parameter override and no storage override; the quarantine test proves that surface stays inert. The custom registrar is a separate Rust program in \`contracts/thru-custom-registrar\` with its own client ABI and byte-pin tests, deployed at a single verified address and read for every runtime fact.
 
 ## Networks
 
@@ -208,7 +263,7 @@ The manifest is the allowlist. Auth tiers include password and signing. \`tx.reg
 
 ## Sacred files
 
-Do not casually edit \`src/lib/vault.js\`, \`src/lib/thru-client.js\`, or \`src/lib/networks.js\`. Derivation has golden tests. The betanet release had to touch \`thru-client.js\` for the 0.4.x package shapes and the betanet move — the rename of \`ALPHANET_RPC\` to \`BETANET_RPC\` is the one intentional export change, and the PDA vectors stayed pinned. Program addresses now come from the managed-genesis registry in \`@thru/programs\` rather than from reverse-engineered marker bytes, so a redeployment lands as a version bump instead of a pasted string.
+Do not casually edit \`src/lib/vault.js\`, \`src/lib/thru-client.js\`, or \`src/lib/networks.js\`. Derivation has golden tests. Program addresses come from the managed-genesis registry in \`@thru/programs 0.4.2\` rather than reverse-engineered marker bytes, and the SDK's account-table sort is proven by a sentinel test rather than assumed.
 
 ## Website
 
@@ -218,7 +273,7 @@ This site is not the extension. Product copy lives in \`src/content/\`. The Post
   {
     slug: "security-model",
     title: "Security model",
-    description: "Custody boundary, contract auth, DOM ratchet, and the checks that are still open.",
+    description: "Custody boundary, contract auth, DOM ratchet, build-time gates, and the checks that are still open.",
     tag: "security",
     markdown: `
 > This extension has not had a security review. The notes below are design constraints, not a certification.
@@ -233,40 +288,46 @@ Encrypted vault bytes may persist. Decrypted vault data belongs only in the sess
 
 Signing requires an unlocked wallet. Password re-authentication for ordinary signing is **off by default**. Turning that preference on goes through a password-gated settings path. Generic \`settings.set\` rejects security-sensitive keys.
 
-Do not extend the v12 registration exception to send, faucet, token transfer, export, or contacts.
+Nine methods are signing-gated at v28. Contract v28 binds the reviewed network, account, price and expiry to a name signing request and locks account switching while it is pending, so a reviewed quote cannot be swapped underneath a signature.
+
+Do not extend the v12 registration exception to send, token transfer, export, or contacts.
 
 ## DOM
 
-\`innerHTML\` and related sinks are ratcheted at zero. New interface code uses the kit DOM factory. Lifecycle tests look for a seeded mnemonic, private key, or password in text, attributes, dataset values, input values, and the URL.
+\`innerHTML\` and related sinks are ratcheted at zero. New interface code uses the kit DOM factory. Lifecycle tests mount all 15 routes in three vault states and look for a seeded mnemonic, private key, or password in text, attributes, dataset values, input values, and the URL.
 
 ## Networks
 
-Custom endpoints cannot become active, including by a direct bridge call or by stale storage. Re-enabling them requires HTTPS policy, host permission, a verified capability record, and password re-auth — together, not one at a time. Localnet was removed from the shipped wallet for the same reason: selecting it bound the extension to a localhost endpoint the user may not control.
+Custom endpoints cannot become active, including by a direct bridge call or by stale storage. Re-enabling them requires HTTPS policy, host permission, a verified capability record, and password re-auth — together, not one at a time. Localnet is declared but not offered for the same reason: selecting it bound the extension to a localhost endpoint the user may not control.
 
-## Permissions
+## Build-time gates
 
-1.4.1 requests five: \`storage\`, \`alarms\`, \`sidePanel\`, \`clipboardRead\`, and \`notifications\`. The fifth is new, it is a Settings toggle, and the notification body says only that a transfer confirmed or failed — no amount, address, or signature. The CSP remains \`default-src 'none'\` with \`script-src 'self'\` and a single \`connect-src\` origin.
+Every \`DEFI_*\` flag is a source constant. No message, URL, or stored value can turn a swap on; turning one on is a reviewed commit. The launchpad quarantine test proves the override surface is inert, and the DeFi M0 suite proves each gated handler honours its flag.
+
+## Permissions and CSP
+
+The 1.4.1 package and main both request five permissions: \`storage\`, \`alarms\`, \`sidePanel\`, \`clipboardRead\`, and \`notifications\`. The notification body says only that a transfer confirmed or failed — no amount, address, or signature. The CSP remains \`default-src 'none'\` with \`script-src 'self'\` and a single \`connect-src\` origin, the betanet RPC.
 
 ## What tests do not prove
 
-Layout, real focus, canvas QR, the side panel, clipboard prompts, and service-worker eviction are browser facts. See the [status page](/status).
+Layout, real focus, canvas QR, the side panel, clipboard prompts, notification delivery, and service-worker eviction are browser facts. One of 100 smoke cells is ticked. See the [status page](/status).
 `,
   },
   {
     slug: "roadmap",
     title: "Roadmap",
-    description: "Open browser and chain checks, and the work that is blocked on purpose.",
+    description: "The release gap, the open browser checks, and the work that is blocked on purpose.",
     tag: "planning",
     markdown: `
 Remaining work is independent. Custom networks and a dApp provider stay blocked until their preconditions exist. Do not "helpfully" implement either early.
 
 ## Open
 
-1. Verify what shipped. 1.4.1 is live on the store and all 36 rows of \`docs/MANUAL_SMOKE_CHECKLIST.md\` are unticked. Install the published package, not a local \`dist/\`, and run them for both popup and side panel, including desktop notifications.
-2. Merge the v16 chain with a version bump. #17 and #18 are mergeable and carry contract v16; landing them without a package bump puts two different contracts behind one version string.
-3. Exercise v12 account activation and owned-recipient just-in-time registration on betanet.
-4. Probe token transfer: fee, and a never-registered recipient owner. Run the token lab against a live chain.
-5. Confirm betanet block-time availability, fee source, and the \`?network=betanet\` explorer routes.
+1. **Publish the source.** Main is 13 contract versions past the store package and still calls itself 1.4.1. Bump the package and the tag in the same change that cuts the release, then submit. Two artifacts sharing one version string is the defect this site exists to make visible.
+2. **Verify what shipped, then verify main.** One of 100 smoke cells is ticked and it belongs to a partial popup send on 2026-10-04. Install the published package, run the runbook, then repeat against a main build — whose Domain screen has never been opened in Chrome.
+3. **Drive the domain flow by hand.** A backend registration is on chain as of 2026-10-27. Search, quote, review sheet, password prompt, confirmation, primary link, and a mid-flow account switch attempt are all unverified.
+4. **Measure what a transaction costs.** The token-program fee is unknown, no response reports a charged fee, and the registrar's 1,000-base-unit quote is not a network cost. Capture native, token and registration fees.
+5. **Confirm betanet block time and the explorer route.** Six-second blocks are documented, not re-measured, and the \`?network=betanet\` links are still a manual check.
 
 ## Blocked
 
@@ -274,28 +335,30 @@ Custom network activation waits on four controls at once: HTTPS with a localhost
 
 An extension provider waits on a published Thru contract. The hosted iframe methods are not that contract.
 
+The DeFi surface waits on an owner decision, not on code. The backend is written, gated, and tested; the swap screen was withdrawn on 2026-10-26 after one day.
+
 ## Already done
 
-Launchpad quarantine, route lifecycle coverage, custom-network quarantine, token transfer code, and contract v12 registration plus history cache. Merged as v1.4.1 on 2026-10-03 and published to the store on 2026-10-04: the whole betanet adaptation — @thru 0.4.1 packages, managed-genesis addresses, contract v13 to v15, the token drawer, and inactivity-based auto-lock. Done does not mean live-certified: the manual checklist behind it is still 0 of 36.
+The v16 retirement of the unbound send paths; the 43-method gated DeFi surface; name reads, primary names, and the paid-lease registrar; free and paid .thru registration with reviewed signing facts; token discovery and storage-only cached balances; @thru 0.4.2; and 36 local suites green on 2026-10-27. Done does not mean released, and released does not mean verified.
 `,
   },
   {
     slug: "changelog",
     title: "Changelog",
-    description: "How to read listing versions, contract versions, and desk notes as different objects.",
+    description: "How to read listing versions, contract versions, package versions, and desk notes as different objects.",
     tag: "updates",
     markdown: `
 This site keeps several clocks and refuses to merge them.
 
 - **Listing version**, such as Chrome Web Store 1.4.1 on 2026-10-04. What Chrome installs.
-- **Contract version**, such as v15 in the published build, v12 in a status document that has not caught up, or v16 on an open pull request. Three live numbers; say which.
-- **Package version**, such as 1.4.1 — merged, tagged, and published, but not manually verified.
+- **Package version**, also 1.4.1 — and unchanged on main since 2026-10-03, which is why the release gap is invisible from the outside.
+- **Contract version**, such as v15 in the published build, **v28 on main**, or a status document that still says v18. Three live numbers; say which.
 - **Submission state**, which is not a version at all: submitted, approved, or rejected.
 - **Desk notes**, which are rows in Postgres and can be added without a code change.
 
 The rendered history is on the [changelog](/changelog). Authored entries live in \`src/content/changelog.ts\`. Desk notes are not a release. They are a ledger.
 
-When you add a release, say which artifact moved. A store update that does not bump the contract is still a release. A contract bump that is not in the listing is not yet what Chrome will install. A reviewed pull request is not a release at all — it is a promise with CI attached.
+When you add a release, say which artifact moved. A contract bump that is not in the listing is not yet what Chrome will install — and between 2026-10-04 and 2026-10-27 there were thirteen of those in a row. A store update that does not bump the contract is still a release. A reviewed pull request is not a release at all — it is a promise with CI attached.
 `,
   },
   {
@@ -325,7 +388,8 @@ Preparation only. The human reviews in the extension. The background signs after
 
 - \`wallet_prepare_native_send\`
 - \`wallet_prepare_token_transfer\`
-- Swap and launchpad preparation only after those programs are real and verified.
+- Name registration preparation only after a person has reviewed the quote — the price and expiry are part of the signature at contract v28.
+- Swap and launchpad preparation only after those programs are verified **and** an owner decision ships them. The flags are off today.
 
 ## Forbidden
 
@@ -341,7 +405,7 @@ Account addresses and balances are not secrets, but they are not public telemetr
   {
     slug: "mcp-and-ai",
     title: "MCP and AI policy",
-    description: "How an agent should read this site and the extension repository without overstepping.",
+    description: "How an agent should read this site and the extension repository without overstating either.",
     tag: "AI",
     markdown: `
 Read in this order when working on the extension:
@@ -349,19 +413,21 @@ Read in this order when working on the extension:
 1. \`AGENTS.md\`
 2. \`docs/DOCS_INDEX.md\`
 3. \`docs/STATUS_AND_ROADMAP.md\`
-4. \`CONTEXT.md\`
-5. \`docs/MCP_AGENT_INTEGRATION.md\`
-6. [https://thru.org/docs/llm.txt](https://thru.org/docs/llm.txt)
+4. \`docs/DECISIONS.md\`
+5. \`docs/BACKEND_GAPS.md\`
+6. \`CONTEXT.md\`
+7. [https://thru.org/docs/llm.txt](https://thru.org/docs/llm.txt)
 
 For this website, start with [\`/llms.txt\`](/llms.txt) and [\`/llms-full.txt\`](/llms-full.txt).
 
 ## Rules that do not soften
 
 - Do not request, store, print, or reveal a mnemonic, private key, or password.
-- Do not invent protocol behavior, token fees, explorer routes, or a \`window.thru\` provider.
-- Do not collapse the published package, the \`main\` tree, and the stale status document into one "current version" — the first two match today, the third does not.
-- Do not quote \`docs/STATUS_AND_ROADMAP.md\` version numbers without checking \`src/shared/contract/manifest.js\`; on \`main\` at \`cee006e\` the doc still says v12 while the code exports 15.
-- Do not mark a smoke check passed because a Node test passed.
+- Do not invent protocol behavior, token fees, explorer routes, name prices, or a \`window.thru\` provider.
+- Do not collapse the artifacts. The store serves 1.4.1 / contract v15 / 14 routes; main is 1.4.1 / contract v28 / 15 routes; the status document claims v18 with 124 methods. All three are live descriptions of this project.
+- Do not quote \`docs/STATUS_AND_ROADMAP.md\` version numbers without checking \`src/shared/contract/manifest.js\`; on main at \`1b9d096\` the doc says v18 and 124 while the code exports 28 and 144.
+- Do not treat a gated method as a feature. 43 DeFi methods exist and none is reachable.
+- Do not mark a smoke check passed because a Node test passed, and do not mark a name flow verified because a backend probe reached the chain.
 - Use official SDK and program surfaces when they exist. The pinned packages are the implementation authority for a checkout.
 
 ## This site's machine surfaces
@@ -380,23 +446,25 @@ For this website, start with [\`/llms.txt\`](/llms.txt) and [\`/llms-full.txt\`]
   {
     slug: "content-guide",
     title: "Content guide",
-    description: "Where hero copy, features, docs, and desk notes are edited.",
+    description: "Where hero copy, features, docs, and desk notes are edited — and which numbers must never be guessed.",
     tag: "editing",
     markdown: `
 Authored product copy is TypeScript, so a change is reviewable.
 
 | File | What it feeds |
 | --- | --- |
-| src/content/site.ts | Name, warning, store link, listing facts, contract facts, the store/release/status-doc tracks and the unverified block, nav |
+| src/content/site.ts | Name, warning, store link, listing facts, source contract facts, the store/source/doc tracks and the unverified block, nav |
+| src/content/drift.ts | The gap between the store build and main: version numbers, the v16 → v28 timeline, and the capability list |
 | src/content/features.ts | Feature groups and status badges |
-| src/content/routes.ts | The 14-route table |
+| src/content/routes.ts | The 15-route table |
 | src/content/security.ts | Principles, gaps, signing notes |
-| src/content/architecture.ts | Five-layer flow and contract breaks |
-| src/content/ai.ts | MCP policy tables |
+| src/content/architecture.ts | The layered flow, boundaries, and contract breaks |
+| src/content/ai.ts | MCP policy tables and pasteable context |
 | src/content/roadmap.ts | Numbered open and blocked steps |
 | src/content/changelog.ts | Authored release history |
 | src/content/docs.ts | Docs hub markdown |
 | src/content/smoke.ts | Smoke checklist seed and open doc slots |
+| src/content/privacy.ts | The privacy policy, published at /privacy |
 
 ## Desk
 
@@ -410,15 +478,15 @@ The canonical install URL is exported as \`chromeStoreUrl\` from \`src/content/s
 
 ## Release tracks
 
-\`site.ts\` exports five things that must not be edited as if they were one:
+The content layer exports things that must not be edited as if they were one:
 
-- \`site.listing\` — only ever what the live Chrome Web Store page says. Re-read the page before touching it and record the date in \`verifiedOn\`. A submission, a merge, and a GitHub release are all forbidden from writing here; on 2026-10-04 a changed public page did.
-- \`storeStatus\` — the package in front of the store and the date it was published. \`state\` runs \`upload-pending\` → \`in-review\` → \`published\`, and reaching \`published\` is the only thing that licenses an edit to \`site.listing\`.
-- \`site.contract\` — the code facts on the extension's \`main\` branch, with \`auditedCommit\` and \`auditedOn\` deliberately lagging while the status document does.
-- \`release\` — the merged, tagged source release, with its PR number, merge commit, and tag.
-- \`auditedDoc\` and \`unverified\` — what the repository still claims about itself, and what nobody has checked. Both exist so that "shipped" is never allowed to read as "verified".
+- \`site.listing\` — only ever what the live Chrome Web Store page says. Re-read the page before touching it and record the date in \`verifiedOn\`. A submission, a merge, and a GitHub release are all forbidden from writing here; on 2026-10-27 a re-read confirmed nothing had changed since 2026-10-04.
+- \`storeStatus\` — the package in front of the store and the date it was published. It also carries the distance: 13 contract versions and 23 days.
+- \`release\` — the last merged, tagged source release (v1.4.1, cee006e). There has been no later tag.
+- \`source\` and \`site.contract\` — the code facts on main at \`1b9d096\`: contract v28, 144 methods, 15 routes, @thru 0.4.2, 36 local suites.
+- \`auditedDoc\` and \`unverified\` — what the repository still claims about itself, and what nobody has ticked. Both exist so that "shipped" is never allowed to read as "verified".
 
-\`releaseTracks\` renders the first three on the status page and the homepage. When two of them converge — as the store and the source did on 2026-10-04 — say so explicitly rather than deleting a track; the convergence is the news.
+\`releaseTracks\` renders three of them on the status page and the homepage. When the store and the source converge — as they did on 2026-10-04 — say so; when they diverge — as they did on 2026-10-04 and every day since — say that too. Deleting a track is not allowed. The gap is the finding.
 `,
   },
 ];

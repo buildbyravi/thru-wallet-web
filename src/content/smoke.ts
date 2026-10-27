@@ -16,14 +16,14 @@ export const smokeSeed = [
   {
     itemKey: "side-panel-gesture",
     label: "Side panel opens from Settings",
-    detail: "Settings > Window > Open side panel calls chrome.sidePanel.open from a user gesture.",
+    detail: "The dashboard header control calls chrome.sidePanel.open from a user gesture. Settings carries the Side Panel Mode toggle and no duplicate open button.",
     status: "open",
     sort: 3,
   },
   {
     itemKey: "toolbar-popup",
     label: "Toolbar still opens the popup",
-    detail: "Nothing calls setPanelBehavior. The toolbar icon must keep opening the popup.",
+    detail: "Nothing calls setPanelBehavior outside the settings toggle. With the toggle off, the toolbar icon must keep opening the popup.",
     status: "open",
     sort: 4,
   },
@@ -104,27 +104,64 @@ export const smokeSeed = [
     status: "open",
     sort: 15,
   },
+  {
+    itemKey: "domain-route",
+    label: "Domain screen mounts and searches",
+    detail: "Source only, no store package. The Domain tile opens /name; typing a label checks availability in the background without blocking the field; the status line names the root it is asking about.",
+    status: "open",
+    sort: 16,
+  },
+  {
+    itemKey: "domain-register",
+    label: "Register a .thru name from the popup",
+    detail: "Source only. Quote, years stepper, review sheet, password prompt, broadcast, confirmation, and a primary-name link afterwards. Backend evidence exists from 2026-10-27; no rendered run does.",
+    status: "open",
+    sort: 17,
+  },
+  {
+    itemKey: "domain-switch-lock",
+    label: "Account switching is locked mid-registration",
+    detail: "Contract v28. Start a registration and try to switch accounts before signing. The switch must be refused rather than quietly changing what the signature covers.",
+    status: "open",
+    sort: 18,
+  },
+  {
+    itemKey: "cached-paint",
+    label: "Routes paint before the chain answers",
+    detail: "Source only, contract v27 and AGENTS.md rule 15. Block the RPC, reopen dashboard, history and tokens: cached rows or an explicit unknown appear immediately, and stale data is labelled rather than dressed as fresh.",
+    status: "open",
+    sort: 19,
+  },
 ] as const;
 
 export const docSlots = [
   {
-    title: "Per-listing release note",
-    detail: "1.4.1 ran submitted 2026-10-03, merged 2026-10-03, published 2026-10-04. Keep recording those as three dates, not one: the next release will not necessarily collapse them either.",
+    title: "Store submission transcript",
+    detail:
+      "The next package has to be cut, bumped and submitted. Record the version, the tag, the submission date and the approval date as separate events — the 1.4.0/1.4.1 sequence is the reason this slot exists.",
   },
   {
-    title: "Store copy diff",
-    detail: "Closed on 2026-10-04: the betanet copy, five permissions, and the new screenshots went live with the package rather than after it. Re-open it the next time extension.md changes without the dashboard changing — extension.md still records the last sync as 2026-09-30.",
+    title: "Domain run transcript",
+    detail:
+      "Paste a real browser pass of /name — search, quote, review, password, confirmation, primary link — only after someone has run it. Backend evidence from 2026-10-27 is not this.",
   },
   {
     title: "Smoke run transcript",
-    detail: "Paste a completed Chrome pass here only after the manual checklist is actually run. Do not mark it done from Node.",
+    detail:
+      "Paste a completed Chrome pass here only after the manual checklist is actually run. One cell of one hundred is ticked, and it belongs to a partial run on 2026-10-04.",
+  },
+  {
+    title: "Charged-fee ledger",
+    detail:
+      "Nothing in the wallet reports what a transaction actually cost. Transaction detail says feeCharged: false, and the send fee is a single historical observation. Capture native, token and registration fees before writing a fee page.",
+  },
+  {
+    title: "DeFi re-ship decision",
+    detail:
+      "The 43-method DeFi surface is unreachable and the swap screen was withdrawn on 2026-10-26. Write the decision before any flag is flipped again — not a changelog entry after the fact.",
   },
   {
     title: "Extension provider watch",
     detail: "Open only when Thru publishes an extension or bring-your-own-signer contract worth validating.",
-  },
-  {
-    title: "Fifteenth route",
-    detail: "If a new route ships, add it to routes.ts, the contract note, and the lifecycle sentence together.",
   },
 ] as const;

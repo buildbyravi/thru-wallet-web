@@ -1,7 +1,7 @@
 export const routes = [
   { path: "/welcome", use: "First-run create or import" },
   { path: "/unlock", use: "Password unlock" },
-  { path: "/dashboard", use: "Balances and primary actions" },
+  { path: "/dashboard", use: "Balances, action tiles, Domain tile" },
   { path: "/accounts", use: "Account list, pin, hide, order" },
   { path: "/account", use: "Single-account detail" },
   { path: "/add-account", use: "Derive or import another account" },
@@ -9,8 +9,9 @@ export const routes = [
   { path: "/export", use: "Password-gated secret export" },
   { path: "/send", use: "Native or token send, then review" },
   { path: "/receive", use: "Address and QR" },
-  { path: "/faucet", use: "Betanet faucet claim" },
+  { path: "/faucet", use: "Faucet claim where the network supports one" },
   { path: "/history", use: "Decoded activity stream" },
+  { path: "/name", use: "Domain search, register, renew" },
   { path: "/settings", use: "Network, lock, window, security" },
   { path: "/reset", use: "Destroy the local vault" },
 ] as const;

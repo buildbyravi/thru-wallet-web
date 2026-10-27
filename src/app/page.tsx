@@ -8,13 +8,13 @@ import { Section } from "@/components/Section";
 import { StoreButton } from "@/components/StoreButton";
 import { WalletMock } from "@/components/WalletMock";
 import { changelog } from "@/content/changelog";
+import { drift, sinceStore } from "@/content/drift";
 import { featureGroups, features } from "@/content/features";
 import { securityPrinciples } from "@/content/security";
 import {
   chromeStoreUrl,
   extensionId,
   heroMetrics,
-  incoming,
   release,
   releaseTracks,
   site,
@@ -74,29 +74,25 @@ export default async function HomePage() {
             <div>
               <p className="label text-paper/55">Extension · Chrome Web Store</p>
               <h2 className="mt-3 font-serif text-3xl leading-tight font-light tracking-[-0.03em] sm:text-4xl">
-                The store build is the betanet build.
+                The store build is still the betanet build.
               </h2>
               <p className="mt-3 max-w-xl text-paper/75">
                 {site.listing.blurb} Version {site.listing.version}, updated {formatDay(site.listing.updated)}. Use this
                 link unless you are loading <span className="mono text-paper">dist/</span> from source.
               </p>
               <p className="mt-3 max-w-xl text-sm text-paper/60">
-                Published {formatDay(storeStatus.publishedOn)}, one day after the source release {release.tag} it was
-                built from — contract {release.contract}, betanet, five permissions. It replaced{" "}
-                {site.listing.previousVersion}, the {site.listing.previousNetwork}-era package that had been the only installable version since {formatDay(site.listing.previousUpdated)}. What
-                it has not had is a human in a browser: {unverified.checked} of {unverified.rows} manual smoke rows are
-                ticked.
+                Published {formatDay(storeStatus.publishedOn)} and untouched since: contract {drift.storeContract},{" "}
+                {drift.storeMethods} methods, {drift.storeRoutes} routes, {drift.storePackages}. The listing still shows
+                the October description and {site.listing.users}. It has not had a human in a browser either —{" "}
+                {unverified.checked} of {unverified.cells} manual smoke cells is ticked.
               </p>
               <p className="mono mt-4 text-xs break-all text-paper/55">{chromeStoreUrl}</p>
             </div>
             <div className="flex flex-col items-start gap-3">
               <StoreButton variant="ghost" label="Add extension" />
-              <a
-                className="text-sm text-paper/70 underline underline-offset-4"
-                href={site.links.privacy} target="_blank" rel="noopener noreferrer"
-              >
+              <Link className="text-sm text-paper/70 underline underline-offset-4" href="/privacy">
                 Privacy policy
-              </a>
+              </Link>
             </div>
           </div>
         </section>
@@ -104,23 +100,24 @@ export default async function HomePage() {
         <section className="mt-8">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <h2 className="font-serif text-3xl leading-tight font-light tracking-[-0.03em]">
-              Three artifacts. Two of them now agree.
+              Three artifacts. One version string.
             </h2>
             <Link className="label text-accent-dark" href="/status">
               Status detail
             </Link>
           </div>
           <p className="mt-3 max-w-3xl text-sm text-warm">
-            Temporarily. Contract {incoming.contract} is already written on the open #{incoming.prs[0].number} to #
-            {incoming.prs[1].number} chain, and it retires {incoming.removes.join(" and ")}. The day that merges, the
-            source stops matching the package you can install.
+            The store package and the source tree were the same build until contract v16 merged on 2026-10-04, hours
+            after the package was cut. Since then the store has served contract {drift.storeContract} while main speaks{" "}
+            {drift.sourceContract} — {drift.contractVersions} contract versions and {drift.days} days apart, under a
+            package number that never moved.
           </p>
           <div className="mt-5 grid gap-4 md:grid-cols-3">
             {releaseTracks.map((track) => (
               <article
                 key={track.key}
                 className={`rounded-2xl border p-5 ${
-                  track.key === "release" ? "border-accent-dark bg-accent-light/40" : "border-rule bg-paper-2/40"
+                  track.key === "source" ? "border-accent-dark bg-accent-light/40" : "border-rule bg-paper-2/40"
                 }`}
               >
                 <p className="label text-warm">{track.label}</p>
@@ -134,6 +131,28 @@ export default async function HomePage() {
                 >
                   {track.hrefLabel}
                 </a>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-rule bg-paper-2/40 p-6">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p className="label text-warm">Source only · absent from the store package</p>
+              <h2 className="mt-2 font-serif text-3xl leading-tight font-light tracking-[-0.03em]">
+                What 1.4.1 has never contained.
+              </h2>
+            </div>
+            <Link className="label text-accent-dark" href="/docs/name-service">
+              Name service detail
+            </Link>
+          </div>
+          <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {sinceStore.map((item) => (
+              <article key={item.key} className="border-t border-rule pt-4">
+                <h3 className="font-serif text-xl tracking-[-0.02em]">{item.title}</h3>
+                <p className="mt-2 text-sm text-warm">{item.detail}</p>
               </article>
             ))}
           </div>
@@ -153,7 +172,7 @@ export default async function HomePage() {
           id="features"
           kicker="Features"
           title="What the extension actually does."
-          lede="Grouped the way the product is used. Planned means it is not in the extension today."
+          lede="Grouped the way the product is used. New means the source has it and the store package does not. Planned means the extension cannot do it today."
           action={
             <Link className="label text-accent-dark" href="/features">
               Full feature index

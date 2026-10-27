@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
-import { release, site } from "@/content/site";
+import { drift } from "@/content/drift";
+import { site } from "@/content/site";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -29,7 +30,7 @@ export default function OpenGraphImage() {
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 24 }}>
           <span>Chrome Web Store · v{site.listing.version}</span>
-          <span>Source {release.tag} · unofficial</span>
+          <span>Store {drift.storeContract} · main {drift.sourceContract} · unofficial</span>
         </div>
       </div>
     ),

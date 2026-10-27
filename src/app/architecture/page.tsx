@@ -17,7 +17,7 @@ export default function ArchitecturePage() {
       <PageHeader
         kicker="Architecture"
         title="Authority sits in the background."
-        lede={`${architectureFlow.length} layers. ${routeCount} routes. Contract ${site.contract.version} with ${site.contract.methods} methods in the published build, ${auditedDoc.version} in a status document that has not caught up. The UI asks. The background decides.`}
+        lede={`${architectureFlow.length} layers. ${routeCount} routes on main, ${site.storeBuild.routes} in the store package. Contract ${site.contract.version} with ${site.contract.methods} methods on main, ${site.storeBuild.contract} with ${site.storeBuild.methods} in the package Chrome installs, and ${auditedDoc.version} in a status document that has not caught up. The UI asks. The background decides.`}
       />
       <div className="mt-10">
         <ArchDiagram />
@@ -36,9 +36,9 @@ export default function ArchitecturePage() {
         </ul>
       </section>
       <section className="mt-14">
-        <h2 className="font-serif text-3xl font-light tracking-[-0.03em]">Fourteen routes</h2>
+        <h2 className="font-serif text-3xl font-light tracking-[-0.03em]">Fifteen routes</h2>
         <p className="mt-3 max-w-2xl text-warm">
-          One stack. No legacy popup fallback. Every route is mounted by the lifecycle test in no-vault, locked, and unlocked states.
+          One stack. No legacy popup fallback. Every route is mounted by the lifecycle test in no-vault, locked, and unlocked states — 1,041 checks. The Domain screen is the fifteenth, added 2026-10-09 and present in no published package.
         </p>
         <div className="mt-6">
           <RouteTable />
@@ -46,7 +46,9 @@ export default function ArchitecturePage() {
       </section>
       <section className="mt-14">
         <h2 className="font-serif text-3xl font-light tracking-[-0.03em]">Documented contract breaks</h2>
-        <p className="mt-3 max-w-2xl text-warm">The contract is append-only, except these security changes, which are called out rather than hidden. Steps v13 to v15 shipped in the 1.4.1 package, published to the store on 2026-10-04.</p>
+        <p className="mt-3 max-w-2xl text-warm">
+          The contract is append-only, except these changes, which are called out rather than hidden. Anything from v16 up is on main and in no published package: the store build stopped at v15 on 2026-10-04.
+        </p>
         <ol className="mt-6 divide-y divide-rule border-y border-rule">
           {contractBreaks.map((item) => (
             <li key={item.version} className="grid gap-2 py-4 sm:grid-cols-[5rem_1fr]">
