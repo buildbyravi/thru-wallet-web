@@ -28,6 +28,7 @@ export const drift = {
   days: 23,
   packageVersion: "1.4.1",
   latestTag: "v1.4.1",
+  swapWithdrawnOn: "2026-10-26",
 } as const;
 
 export interface TimelineEntry {

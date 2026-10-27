@@ -194,10 +194,10 @@ export const auditedDoc = {
   methods: 124,
   commit: "7883219",
   date: "2026-10-03",
-  state: "ten versions behind",
+  state: "behind main",
   checkedOn: "2026-10-27",
   note:
-    "docs/STATUS_AND_ROADMAP.md still opens with \"Contract v18, 124 methods\" against a baseline reviewed on 2026-10-03, while src/shared/contract/manifest.js exports CONTRACT_VERSION 28 with 144 methods. The document did get a 2026-10-27 Domain section — real evidence, correctly scoped — but the headline identifiers were not refreshed with it. llms.txt in the same repository still says 14 routes and @thru 0.4.1. This site quotes src/ for code facts and the document only for what the document says.",
+    "docs/STATUS_AND_ROADMAP.md still opens with \"Contract v18, 124 methods\" against a baseline reviewed on 2026-10-03, while src/shared/contract/manifest.js exports CONTRACT_VERSION 28 with 144 methods — so the document is ten versions behind main and describes a version the store package never reached. The document did get a 2026-10-27 Domain section — real evidence, correctly scoped — but the headline identifiers were not refreshed with it. llms.txt in the same repository still says 14 routes and @thru 0.4.1. This site quotes src/ for code facts and the document only for what the document says.",
 } as const;
 
 // What nobody has done yet. Re-read on 2026-10-27: the runbook now holds 100 checkbox cells
@@ -210,13 +210,24 @@ export const unverified = {
   checked: 1,
   doc: "docs/MANUAL_SMOKE_CHECKLIST.md",
   checkedOn: "2026-10-27",
+  // The previous record, kept rather than overwritten. The runbook was re-counted on 2026-10-27
+  // (the /name row and the Domain checks were added, and one cell was ticked); the 2026-10-04
+  // numbers remain true of the 2026-10-04 file and stay quotable.
+  prior: {
+    rows: 36,
+    cells: 95,
+    checked: 0,
+    asOf: "2026-10-04",
+  },
   note:
     "One ticked cell out of one hundred. The single pass is a popup-only native betanet send to the tester's own account on 2026-10-04, recorded honestly as a partial run with the charged fee uncaptured. Everything since — the Domain screen and its signed registration, the faucet policy reads, token discovery, cached-first painting, notification delivery, the side panel at any width — has never been opened in a browser by anyone who recorded it.",
 } as const;
 
-// Three artifacts, and the two that used to agree no longer do. This is the replacement for the
-// "incoming chain" block: the PRs merged, the chain landed, and nobody bumped the package.
-export const releaseTracks = [
+// FIVE ARTIFACTS, VERIFIED SEPARATELY. This is the site's audit spine and it is not allowed to
+// collapse: what Chrome installs, what the source tree is, what the repository claims about
+// itself, what has actually been checked, and what exists but is deliberately not reachable.
+// They move on different days. Any sentence that averages two of them is wrong.
+export const artifacts = [
   {
     key: "store",
     label: "Chrome Web Store",
@@ -224,7 +235,7 @@ export const releaseTracks = [
     pill: storeStatus.stateLabel,
     meta: `Contract ${drift.storeContract} · ${drift.storeMethods} methods · ${drift.storePackages} · ${drift.storeRoutes} routes`,
     detail:
-      "What Chrome installs today. Published 2026-10-04 and untouched since: the listing still carries the October description and the October screenshots, and it reports three users. Thirteen contract versions of work are not in it.",
+      "What Chrome installs today. Published 2026-10-04 and untouched since: the listing still carries the October description and the October screenshots, and it reports three users. Thirteen contract versions of source work are not in it.",
     href: chromeStoreUrl,
     hrefLabel: "Open the listing",
   },
@@ -235,7 +246,7 @@ export const releaseTracks = [
     pill: `${drift.sourceCommit} · package still ${drift.packageVersion}`,
     meta: `${drift.sourceMethods} methods · ${drift.sourcePackages} · ${drift.sourceRoutes} routes · ${drift.days} days after the store build`,
     detail:
-      "The tree itself: a Domain screen, a faucet that reads the on-chain policy, token auto-discovery, cached-first painting, and contract v16 through v28. The package manifest never moved past 1.4.1 and no tag was cut, so a build from main calls itself the same version as the store build.",
+      "The tree itself, read on 2026-10-27: a Domain screen, a faucet that reads the on-chain policy, token auto-discovery, cached-first painting, and contract v16 through v28. The package manifest never moved past 1.4.1 and no tag was cut, so a build from main calls itself the same version as the store build.",
     href: `https://github.com/buildbyravi/thru-wallet-ext/commit/${drift.sourceCommit}`,
     hrefLabel: `Commit ${drift.sourceCommit}`,
   },
@@ -246,9 +257,31 @@ export const releaseTracks = [
     pill: auditedDoc.state,
     meta: `${auditedDoc.methods} methods · baseline ${auditedDoc.date} · ${auditedDoc.commit}`,
     detail:
-      "The repository's own summary, which now describes a contract ten versions old while claiming a baseline from 2026-10-03. It is not the shipped build and it is not main. It is a third clock, and it is the slowest.",
+      "The repository's own summary: contract v18 with 124 methods against a 2026-10-03 baseline, while the code beside it exports v28 with 144. It is ahead of the store package, which never reached v18, and ten versions behind main. Of the five it is the slowest, and the only one that is a document describing code.",
     href: site.links.statusDoc,
     hrefLabel: "STATUS_AND_ROADMAP.md",
+  },
+  {
+    key: "verified",
+    label: "Verification",
+    value: `${unverified.checked} of ${unverified.cells}`,
+    pill: "cells ticked",
+    meta: `Prior record: ${unverified.prior.checked} of ${unverified.prior.rows} rows (${unverified.prior.cells} cells) on ${unverified.prior.asOf}`,
+    detail:
+      "One ticked cell out of one hundred, and it is the popup /send cell from a partial run on 2026-10-04 whose charged fee was never captured. The runbook grew from 36 rows / 95 cells to 64 lines / 100 cells; both counts are the same file, so both stay on the record. No browser run of the published package exists.",
+    href: site.links.smokeDoc,
+    hrefLabel: "MANUAL_SMOKE_CHECKLIST.md",
+  },
+  {
+    key: "deferred",
+    label: "Deferred surface",
+    value: "43",
+    pill: "methods behind false flags",
+    meta: `DeFi contract surface · swap screen withdrawn ${drift.swapWithdrawnOn} · ${drift.routesAdded} route added elsewhere`,
+    detail:
+      "Written, tested, and unreachable: program discovery, market reads, launchpad drafts, dex quotes, prepared intents. The swap screen shipped on 2026-10-26 and was withdrawn the same day. Custom networks stay quarantined and no dApp provider exists. This block replaces the old \"v16 incoming\" artifact, because v16 merged.",
+    href: site.links.decisions,
+    hrefLabel: "docs/DECISIONS.md",
   },
 ] as const;
 

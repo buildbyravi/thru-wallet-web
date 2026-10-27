@@ -32,11 +32,13 @@ Privacy: ${site.links.privacy}
 
 ${site.warning}
 
-## Three artifacts, one version string
+## Five artifacts, verified separately
 
 - Chrome Web Store: package ${drift.packageVersion}, published ${drift.storeDate}, contract ${drift.storeContract}, ${drift.storeMethods} methods, ${drift.storeRoutes} routes, ${drift.storePackages}. What Chrome installs. No Domain screen.
 - Source main at ${drift.sourceCommit} (${drift.sourceDate}): package still ${drift.packageVersion}, contract ${drift.sourceContract}, ${drift.sourceMethods} methods (${drift.sourceWalletCore} wallet-core + ${drift.sourceDefi} gated DeFi), ${drift.sourceRoutes} routes, ${drift.sourcePackages}. No tag after ${release.tag}.
-- docs/STATUS_AND_ROADMAP.md: still opens with contract ${auditedDoc.version}, ${auditedDoc.methods} methods against a ${auditedDoc.date} baseline.
+- docs/STATUS_AND_ROADMAP.md: still opens with contract ${auditedDoc.version}, ${auditedDoc.methods} methods against a ${auditedDoc.date} baseline — behind main, ahead of the store.
+- Verification: ${unverified.checked} of ${unverified.cells} runbook cells ticked (prior record ${unverified.prior.checked} of ${unverified.prior.rows} rows / ${unverified.prior.cells} cells as of ${unverified.prior.asOf}).
+- Deferred surface: ${drift.sourceDefi} DeFi methods behind false flags, swap screen withdrawn ${drift.swapWithdrawnOn}, custom networks quarantined, no injected provider.
 
 The store package was cut from the same commit as the source release (${drift.storeDate}). Contract v16 merged the same day, and main has been ${drift.contractVersions} contract versions ahead ever since — under one unchanged package number. Do not collapse them.
 

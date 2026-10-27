@@ -48,19 +48,21 @@ Thru's own wallet architecture is an embedded, iframe-hosted wallet. There is no
 
 The 43-method DeFi surface exists in the contract and is unreachable: every \`DEFI_*\` flag is false. There is no swap tile, no launchpad, and no prediction market. A swap screen did ship on 2026-10-26 and was withdrawn the same day.
 
-## Three artifacts, one version string
+## Five artifacts, verified separately
 
-| | Chrome Web Store | Source \`main\` | Status document |
-| --- | --- | --- | --- |
-| Version | **1.4.1**, 2026-10-04 | **1.4.1**, commit \`1b9d096\`, 2026-10-27 | baseline 2026-10-03 |
-| Contract | v15, 83 methods | **v28, 144 methods** | claims v18, 124 methods |
-| Routes | 14 | **15 — /name added** | says 14 |
-| Packages | @thru 0.4.1 | @thru 0.4.2 | says 0.4.1 |
-| Verification | never opened in a recorded browser run | 36 local suites, 1 of 100 smoke cells | older than both |
+| | Chrome Web Store | Source \`main\` | Status document | Verification | Deferred surface |
+| --- | --- | --- | --- | --- | --- |
+| Reads | published 2026-10-04 | commit \`1b9d096\`, 2026-10-27 | baseline 2026-10-03 | runbook 2026-10-27 | flags reviewed 2026-10-26 |
+| Contract | v15, 83 methods | **v28, 144 methods** | claims v18, 124 methods | n/a | 43 methods, all gates false |
+| Routes | 14 | **15 — /name added** | says 14 | 15 mounted locally | none reachable |
+| Packages | @thru 0.4.1 | @thru 0.4.2 | says 0.4.1 | n/a | n/a |
+| State | what Chrome installs | what the tree builds | behind main, ahead of the store | 1 of 100 cells ticked | written, tested, withdrawn |
 
-The first two columns agree on exactly one thing: the package version. They have been 13 contract versions apart since contract v16 merged on 2026-10-04, hours after the 1.4.1 package was cut, and nobody bumped the number afterwards. A build from \`main\` and an install from the store both call themselves 1.4.1 while speaking v28 and v15.
+The store and source columns agree on exactly one thing: the package version. They have been 13 contract versions apart since contract v16 merged on 2026-10-04, hours after the 1.4.1 package was cut, and nobody bumped the number afterwards. A build from \`main\` and an install from the store both call themselves 1.4.1 while speaking v28 and v15.
 
 That is not a documentation bug. It is a release gap, and this site reports it as one.
+
+The last two columns are artifacts too, and they are the ones people skip. Verification is a count, not an adjective: one ticked cell out of one hundred, from a partial popup run on 2026-10-04. Deferred surface is code that exists and cannot be reached: 43 DeFi methods behind false flags, a swap screen that lived one afternoon, custom networks quarantined, no injected provider. Neither column is allowed to borrow the other's confidence.
 
 Say which artifact you mean. "Thru Wallet registers .thru names" is true of the source and false of the package Chrome installs. "Thru Wallet is verified on betanet" is true of neither.
 `,
@@ -485,7 +487,7 @@ The content layer exports things that must not be edited as if they were one:
 - \`source\` and \`site.contract\` — the code facts on main at \`1b9d096\`: contract v28, 144 methods, 15 routes, @thru 0.4.2, 36 local suites.
 - \`auditedDoc\` and \`unverified\` — what the repository still claims about itself, and what nobody has ticked. Both exist so that "shipped" is never allowed to read as "verified".
 
-\`releaseTracks\` renders three of them on the status page and the homepage. When the store and the source converge — as they did on 2026-10-04 — say so; when they diverge — as they did on 2026-10-04 and every day since — say that too. Deleting a track is not allowed. The gap is the finding.
+\`artifacts\` renders all five on the status page and the homepage: store, source, audited document, verification, deferred surface. When two of them converge — as the store and the source did on 2026-10-04 — say so; when they diverge — as they did the same day, when contract v16 merged hours after the package was cut — say that too. A column is never deleted to make the table look tidy. \`unverified.prior\` keeps the previous count (0 of 36 rows, 95 cells) beside the current one (1 of 100 cells) so neither is presented as a correction of the other.
 `,
   },
 ];

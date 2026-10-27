@@ -4,6 +4,7 @@ import { drift } from "@/content/drift";
 import { features } from "@/content/features";
 import { routeCount } from "@/content/routes";
 import {
+  artifacts,
   auditedDoc,
   chromeStoreUrl,
   domains,
@@ -49,6 +50,8 @@ export async function GET() {
     source,
     // The distance between the two, so a machine reader cannot average them.
     drift,
+    // The audit spine: store, source, audited document, verification, deferred surface.
+    artifacts: artifacts.map(({ key, label, value, pill, meta }) => ({ key, label, value, pill, meta })),
     release,
     auditedDoc,
     unverified,
