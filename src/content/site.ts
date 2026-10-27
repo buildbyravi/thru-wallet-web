@@ -218,8 +218,9 @@ export const unverified = {
     "One ticked cell out of one hundred. The single pass is a popup-only native betanet send to the tester's own account on 2026-10-04, recorded honestly as a partial run with the charged fee uncaptured. Everything since — the Domain screen and its signed registration, token discovery, cached-first painting, notification delivery, the side panel at any width — has never been opened in a browser by anyone who recorded it.",
 } as const;
 
-// Three artifacts, and the two that used to agree no longer do. This is the replacement for the
-// "incoming chain" block: the PRs merged, the chain landed, and nobody bumped the package.
+// Three artifacts. The store build and the source tree were last the same build on 2026-10-04; the
+// status document has never described either during that window. This block replaces the retired
+// "incoming chain" track — those PRs merged, the chain landed, and nobody bumped the package.
 export const releaseTracks = [
   {
     key: "store",
