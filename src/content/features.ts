@@ -68,20 +68,14 @@ export const features: Feature[] = [
   },
   {
     title: "Balances in human-scale THRU",
-    body: "1 THRU = 1e9 base units. The human amount is primary. Raw units stay visible underneath so a faucet credit of 10000 base units cannot be mistaken for 10000 THRU.",
+    body: "1 THRU = 1e9 base units. The human amount is primary. Raw units stay visible underneath, so a small credit cannot be mistaken for whole THRU.",
     status: "STABLE",
     group: "Daily Use",
   },
   {
-    title: "Account creation and faucet claims",
-    body: "Create the on-chain account and claim from the faucet where the active network supports one. Betanet's faucet is a managed program whose vault credits 10,000 base units per claim.",
+    title: "Account creation",
+    body: "Create the on-chain account on the active network, and claim from a faucet where that network declares one.",
     status: "STABLE",
-    group: "Daily Use",
-  },
-  {
-    title: "A faucet that reads the policy first",
-    body: "Contract v24 adds tx.getFaucetLimit: the claim screen reads the on-chain rate-limit policy and this account's own buckets, so a refusal is explained before a transaction is built. Rate-limited chain errors now surface as FAUCET_RATE_LIMITED instead of a generic failure. The cap is exactly 10,000 base units per transaction — 10,001 reverts — measured live on 2026-10-24. Source only.",
-    status: "NEW",
     group: "Daily Use",
   },
   {

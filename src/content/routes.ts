@@ -9,7 +9,7 @@ export const routes = [
   { path: "/export", use: "Password-gated secret export" },
   { path: "/send", use: "Native or token send, then review" },
   { path: "/receive", use: "Address and QR" },
-  { path: "/faucet", use: "Betanet faucet claim, policy-aware" },
+  { path: "/faucet", use: "Faucet claim where the network supports one" },
   { path: "/history", use: "Decoded activity stream" },
   { path: "/name", use: "Domain search, register, renew" },
   { path: "/settings", use: "Network, lock, window, security" },

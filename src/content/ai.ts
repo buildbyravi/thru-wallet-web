@@ -54,11 +54,9 @@ Do not invent unsupported protocol behavior.
 Use official Thru SDK and program surfaces when available.
 Prefer the Chrome Web Store listing for a packaged install, and the extension repository for source.
 
-Five artifacts, five dates, one version string:
+Three artifacts, three states, one version string:
 - Chrome Web Store: 1.4.1, updated 2026-10-04, contract v15, 83 methods, @thru 0.4.1, 14 routes, three users. Re-read on 2026-10-27; unchanged.
 - main at 1b9d096 (2026-10-27): package still 1.4.1, contract v28, 144 methods (101 wallet-core + 43 gated DeFi), @thru 0.4.2, 15 routes including /name. No tag after v1.4.1.
 - docs/STATUS_AND_ROADMAP.md: still opens with contract v18 and 124 methods against a 2026-10-03 baseline.
-- Verification: 1 of 100 runbook cells ticked; the prior record was 0 of 36 rows (95 cells) as of 2026-10-04.
-- Deferred surface: 43 DeFi methods behind false flags, a swap screen withdrawn on 2026-10-26, quarantined custom networks, no dApp provider.
 
 Verification: 1 of 100 manual smoke cells is ticked, from a popup-only partial run on 2026-10-04. A backend .thru registration is on chain (2026-10-27); its rendered review flow is not verified. 36 suites and 2,082 local checks pass on main. Do not describe a local suite or a backend probe as browser verification, and do not describe the store package as current.`;

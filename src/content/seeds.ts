@@ -22,7 +22,7 @@ export const noteSeed = [
   },
   {
     title: "One smoke cell of one hundred is ticked",
-    body: "docs/MANUAL_SMOKE_CHECKLIST.md now holds 100 checkbox cells across 64 lines. Exactly one is ticked: the popup /send cell from the 2026-10-04 partial run, with the charged fee uncaptured. The recording block at the end still says routes: 14/14 while the wallet has 15. Nothing added since — Domain, faucet policy, token discovery, cached-first paint — has a browser run behind it.",
+    body: "docs/MANUAL_SMOKE_CHECKLIST.md now holds 100 checkbox cells across 64 lines. Exactly one is ticked: the popup /send cell from the 2026-10-04 partial run, with the charged fee uncaptured. The recording block at the end still says routes: 14/14 while the wallet has 15. Nothing added since — Domain, token discovery, cached-first paint — has a browser run behind it.",
     tag: "SMOKE",
     author: "dossier",
     createdAt: new Date("2026-10-27T10:30:00Z"),
@@ -47,13 +47,6 @@ export const noteSeed = [
     tag: "RELEASE",
     author: "dossier",
     createdAt: new Date("2026-10-25T15:00:00Z"),
-  },
-  {
-    title: "Faucet cap closed: exactly 10,000 base units",
-    body: "Live evidence on 2026-10-24: a claim of 10,000 base units succeeds, 10,001 reverts with vmError −765, and repeated claims accumulate freely. Contract v24 now reads the on-chain rate-limit policy and the account's own buckets before building a transaction, and relabels a rate-limited chain error FAUCET_RATE_LIMITED.",
-    tag: "SECURITY",
-    author: "dossier",
-    createdAt: new Date("2026-10-24T13:00:00Z"),
   },
   {
     title: "Fifteenth route: /name",

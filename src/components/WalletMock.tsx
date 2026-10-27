@@ -58,7 +58,6 @@ export function WalletMock() {
             </div>
             <ul className="mt-3 space-y-3">
               <Activity kind="Sent" amount="−0.500 THRU" meta="Block 1,842,201" />
-              <Activity kind="Faucet" amount="+10,000 base" meta="Raw units, not 10,000 THRU" />
               <Activity kind="Received" amount="+2.000 THRU" meta="Block 1,841,994" />
             </ul>
           </div>

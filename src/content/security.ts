@@ -9,7 +9,7 @@ export const securityPrinciples = [
   },
   {
     title: "Nine signing methods, named",
-    body: "Signing is a small, enumerable set: tx.sendChecked, token.transferChecked, tx.autoCreateAccount, token.deploy, the four name writes (name.register, name.purchase, name.renewLease, name.claimExpired), and intent.submit — which refuses FEATURE_DISABLED in every shipped build. The faucet claim is deliberately not in it since v13, because an incoming credit is not a spend. Contract v28 carries the reviewed network, account, price and expiry into a name signing request rather than trusting a screen two documents away.",
+    body: "Signing is a small, enumerable set: tx.sendChecked, token.transferChecked, tx.autoCreateAccount, token.deploy, the four name writes (name.register, name.purchase, name.renewLease, name.claimExpired), and intent.submit — which refuses FEATURE_DISABLED in every shipped build. Contract v28 carries the reviewed network, account, price and expiry into a name signing request rather than trusting a screen two documents away.",
   },
   {
     title: "No unsafe DOM sinks",
@@ -17,7 +17,7 @@ export const securityPrinciples = [
   },
   {
     title: "Honest unsupported states",
-    body: "Unverified chain behavior returns supported: false and a reason. Missing token accounts, failed reads, custom endpoints, an uninitialized registry, a closed root authority, a rate-limited faucet, and every gated DeFi method are not filled in with guessed numbers. A rate-limited faucet error is now labelled FAUCET_RATE_LIMITED instead of wearing a generic chain message.",
+    body: "Unverified chain behavior returns supported: false and a reason. Missing token accounts, failed reads, custom endpoints, an uninitialized registry, a closed root authority, and every gated DeFi method are not filled in with guessed numbers.",
   },
   {
     title: "One network, enforced twice",
@@ -39,7 +39,7 @@ export const securityPrinciples = [
 
 export const gaps = [
   "Run the browser smoke checklist. One cell of 100 is ticked: a popup-only native send on 2026-10-04 whose charged fee was not captured.",
-  "Publish the source. Contract v16 through v28, the Domain screen, the faucet policy reads, token discovery and @thru 0.4.2 exist only on main. The store still serves the 2026-10-04 build and the package number never moved past 1.4.1, so a main build and a store install answer to the same version string while speaking v28 and v15.",
+  "Publish the source. Contract v16 through v28, the Domain screen, token discovery and @thru 0.4.2 exist only on main. The store still serves the 2026-10-04 build and the package number never moved past 1.4.1, so a main build and a store install answer to the same version string while speaking v28 and v15.",
   "Verify the domain flow in a browser. A backend registration through the real API router is on-chain (2026-10-27); the rendered search, quote, review sheet, password prompt and confirmation have never been driven by a person in Chrome.",
   "The registry's own unverified boundaries: custom lease renewal and claim are not wired, My Domains cannot enumerate owned names, and the official paid .thru registry is not initialized on Betanet, so its purchase and renewal paths answer unsupported there.",
   "Token transfer code is shipped; the token-program fee and the never-registered owner case are not measured. The UI says so instead of quoting the native 1-base-unit fee.",
@@ -56,8 +56,7 @@ export const signingNotes = [
   "Signing methods use auth: 'signing'. The wallet must be unlocked.",
   "Password re-authentication for signing is off by default. A user can turn it on through the password-gated Settings path.",
   "requirePasswordForSigning cannot be flipped by generic settings.set. That key goes through settings.setSecurity.",
-  "tx.registerAccount is a narrow unlocked-only exception: exact vault-owned address, no value transfer. It must not be widened to send, faucet, token transfer, export, or arbitrary recipients.",
-  "Contract v13 moves the faucet claim to unlocked-only as a second deliberate exception: claiming testnet funds is an incoming credit, and a signing password bought nothing there.",
+  "tx.registerAccount is a narrow unlocked-only exception: exact vault-owned address, no value transfer. It must not be widened to send, token transfer, export, or arbitrary recipients.",
   "Contract v23 makes name.register a signing method. It is a broadcast, on-chain, irreversible write, and it signs only for the selected, reviewed account.",
   "Contract v28 puts the reviewed network, account, price and expiry into the name signing request, and locks account switching while a registration is pending.",
   "intent.submit is the only signing-gated DeFi method, and it refuses while DEFI_INTENT is false — which is every build.",

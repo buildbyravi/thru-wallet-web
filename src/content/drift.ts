@@ -28,7 +28,6 @@ export const drift = {
   days: 23,
   packageVersion: "1.4.1",
   latestTag: "v1.4.1",
-  swapWithdrawnOn: "2026-10-26",
 } as const;
 
 export interface TimelineEntry {
@@ -71,18 +70,11 @@ export const contractTimeline: TimelineEntry[] = [
       "Registrar config and lease reads plus purchase, renew and claim-expired, built from first-party formats. The fee policy copies the first-party builder: 0n header fee, because the registrar prices in its own payment token.",
   },
   {
-    version: "v23",
+    version: "v23–v24",
     date: "2026-10-23",
     title: "name.register becomes a real signed write",
     detail:
       "Free registration beneath a canonical root, auth tightened from unlocked to signing. The wire format is first-party and the program fee is 0n by construction; a root whose authority is another key refuses the signer rather than pretending.",
-  },
-  {
-    version: "v24",
-    date: "2026-10-24",
-    title: "Faucet rate-limit awareness",
-    detail:
-      "tx.getFaucetLimit reads the on-chain policy and the account's own buckets; rate-limited vmErrors are relabelled FAUCET_RATE_LIMITED instead of surfacing as a generic chain failure.",
   },
   {
     version: "v25",
@@ -122,12 +114,6 @@ export const sinceStore = [
     title: "A Domain screen that registers a .thru name",
     detail:
       "ENS-style: one search field, a background availability check, a years stepper, an explicit review sheet, then a signed registration. Prices come from the on-chain registrar config, never a hardcoded number.",
-  },
-  {
-    key: "faucet",
-    title: "Faucet claims that know the policy",
-    detail:
-      "The claim screen reads the on-chain rate limit and the account's own bucket usage first, so a refusal is explained before a transaction is built instead of after it reverts.",
   },
   {
     key: "tokens",

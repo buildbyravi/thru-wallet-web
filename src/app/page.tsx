@@ -14,9 +14,9 @@ import { securityPrinciples } from "@/content/security";
 import {
   chromeStoreUrl,
   extensionId,
-  artifacts,
   heroMetrics,
   release,
+  releaseTracks,
   site,
   storeStatus,
   unverified,
@@ -103,40 +103,36 @@ export default async function HomePage() {
         <section className="mt-8">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <h2 className="font-serif text-3xl leading-tight font-light tracking-[-0.03em]">
-              Five artifacts. Verified separately.
+              Three artifacts. One version string.
             </h2>
             <Link className="label text-accent-dark" href="/status">
               Status detail
             </Link>
           </div>
           <p className="mt-3 max-w-3xl text-sm text-warm">
-            What Chrome installs, what the source tree is, what the repository says about itself, what has actually
-            been checked, and what exists but is deliberately unreachable. They move on different days
-            {" "}— {drift.contractVersions} contract versions and {drift.days} days separate the first two — and every
-            sentence on this site names the one it means.
+            The store package and the source tree were the same build until contract v16 merged on 2026-10-04, hours
+            after the package was cut. Since then the store has served contract {drift.storeContract} while main speaks{" "}
+            {drift.sourceContract} — {drift.contractVersions} contract versions and {drift.days} days apart, under a
+            package number that never moved.
           </p>
-          <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {artifacts.map((artifact) => (
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
+            {releaseTracks.map((track) => (
               <article
-                key={artifact.key}
+                key={track.key}
                 className={`rounded-2xl border p-5 ${
-                  artifact.key === "source"
-                    ? "border-accent-dark bg-accent-light/40"
-                    : artifact.key === "verified"
-                      ? "border-dashed border-alert/60"
-                      : "border-rule bg-paper-2/40"
+                  track.key === "source" ? "border-accent-dark bg-accent-light/40" : "border-rule bg-paper-2/40"
                 }`}
               >
-                <p className="label text-warm">{artifact.label}</p>
-                <p className="mt-3 font-serif text-4xl leading-none font-light tracking-[-0.04em]">{artifact.value}</p>
-                <p className="label mt-2 text-accent-dark">{artifact.pill}</p>
-                <p className="mono mt-2 text-xs text-dim">{artifact.meta}</p>
-                <p className="mt-3 text-sm text-warm">{artifact.detail}</p>
+                <p className="label text-warm">{track.label}</p>
+                <p className="mt-3 font-serif text-4xl leading-none font-light tracking-[-0.04em]">{track.value}</p>
+                <p className="label mt-2 text-accent-dark">{track.pill}</p>
+                <p className="mono mt-2 text-xs text-dim">{track.meta}</p>
+                <p className="mt-3 text-sm text-warm">{track.detail}</p>
                 <a
                   className="text-link mt-4 inline-block text-sm"
-                  href={artifact.href} target="_blank" rel="noopener noreferrer"
+                  href={track.href} target="_blank" rel="noopener noreferrer"
                 >
-                  {artifact.hrefLabel}
+                  {track.hrefLabel}
                 </a>
               </article>
             ))}

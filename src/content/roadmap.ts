@@ -20,7 +20,7 @@ export const roadmap: RoadmapItem[] = [
     title: "Verify the package a real user can install",
     status: "open",
     detail:
-      "One cell of 100 in docs/MANUAL_SMOKE_CHECKLIST.md is ticked, and that cell belongs to a popup-only send on 2026-10-04 whose charged fee was not captured. Install the published package — not a local dist/ — and run the runbook against it, then repeat against main, whose Domain screen and faucet policy reads have never been opened in Chrome at all.",
+      "One cell of 100 in docs/MANUAL_SMOKE_CHECKLIST.md is ticked, and that cell belongs to a popup-only send on 2026-10-04 whose charged fee was not captured. Install the published package — not a local dist/ — and run the runbook against it, then repeat against main, whose Domain screen has never been opened in Chrome at all.",
   },
   {
     step: "03",
@@ -73,7 +73,6 @@ export const completed = [
   "Contract v17 and v18 appended the 43-method DeFi surface with no existing shape changed and every flag off.",
   "Contract v19 to v22: name reads, the native-send intent pipeline behind its gate, primary-name records, and the paid-lease registrar surface.",
   "Contract v23: name.register became a real, signed, fee-0n registration beneath a canonical root — and a .id root controlled by another key refuses the signer instead of failing later.",
-  "Contract v24: the faucet reads the on-chain rate limit and the account's own buckets; the 10,000 base-unit cap was measured live on 2026-10-24.",
   "Contract v25 and D-016: the thru-custom-registrar deployed and initialized on Betanet, verified end to end with vmError 0 on 2026-10-25.",
   "Contract v26 to v28: token auto-discovery, storage-only cached balances, and reviewed name-signing facts with account-switch locking.",
   "@thru/sdk and @thru/programs moved 0.4.1 → 0.4.2 on 2026-10-23, with the account-table sort proven by an in-process sentinel rather than assumed.",

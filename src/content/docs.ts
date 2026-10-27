@@ -37,7 +37,7 @@ Use the store unless you are auditing or rebuilding. The full steps live on the 
 - Create, import, lock, and unlock a local vault.
 - Hold multiple keyrings and accounts.
 - Read a THRU balance with raw units still visible, from cache first and the chain second.
-- Create an on-chain account, claim a faucet that now reads its own policy, and send native THRU after review.
+- Create an on-chain account and send native THRU after review.
 - Show a receive address and QR, plus decoded history when the shape is known.
 - Read token balances, discover incoming tokens, and prepare token transfers on official program bindings.
 - Register a **.thru** name from the Domain screen, and link one you own to the dashboard.
@@ -48,21 +48,19 @@ Thru's own wallet architecture is an embedded, iframe-hosted wallet. There is no
 
 The 43-method DeFi surface exists in the contract and is unreachable: every \`DEFI_*\` flag is false. There is no swap tile, no launchpad, and no prediction market. A swap screen did ship on 2026-10-26 and was withdrawn the same day.
 
-## Five artifacts, verified separately
+## Three artifacts, one version string
 
-| | Chrome Web Store | Source \`main\` | Status document | Verification | Deferred surface |
-| --- | --- | --- | --- | --- | --- |
-| Reads | published 2026-10-04 | commit \`1b9d096\`, 2026-10-27 | baseline 2026-10-03 | runbook 2026-10-27 | flags reviewed 2026-10-26 |
-| Contract | v15, 83 methods | **v28, 144 methods** | claims v18, 124 methods | n/a | 43 methods, all gates false |
-| Routes | 14 | **15 — /name added** | says 14 | 15 mounted locally | none reachable |
-| Packages | @thru 0.4.1 | @thru 0.4.2 | says 0.4.1 | n/a | n/a |
-| State | what Chrome installs | what the tree builds | behind main, ahead of the store | 1 of 100 cells ticked | written, tested, withdrawn |
+| | Chrome Web Store | Source \`main\` | Status document |
+| --- | --- | --- | --- |
+| Version | **1.4.1**, 2026-10-04 | **1.4.1**, commit \`1b9d096\`, 2026-10-27 | baseline 2026-10-03 |
+| Contract | v15, 83 methods | **v28, 144 methods** | claims v18, 124 methods |
+| Routes | 14 | **15 — /name added** | says 14 |
+| Packages | @thru 0.4.1 | @thru 0.4.2 | says 0.4.1 |
+| Verification | never opened in a recorded browser run | 36 local suites, 1 of 100 smoke cells | older than both |
 
-The store and source columns agree on exactly one thing: the package version. They have been 13 contract versions apart since contract v16 merged on 2026-10-04, hours after the 1.4.1 package was cut, and nobody bumped the number afterwards. A build from \`main\` and an install from the store both call themselves 1.4.1 while speaking v28 and v15.
+The first two columns agree on exactly one thing: the package version. They have been 13 contract versions apart since contract v16 merged on 2026-10-04, hours after the 1.4.1 package was cut, and nobody bumped the number afterwards. A build from \`main\` and an install from the store both call themselves 1.4.1 while speaking v28 and v15.
 
 That is not a documentation bug. It is a release gap, and this site reports it as one.
-
-The last two columns are artifacts too, and they are the ones people skip. Verification is a count, not an adjective: one ticked cell out of one hundred, from a partial popup run on 2026-10-04. Deferred surface is code that exists and cannot be reached: 43 DeFi methods behind false flags, a swap screen that lived one afternoon, custom networks quarantined, no injected provider. Neither column is allowed to borrow the other's confidence.
 
 Say which artifact you mean. "Thru Wallet registers .thru names" is true of the source and false of the package Chrome installs. "Thru Wallet is verified on betanet" is true of neither.
 `,
@@ -84,7 +82,7 @@ Two paths, and they no longer produce the same wallet.
 
 The listing is community software. It is not an Unto Labs product and it has not been audited.
 
-> The packaged 1.4.1 build targets betanet and speaks **contract v15**. It has no Domain screen, no faucet policy reads, no token discovery, and no 0.4.2 packages. Everything this site documents as source-only is genuinely absent from it.
+> The packaged 1.4.1 build targets betanet and speaks **contract v15**. It has no Domain screen, no token discovery, and no 0.4.2 packages. Everything this site documents as source-only is genuinely absent from it.
 
 ## Load unpacked
 
@@ -151,7 +149,7 @@ Auto-lock defaults to 15 minutes, is configurable from 0 to 240, and is password
 
 ## Daily use
 
-Balances show human-scale THRU and the raw base units. 1 THRU = 1e9 base units. Account creation exists where the network supports it. The faucet now reads the on-chain rate-limit policy and this account's own buckets before building a transaction; the cap is exactly 10,000 base units per claim, and a rate-limited chain error is relabelled rather than passed through raw.
+Balances show human-scale THRU and the raw base units. 1 THRU = 1e9 base units. Account creation exists where the network supports it, and a faucet claim where that network declares a faucet.
 
 Native send goes through review, and contract v15 catches a repeat transfer to the same recipient inside 30 seconds before it is signed. History is one flat stream: block time when known, otherwise \`Block <slot>\`, refreshed every 30 seconds. Optional desktop notifications announce confirm or fail.
 
@@ -249,7 +247,7 @@ The UI does not call \`chrome.runtime.sendMessage\` except through the bridge. B
 
 ## API router
 
-The manifest is the allowlist: 144 methods at v28 — 72 callable while locked, 51 unlocked-only, 12 password-gated, 9 signing-gated. \`tx.registerAccount\` remains the narrow unlocked-only registration exception, \`tx.claimFaucet\` stays unlocked because an incoming credit is not a spend, and \`name.register\` is signing-gated since v23 because it broadcasts an irreversible write.
+The manifest is the allowlist: 144 methods at v28 — 72 callable while locked, 51 unlocked-only, 12 password-gated, 9 signing-gated. \`tx.registerAccount\` remains the narrow unlocked-only registration exception and \`name.register\` is signing-gated since v23 because it broadcasts an irreversible write.
 
 ## Services and cached reads
 
@@ -292,7 +290,7 @@ Signing requires an unlocked wallet. Password re-authentication for ordinary sig
 
 Nine methods are signing-gated at v28. Contract v28 binds the reviewed network, account, price and expiry to a name signing request and locks account switching while it is pending, so a reviewed quote cannot be swapped underneath a signature.
 
-Do not extend the v12 registration exception to send, faucet, token transfer, export, or contacts.
+Do not extend the v12 registration exception to send, token transfer, export, or contacts.
 
 ## DOM
 
@@ -341,7 +339,7 @@ The DeFi surface waits on an owner decision, not on code. The backend is written
 
 ## Already done
 
-The v16 retirement of the unbound send paths; the 43-method gated DeFi surface; name reads, primary names, and the paid-lease registrar; free and paid .thru registration with reviewed signing facts; faucet policy reads with a measured 10,000 base-unit cap; token discovery and storage-only cached balances; @thru 0.4.2; and 36 local suites green on 2026-10-27. Done does not mean released, and released does not mean verified.
+The v16 retirement of the unbound send paths; the 43-method gated DeFi surface; name reads, primary names, and the paid-lease registrar; free and paid .thru registration with reviewed signing facts; token discovery and storage-only cached balances; @thru 0.4.2; and 36 local suites green on 2026-10-27. Done does not mean released, and released does not mean verified.
 `,
   },
   {
@@ -487,7 +485,7 @@ The content layer exports things that must not be edited as if they were one:
 - \`source\` and \`site.contract\` — the code facts on main at \`1b9d096\`: contract v28, 144 methods, 15 routes, @thru 0.4.2, 36 local suites.
 - \`auditedDoc\` and \`unverified\` — what the repository still claims about itself, and what nobody has ticked. Both exist so that "shipped" is never allowed to read as "verified".
 
-\`artifacts\` renders all five on the status page and the homepage: store, source, audited document, verification, deferred surface. When two of them converge — as the store and the source did on 2026-10-04 — say so; when they diverge — as they did the same day, when contract v16 merged hours after the package was cut — say that too. A column is never deleted to make the table look tidy. \`unverified.prior\` keeps the previous count (0 of 36 rows, 95 cells) beside the current one (1 of 100 cells) so neither is presented as a correction of the other.
+\`releaseTracks\` renders three of them on the status page and the homepage. When the store and the source converge — as they did on 2026-10-04 — say so; when they diverge — as they did on 2026-10-04 and every day since — say that too. Deleting a track is not allowed. The gap is the finding.
 `,
   },
 ];

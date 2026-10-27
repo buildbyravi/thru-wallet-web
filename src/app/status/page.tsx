@@ -4,7 +4,7 @@ import { Badge } from "@/components/Badge";
 import { PageHeader } from "@/components/Section";
 import { contractTimeline, drift } from "@/content/drift";
 import { completed, roadmap } from "@/content/roadmap";
-import { artifacts, auditedDoc, release, site, source, storeStatus, unverified } from "@/content/site";
+import { auditedDoc, release, releaseTracks, site, source, storeStatus, unverified } from "@/content/site";
 import { listSmoke } from "@/lib/catalog";
 import { formatStamp } from "@/lib/format";
 
@@ -23,49 +23,38 @@ export default async function StatusPage() {
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">
       <PageHeader
         kicker="Status"
-        title="Five artifacts. Verified separately."
-        lede="The store build stopped on 2026-10-04. Main kept going for 23 days and 13 contract versions. The repository's own status document describes neither, 43 DeFi methods are written and unreachable, and one of a hundred browser checks is ticked."
+        title="Three clocks. One version string."
+        lede="The store build stopped on 2026-10-04. Main kept going for 23 days and 13 contract versions. The repository's own status document describes neither, and one of a hundred browser checks is ticked."
         meta={`${passed} of ${checks.length} desk rows marked pass · ${unverified.checked} of ${unverified.cells} cells in the extension's own runbook`}
       />
 
-      <section className="mt-10">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="label text-warm">The audit spine</p>
-            <h2 className="mt-2 font-serif text-2xl font-light tracking-[-0.03em]">Five artifacts, five dates.</h2>
-          </div>
-          <p className="label text-dim">Re-verified 2026-10-27</p>
-        </div>
-        <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {artifacts.map((artifact) => (
-            <article
-              key={artifact.key}
-              className={
-                artifact.key === "store"
-                  ? "rounded-2xl bg-plate p-5 text-paper"
-                  : artifact.key === "source"
-                    ? "rounded-2xl border border-accent-dark bg-accent-light/40 p-5"
-                    : artifact.key === "verified" || artifact.key === "audited"
-                      ? "rounded-2xl border border-dashed border-alert/60 p-5"
-                      : "rounded-2xl border border-rule p-5"
-              }
+      <section className="mt-10 grid gap-4 md:grid-cols-3">
+        {releaseTracks.map((track) => (
+          <article
+            key={track.key}
+            className={
+              track.key === "store"
+                ? "rounded-2xl bg-plate p-5 text-paper"
+                : track.key === "source"
+                  ? "rounded-2xl border border-accent-dark bg-accent-light/40 p-5"
+                  : "rounded-2xl border border-dashed border-alert/60 p-5"
+            }
+          >
+            <p className={`label ${track.key === "store" ? "text-paper/50" : "text-warm"}`}>{track.label}</p>
+            <p className="mt-3 font-serif text-4xl font-light tracking-[-0.04em]">{track.value}</p>
+            <p className={`label mt-2 ${track.key === "store" ? "text-paper/70" : "text-accent-dark"}`}>{track.pill}</p>
+            <p className={`mt-2 text-sm ${track.key === "store" ? "text-paper/70" : "text-warm"}`}>{track.meta}</p>
+            <p className={`mt-3 text-sm ${track.key === "store" ? "text-paper/70" : "text-warm"}`}>{track.detail}</p>
+            <a
+              className={`mt-4 inline-block text-sm ${track.key === "store" ? "underline underline-offset-4" : "text-link"}`}
+              href={track.href}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <p className={`label ${artifact.key === "store" ? "text-paper/50" : "text-warm"}`}>{artifact.label}</p>
-              <p className="mt-3 font-serif text-4xl font-light tracking-[-0.04em]">{artifact.value}</p>
-              <p className={`label mt-2 ${artifact.key === "store" ? "text-paper/70" : "text-accent-dark"}`}>{artifact.pill}</p>
-              <p className={`mt-2 text-sm ${artifact.key === "store" ? "text-paper/70" : "text-warm"}`}>{artifact.meta}</p>
-              <p className={`mt-3 text-sm ${artifact.key === "store" ? "text-paper/70" : "text-warm"}`}>{artifact.detail}</p>
-              <a
-                className={`mt-4 inline-block text-sm ${artifact.key === "store" ? "underline underline-offset-4" : "text-link"}`}
-                href={artifact.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {artifact.hrefLabel}
-              </a>
-            </article>
-          ))}
-        </div>
+              {track.hrefLabel}
+            </a>
+          </article>
+        ))}
       </section>
 
       <section className="mt-6 grid gap-4 md:grid-cols-2">
@@ -118,7 +107,7 @@ export default async function StatusPage() {
             desktop notifications, and inactivity-based auto-lock.
           </p>
           <p className="mt-3 text-sm text-warm">
-            What it does not get you: the Domain screen, faucet policy reads, token discovery, cached-first painting,
+            What it does not get you: the Domain screen, token discovery, cached-first painting,
             the 0.4.2 packages, or any of contract {drift.sourceContract}&rsquo;s {drift.sourceMethods} methods. The
             listing was re-read on {site.listing.verifiedOn} and still reports{" "}
             <strong className="font-normal text-ink">{site.listing.users}</strong>, so this is not an adoption story.

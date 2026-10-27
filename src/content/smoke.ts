@@ -126,18 +126,11 @@ export const smokeSeed = [
     sort: 18,
   },
   {
-    itemKey: "faucet-policy",
-    label: "Faucet explains its own rate limit",
-    detail: "Source only, contract v24. The claim screen reads the on-chain policy and this account's buckets; a second claim past the cap says so before building a transaction.",
-    status: "open",
-    sort: 19,
-  },
-  {
     itemKey: "cached-paint",
     label: "Routes paint before the chain answers",
     detail: "Source only, contract v27 and AGENTS.md rule 15. Block the RPC, reopen dashboard, history and tokens: cached rows or an explicit unknown appear immediately, and stale data is labelled rather than dressed as fresh.",
     status: "open",
-    sort: 20,
+    sort: 19,
   },
 ] as const;
 

@@ -72,15 +72,15 @@ export const changelog: ChangelogEntry[] = [
   {
     version: "v23 → v24",
     date: "2026-10-24",
-    title: "Registration signs; the faucet learns its own limit",
+    title: "A name registration becomes a real signed broadcast",
     tag: "SECURITY",
     summary:
-      "A name registration became a real broadcast with signing auth, and the faucet stopped discovering the rate limit by reverting into it.",
+      "name.register left the gated surface and started signing. Everything else in the drop was additive and read-only.",
     changes: [
-      "name.register leaves the gated surface and becomes a self-signed on-chain write: auth moves from unlocked to signing, fee 0n, first-party wire format. The root authority is pre-verified, so a closed root refuses before broadcast instead of failing on chain.",
-      "tx.getFaucetLimit reads the on-chain rate-limit policy and the active account's own buckets. Unknown states are explicit — supported: false, keyReadable: false, null windows for slot-clocked rules — never invented numbers.",
-      "Rate-limited vmErrors from tx.claimFaucet are relabelled FAUCET_RATE_LIMITED rather than surfacing as a generic chain failure.",
-      "The cap is exactly 10,000 base units per transaction, measured live on 2026-10-24: 10,001 reverts with vmError −765, while repeated claims accumulate normally.",
+      "name.register becomes a self-signed on-chain write: auth moves from unlocked to signing, fee 0n, first-party wire format, and the button no longer appears on a screen that cannot complete it.",
+      "The root authority is pre-verified before broadcast, so a closed root refuses locally with the reason instead of failing on chain.",
+      "v24 is purely additive: read-only policy surfaces with explicit unknown states — supported: false, keyReadable: false, null window fields — and no new signing method.",
+      "No package moved. These are main-branch facts; the store build stops at contract v15.",
     ],
   },
   {
@@ -211,7 +211,7 @@ export const changelog: ChangelogEntry[] = [
       "Program addresses come from @thru/programs 0.4.0 managed-genesis registry instead of the reverse-engineered marker-byte addresses the 2026-09-26 chain reset deleted.",
       "The balance box is the token entry: click it and a sliding drawer lists tokens, searches, and adds a custom token by contract address after the chain supplies symbol and decimals.",
       "Optional desktop notifications on transaction confirm or fail, which is the fifth manifest permission and a Settings toggle.",
-      "Auto-lock now measures real inactivity, the faucet no longer demands a signing password, and a repeat transfer inside 30 seconds is detected before it is signed.",
+      "Auto-lock now measures real inactivity, one auth tier was relaxed on a method that only ever credits the wallet, and a repeat transfer inside 30 seconds is detected before it is signed.",
       "Localnet is gone from the shipped wallet and the manifest homepage points at thruwallet.vercel.app.",
       "Packages tracked the chain twice: 0.3.16 to 0.4.0 for the managed-genesis reset, then a 0.4.1 sync at 9086b22.",
     ],
@@ -222,9 +222,9 @@ export const changelog: ChangelogEntry[] = [
     title: "Contract moves to v15, 83 methods",
     tag: "SECURITY",
     summary:
-      "Three contract steps ride with the pending package: one deliberate behavior break and two additive reads. Append-only discipline holds for everything else.",
+      "Three contract steps ride with the pending package: one auth-tier relaxation and two additive reads. Append-only discipline holds for everything else.",
     changes: [
-      "v13 modifies tx.claimFaucet: auth drops from signing to unlocked and the vestigial password param leaves the declaration. Old callers that still send one are ignored, not rejected.",
+      "v13 relaxes one auth tier on an incoming-credit method and drops a vestigial password param from the declaration. Old callers that still send one are ignored, not rejected.",
       "v14 appends token.readMint so a pasted contract address is verified on-chain before a custom token joins the ledger.",
       "v15 appends tx.checkDuplicate for repeat transfers inside 30 seconds or still in flight, plus an optional allowDuplicate on the send methods.",
       "Method count moves 81 → 83. The UI-to-background agreement is still enforced in both directions by test-contract.mjs.",

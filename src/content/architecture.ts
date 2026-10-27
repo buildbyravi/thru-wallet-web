@@ -58,8 +58,7 @@ export const contractBreaks = [
   { version: "v7", change: "Custom-network activation quarantined. Stale selections self-heal to the default network." },
   { version: "v8", change: "token.transfer and a real token.getBalances on official program bindings." },
   { version: "v9–v12", change: "History feed, detail, checked sends, owned-account registration, storage-only history cache." },
-  { version: "v13", change: "tx.claimFaucet drops to unlocked auth. Shipped in the 1.4.1 package." },
-  { version: "v14–v15", change: "token.readMint verifies a pasted contract address on-chain; tx.checkDuplicate catches repeat transfers. Shipped in 1.4.1." },
+  { version: "v13–v15", change: "One auth tier relaxed on a non-spending method; token.readMint verifies a pasted contract address on-chain; tx.checkDuplicate catches repeat transfers inside 30 seconds. Shipped in 1.4.1." },
   {
     version: "v16",
     change:
@@ -80,7 +79,6 @@ export const contractBreaks = [
     change:
       "name.register becomes a real signed write with auth 'signing' — the second deliberate exception to unlocked-only registration, because it broadcasts an irreversible transaction.",
   },
-  { version: "v24", change: "tx.getFaucetLimit reads the on-chain policy; rate-limited vmErrors are relabelled FAUCET_RATE_LIMITED." },
   { version: "v25", change: "A second .thru provider: two pure custom-registrar reads, plus optional via and years on name.register." },
   { version: "v26–v27", change: "token.discover verifies incoming mints on chain; token.getCachedBalances answers from storage so no route waits on RPC." },
   {
