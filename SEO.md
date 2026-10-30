@@ -20,7 +20,8 @@ should be set before you verify anything.
 | Variable | Example | Why |
 | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | `https://thruwallet.vercel.app` | Canonical tags, `og:url`, sitemap URLs, `robots.txt`, and every JSON-LD `@id`. If this is wrong, you are asking Google to index an address that is not the site. |
-| `GOOGLE_SITE_VERIFICATION` | `kZ8…` (43 characters) | Optional override. The current token is committed in `src/content/seo.ts`, so the tag is already live; set this only to replace it. Emitted as `<meta name="google-site-verification">` **and** served as the HTML verification file. Public by design. |
+| `GOOGLE_SITE_VERIFICATION` | `kZ8…` (43 characters) | Optional override. The current token is committed in `src/content/seo.ts`, so the tag is already live; set this only to replace it. Emitted as `<meta name="google-site-verification">`. Public by design. |
+| `GOOGLE_SITE_VERIFICATION_FILE` | `kZ8…` | Optional. Only needed if Search Console issues a *different* string for the HTML-file method than for the meta tag. Defaults to `GOOGLE_SITE_VERIFICATION`. |
 | `BING_SITE_VERIFICATION` | `1A2B…` | Optional. Emitted as `<meta name="msvalidate.01">` for Bing Webmaster Tools. |
 
 > A preview deployment must not inherit production's `NEXT_PUBLIC_SITE_URL`. If it does, two hosts
@@ -67,14 +68,20 @@ edit that constant or set `GOOGLE_SITE_VERIFICATION` — the environment wins �
 Search Console offers a filename of the shape `google<token>.html` and the contents
 `google-site-verification: google<token>.html`.
 
-This repository serves that file without committing it. `next.config.ts` rewrites
-`/google<token>.html` to `/api/google-verification/[file]`, which answers **only** when the
-filename matches `GOOGLE_SITE_VERIFICATION`:
+Search Console normally issues one token per property and reuses it for the meta tag, the DNS TXT
+record and the file, so the committed token covers both methods out of the box. If a property ever
+issues a different string for the file, set `GOOGLE_SITE_VERIFICATION_FILE` rather than changing the
+working meta tag.
+
+This repository serves that file without adding a token-named file to the repo. `next.config.ts`
+rewrites `/google<token>.html` to `/api/google-verification/[file]`, which answers **only** when
+the filename matches the file token — `GOOGLE_SITE_VERIFICATION_FILE`, or the meta-tag token it
+falls back to:
 
 ```bash
-# with GOOGLE_SITE_VERIFICATION=kZ8... set, this returns 200 and the exact required body
-curl -s https://thruwallet.vercel.app/googlekZ8....html
-# → google-site-verification: googlekZ8....html
+# returns 200 and the exact required body with no configuration at all
+curl -s https://thruwallet.vercel.app/googleBGKQlv57PUBBFxHxmUw8wgFcmO70Y3yl-g5vTKY4dCo.html
+# → google-site-verification: googleBGKQlv57PUBBFxHxmUw8wgFcmO70Y3yl-g5vTKY4dCo.html
 ```
 
 So the same variable satisfies both the meta tag and the file method. If you would rather commit
@@ -123,7 +130,7 @@ A new property is usually indexed within a few days; the Sitemaps and Pages repo
 | `<meta name="description">` | `src/content/seo.ts` | 120–160 characters, one claim per page, never the store blurb twice. |
 | `<link rel="canonical">` | `src/lib/seo.ts` → `pageMetadata()` | Absolute, per page, derived from `NEXT_PUBLIC_SITE_URL`. |
 | `robots` / `googlebot` meta | `src/lib/seo.ts` | `index, follow`, `max-image-preview:large`, `max-snippet:-1`. `/desk` is `noindex`. |
-| `/robots.txt` | `src/app/robots.ts` | Allows crawlers and AI agents; disallows `/api/` and `/desk`. Points at the sitemap. |
+| `/robots.txt` | `src/app/robots.ts` | Allows crawlers and AI agents; disallows `/api/` and `/desk`, except the exact `/desk` and `/api/catalog` paths, which stay crawlable so their `noindex` can be read. |
 | `/sitemap.xml` | `src/app/sitemap.ts` | 21 URLs with `lastModified` from the newest changelog entry. |
 | JSON-LD | `src/components/JsonLd.tsx` | `Organization` + `WebSite` sitewide; `SoftwareApplication` on `/`; `BreadcrumbList` on every section; `TechArticle` on documents; `CollectionPage` on `/docs`. |
 | Visible breadcrumbs | `src/components/Breadcrumb.tsx` | Rendered wherever `BreadcrumbList` is emitted. Google asks for the markup to describe navigation a person can see. |
@@ -172,4 +179,7 @@ and the [Schema Markup Validator](https://validator.schema.org/). The expected g
 - **No `SearchAction`.** The site has no search endpoint, and claiming one it does not have is a
   structured-data lie.
 - **No invented dates.** Documents carry no publication date, so their `TechArticle` node omits
-  `datePublished` rather than guess one.
+  `datePublished` rather than guess one. Desk-driven pages omit sitemap `lastModified` for the same
+  reason: the checked-in changelog cannot date a row written to Postgres.
+- **No `NEW` features in the software graph.** The node advertises the 1.4.1 store build, so
+  `featureList` holds only what that package carries.

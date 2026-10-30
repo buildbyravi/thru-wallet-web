@@ -12,7 +12,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return indexableRoutes.map((entry) => ({
     url: absoluteUrl(entry.path),
-    lastModified: lastReviewed,
+    // `/`, `/changelog` and `/status` render desk rows from Postgres, which the checked-in
+    // changelog cannot date. Claiming lastReviewed for them would be a stale date after every
+    // desk write, and an inaccurate lastmod is worse than none: Google stops trusting the file.
+    ...(entry.deskDriven ? {} : { lastModified: lastReviewed }),
     changeFrequency: entry.changeFrequency,
     priority: entry.priority,
   }));

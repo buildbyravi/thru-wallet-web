@@ -25,6 +25,12 @@ export interface RouteSeo {
   changeFrequency: ChangeFrequency;
   /** Keep out of the sitemap and out of search results (the desk gate is not a public page). */
   noindex?: boolean;
+  /**
+   * The page renders rows the desk can change, so its real modification date is not derivable at
+   * build time. Its sitemap entry omits `lastModified` rather than claim a date that a desk write
+   * would make false. Google only honours `lastmod` while it stays consistently accurate.
+   */
+  deskDriven?: boolean;
   /** Older name or common search phrase redirected here. Documented, not rendered. */
   aliases?: string[];
 }
@@ -57,6 +63,7 @@ export const routes: RouteSeo[] = [
     ],
     priority: 1,
     changeFrequency: "weekly",
+    deskDriven: true,
   },
   {
     path: "/install",
@@ -137,6 +144,7 @@ export const routes: RouteSeo[] = [
     keywords: ["Thru Wallet status", "Thru Wallet version", "Thru contract v28"],
     priority: 0.6,
     changeFrequency: "daily",
+    deskDriven: true,
   },
   {
     path: "/changelog",
@@ -146,6 +154,7 @@ export const routes: RouteSeo[] = [
     keywords: ["Thru Wallet changelog", "Thru Wallet release notes"],
     priority: 0.6,
     changeFrequency: "daily",
+    deskDriven: true,
   },
   {
     path: "/agents",
@@ -181,11 +190,14 @@ export const routes: RouteSeo[] = [
   },
 ];
 
-// Per-document pages inherit the document's own title and description, which were written to be
-// read on their own. Deduplicating would mean two copies of every string.
+// Per-document pages reuse the document's own description, which was written to be read on its
+// own. The title is prefixed because four documents are named after a top-level page — Features,
+// Architecture, Changelog, Security model — and two pages sharing a `<title>` is a real ambiguity
+// in a result list. The prefix changes the metadata only; the heading and the breadcrumb still
+// read "Features", because that is the document's name.
 export const docRoutes: RouteSeo[] = docs.map((doc) => ({
   path: `/docs/${doc.slug}`,
-  title: doc.title,
+  title: `Docs: ${doc.title}`,
   description: doc.description,
   keywords: [`Thru Wallet ${doc.title.toLowerCase()}`, "Thru Wallet docs"],
   priority: 0.7,

@@ -21,7 +21,7 @@ export const changelog: ChangelogEntry[] = [
       "src/content/seo.ts is the single registry: title, description, keywords, canonical path, sitemap priority and crawl directives for all 21 indexable routes. pageMetadata(path) turns an entry into Next metadata.",
       "/sitemap.xml lists 21 URLs, /robots.txt allows crawlers and AI agents while disallowing /api/ and /desk, and /manifest.webmanifest resolves. All three are generated from that registry, not written by hand.",
       "Structured data: Organization and WebSite sitewide, SoftwareApplication on the homepage, BreadcrumbList on every section with visible breadcrumbs to match, TechArticle on documents, CollectionPage on /docs.",
-      "Google Search Console: GOOGLE_SITE_VERIFICATION emits the meta tag and answers /google<token>.html through a rewrite, so ownership verifies without committing a token. Steps are in SEO.md.",
+      "Google Search Console: the verification token is committed in src/content/seo.ts, so the meta tag is emitted and /google<token>.html answered by a rewrite on a deploy that sets nothing; GOOGLE_SITE_VERIFICATION and GOOGLE_SITE_VERIFICATION_FILE override either method without a code change. Steps are in SEO.md.",
       "/extension and /chrome are now 308 rather than 307, so the old names pass their signal to /install instead of asking a crawler to keep both.",
       "Three pages that were force-dynamic (/, /status, /changelog) revalidate every five minutes instead: a faster answer for a crawler, with desk writes still landing immediately through revalidatePath.",
       "/desk is noindex, through both its metadata and an X-Robots-Tag header. It is an editor, not a page.",

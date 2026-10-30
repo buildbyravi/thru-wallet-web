@@ -28,10 +28,18 @@ export function SiteJsonLd() {
   return <JsonLd data={graph([organizationNode(), websiteNode()])} />;
 }
 
-/** The extension itself. Homepage only — it describes the product, not every page. */
+/**
+ * The extension itself. Homepage only — it describes the product, not every page.
+ *
+ * The node advertises `softwareVersion` 1.4.1 and installs from the Chrome Web Store, so its
+ * featureList may only contain what that package carries. `NEW` means source-only and absent from
+ * the store build, and `PLANNED` means absent entirely; listing either one would have the
+ * structured data claim a capability the installable package does not have, which is the exact
+ * conflation this site exists to prevent.
+ */
 export function SoftwareJsonLd() {
   const featureList = features
-    .filter((feature) => feature.status !== "PLANNED")
+    .filter((feature) => feature.status !== "PLANNED" && feature.status !== "NEW")
     .slice(0, 12)
     .map((feature) => feature.title);
 

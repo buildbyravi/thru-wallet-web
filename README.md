@@ -55,7 +55,8 @@ read-only.
 | `DATABASE_URL` | no | Postgres connection for the desk (field notes, smoke marks, sessions). |
 | `DESK_PASSWORD` | no | Gate for `/desk` writes. No default — absent means read-only. |
 | `NEXT_PUBLIC_SITE_URL` | no | Canonical origin for metadata. Defaults to `https://thruwallet.vercel.app`. |
-| `GOOGLE_SITE_VERIFICATION` | no | Search Console token. Emits the verification meta tag **and** answers `/google<token>.html`. See [SEO.md](SEO.md). |
+| `GOOGLE_SITE_VERIFICATION` | no | Search Console token. Emits the verification meta tag; also the default for the HTML-file method. See [SEO.md](SEO.md). |
+| `GOOGLE_SITE_VERIFICATION_FILE` | no | Only if Search Console issues a different token for the HTML-file method. Defaults to the value above. |
 | `BING_SITE_VERIFICATION` | no | Bing Webmaster Tools token, emitted as `msvalidate.01`. |
 
 The desk needs **both** `DATABASE_URL` and `DESK_PASSWORD` to accept writes. Sessions live in a

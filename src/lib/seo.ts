@@ -37,6 +37,19 @@ export function googleSiteVerification(): string {
   return fromEnv && fromEnv.length > 0 ? fromEnv : googleVerificationToken;
 }
 
+/**
+ * The token embedded in the HTML-file method's filename: `/google<token>.html`.
+ *
+ * Search Console normally issues one token per property and reuses it across the DNS, file and
+ * meta-tag methods, so this defaults to the meta-tag token above. `GOOGLE_SITE_VERIFICATION_FILE`
+ * exists because that is a convention, not a guarantee: if a property ever hands out a different
+ * string for the file, this variable covers it without disturbing the working meta tag.
+ */
+export function googleVerificationFileToken(): string {
+  const fromEnv = process.env.GOOGLE_SITE_VERIFICATION_FILE?.trim();
+  return fromEnv && fromEnv.length > 0 ? fromEnv : googleSiteVerification();
+}
+
 const OG_IMAGE = { url: "/opengraph-image", width: 1200, height: 630 } as const;
 
 function ogImageEntry(alt: string) {
