@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { ArticleJsonLd } from "@/components/JsonLd";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { docs, getDoc } from "@/content/docs";
+import { pageMetadata } from "@/lib/seo";
 
 type Params = { slug: string };
 
@@ -12,9 +15,10 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
-  const doc = getDoc(slug);
-  if (!doc) return { title: "Doc" };
-  return { title: doc.title, description: doc.description };
+  if (!getDoc(slug)) {
+    return { title: "Document not found", robots: { index: false, follow: true } };
+  }
+  return pageMetadata(`/docs/${slug}`);
 }
 
 export default async function DocPage({ params }: { params: Promise<Params> }) {
@@ -27,6 +31,9 @@ export default async function DocPage({ params }: { params: Promise<Params> }) {
 
   return (
     <main className="mx-auto grid max-w-[1120px] gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[220px_minmax(0,1fr)]">
+      {/* No dates: these documents do not carry publication dates, and this site does not invent
+          them. The Article graph says what the page is, and stops there. */}
+      <ArticleJsonLd headline={doc.title} description={doc.description} path={`/docs/${doc.slug}`} />
       <aside className="lg:sticky lg:top-8 lg:self-start">
         <p className="label text-warm">Docs</p>
         <nav aria-label="Documents" className="mt-3 space-y-1">
@@ -43,7 +50,14 @@ export default async function DocPage({ params }: { params: Promise<Params> }) {
         </nav>
       </aside>
       <article className="min-w-0 max-w-3xl">
-        <p className="label text-accent-dark">{doc.tag}</p>
+        <Breadcrumb
+          items={[
+            { name: "Home", path: "/" },
+            { name: "Docs", path: "/docs" },
+            { name: doc.title, path: `/docs/${doc.slug}` },
+          ]}
+        />
+        <p className="label mt-3 text-accent-dark">{doc.tag}</p>
         <h1 className="mt-3 font-serif text-[clamp(2.4rem,5vw,4rem)] leading-[0.98] font-light tracking-[-0.035em]">
           {doc.title}
         </h1>

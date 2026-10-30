@@ -2,16 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/Section";
 import { customNetworkPreconditions, gaps, securityPrinciples, signingNotes } from "@/content/security";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Security",
-  description: "Thru Wallet security principles, signing policy, quarantined networks, and open gaps.",
-};
+export const metadata: Metadata = pageMetadata("/security");
 
 export default function SecurityPage() {
   return (
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">
       <PageHeader
+        path="/security"
         kicker="Security"
         title="A boundary, not a badge."
         lede="The extension is not security-reviewed. These principles describe how the source is supposed to behave. They are not a promise that every path has been attacked."

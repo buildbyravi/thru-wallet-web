@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export function Section({
   id,
@@ -35,15 +36,27 @@ export function PageHeader({
   title,
   lede,
   meta,
+  path,
 }: {
   kicker: string;
   title: string;
   lede: string;
   meta?: string;
+  /** When set, the kicker becomes the last visible breadcrumb and a BreadcrumbList is emitted. */
+  path?: string;
 }) {
   return (
     <header className="max-w-3xl">
-      <p className="label text-warm">{kicker}</p>
+      {path ? (
+        <Breadcrumb
+          items={[
+            { name: "Home", path: "/" },
+            { name: kicker, path },
+          ]}
+        />
+      ) : (
+        <p className="label text-warm">{kicker}</p>
+      )}
       <h1 className="mt-3 font-serif text-[clamp(2.4rem,6vw,4.4rem)] leading-[0.96] font-light tracking-[-0.035em]">
         {title}
       </h1>

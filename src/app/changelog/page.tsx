@@ -1,23 +1,24 @@
 import type { Metadata } from "next";
 import { Badge } from "@/components/Badge";
+import { ChangelogJsonLd } from "@/components/JsonLd";
 import { PageHeader } from "@/components/Section";
 import { changelog } from "@/content/changelog";
 import { listNotes } from "@/lib/catalog";
 import { formatDay, formatStamp } from "@/lib/format";
+import { pageMetadata } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
-export const metadata: Metadata = {
-  title: "Changelog",
-  description: "Thru Wallet listing releases, contract notes, and desk ledger entries.",
-};
+export const metadata: Metadata = pageMetadata("/changelog");
 
 export default async function ChangelogPage() {
   const notes = await listNotes(12);
 
   return (
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">
+      <ChangelogJsonLd />
       <PageHeader
+        path="/changelog"
         kicker="Changelog"
         title="What changed, and in which artifact."
         lede="Authored entries are reviewed with the site. Desk notes are rows in Postgres. A store release and a contract bump are not the same event."

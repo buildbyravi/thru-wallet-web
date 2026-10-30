@@ -2,16 +2,15 @@ import type { Metadata } from "next";
 import { Badge } from "@/components/Badge";
 import { PageHeader } from "@/components/Section";
 import { featureGroups, features } from "@/content/features";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Features",
-  description: "Thru Wallet features grouped by wallet core, daily use, token work, and future modules.",
-};
+export const metadata: Metadata = pageMetadata("/features");
 
 export default function FeaturesPage() {
   return (
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">
       <PageHeader
+        path="/features"
         kicker="Features"
         title="A narrow wallet, labeled honestly."
         lede="Stable means it is the product. Alpha means the code exists and a live or browser check is still open. New means the source has it and the 1.4.1 package in the store does not — you can build it, not install it. Planned means the extension cannot do it today."

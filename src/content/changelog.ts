@@ -12,6 +12,24 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     version: "site",
+    date: "2026-10-30",
+    title: "One description, one canonical, and one file to edit them in",
+    tag: "DOCS",
+    summary:
+      "Search metadata moved out of eleven page files into src/content/seo.ts, which now also generates the sitemap, robots.txt, the verification file and the JSON-LD graph. Nothing about the extension moved. This entry exists so the sitemap's lastModified is not a lie.",
+    changes: [
+      "src/content/seo.ts is the single registry: title, description, keywords, canonical path, sitemap priority and crawl directives for all 21 indexable routes. pageMetadata(path) turns an entry into Next metadata.",
+      "/sitemap.xml lists 21 URLs, /robots.txt allows crawlers and AI agents while disallowing /api/ and /desk, and /manifest.webmanifest resolves. All three are generated from that registry, not written by hand.",
+      "Structured data: Organization and WebSite sitewide, SoftwareApplication on the homepage, BreadcrumbList on every section with visible breadcrumbs to match, TechArticle on documents, CollectionPage on /docs.",
+      "Google Search Console: GOOGLE_SITE_VERIFICATION emits the meta tag and answers /google<token>.html through a rewrite, so ownership verifies without committing a token. Steps are in SEO.md.",
+      "/extension and /chrome are now 308 rather than 307, so the old names pass their signal to /install instead of asking a crawler to keep both.",
+      "Three pages that were force-dynamic (/, /status, /changelog) revalidate every five minutes instead: a faster answer for a crawler, with desk writes still landing immediately through revalidatePath.",
+      "/desk is noindex, through both its metadata and an X-Robots-Tag header. It is an editor, not a page.",
+      "The primary nav existed but was never rendered. It is in the header now, so every section is one hop from every page.",
+    ],
+  },
+  {
+    version: "site",
     date: "2026-10-27",
     title: "Thirteen contract versions ahead, one version string",
     tag: "DOCS",

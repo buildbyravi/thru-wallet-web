@@ -5,16 +5,15 @@ import { RouteTable } from "@/components/RouteTable";
 import { architectureFlow, boundaries, contractBreaks } from "@/content/architecture";
 import { routeCount } from "@/content/routes";
 import { auditedDoc, site } from "@/content/site";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Architecture",
-  description: "How Thru Wallet separates UI routes, the bridge, the API router, services, and sacred adapters.",
-};
+export const metadata: Metadata = pageMetadata("/architecture");
 
 export default function ArchitecturePage() {
   return (
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">
       <PageHeader
+        path="/architecture"
         kicker="Architecture"
         title="Authority sits in the background."
         lede={`${architectureFlow.length} layers. ${routeCount} routes on main, ${site.storeBuild.routes} in the store package. Contract ${site.contract.version} with ${site.contract.methods} methods on main, ${site.storeBuild.contract} with ${site.storeBuild.methods} in the package Chrome installs, and ${auditedDoc.version} in a status document that has not caught up. The UI asks. The background decides.`}
