@@ -4,13 +4,11 @@ import { CodeBlock } from "@/components/CodeBlock";
 import { PageHeader } from "@/components/Section";
 import { StoreButton } from "@/components/StoreButton";
 import { drift } from "@/content/drift";
-import { chromeStoreUrl, extensionId, release, site, unverified } from "@/content/site";
+import { chromeStoreUrl, extensionId, release, site, source, unverified } from "@/content/site";
 import { formatDay } from "@/lib/format";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Install",
-  description: "Add Thru Wallet from the Chrome Web Store, or load an unpacked build from the extension repository — and know which contract each one speaks.",
-};
+export const metadata: Metadata = pageMetadata("/install");
 
 const commands = `git clone https://github.com/buildbyravi/thru-wallet-ext.git
 cd thru-wallet-ext
@@ -23,6 +21,7 @@ export default function InstallPage() {
   return (
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">
       <PageHeader
+        path="/install"
         kicker="Install"
         title="Add the extension."
         lede="The Chrome Web Store listing is the public install path. The repository is the audit path. They stopped being the same build on 2026-10-04, when contract v16 merged hours after the package was cut, and both still call themselves the same version."
@@ -117,7 +116,7 @@ export default function InstallPage() {
           <h2 className="mt-2 font-serif text-3xl font-light tracking-[-0.03em]">Build dist/, then point Chrome at it.</h2>
           <ol className="mt-5 list-decimal space-y-3 pl-5 text-warm">
             <li>Clone the extension repository and install dependencies.</li>
-            <li>Run the test suite. It is local: 36 suites on {site.contract.checkedOn}. It does not certify Chrome or the chain.</li>
+            <li>Run the test suite. It is local — {source.tests} on {site.contract.checkedOn} — and it does not certify Chrome or the chain.</li>
             <li>Build, then load the dist/ folder as an unpacked extension.</li>
             <li>After a code change, reload the extension so the service worker updates too.</li>
             <li>Register a .thru name on a throwaway account first — the registration is a real signed, irreversible broadcast.</li>

@@ -5,16 +5,15 @@ import { McpTables } from "@/components/McpTables";
 import { PageHeader } from "@/components/Section";
 import { aiContext, aiMcp, aiReadFirst } from "@/content/ai";
 import { chromeStoreUrl, site } from "@/content/site";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Agents",
-  description: "How AI agents should read Thru Wallet context without requesting secrets or inventing a provider.",
-};
+export const metadata: Metadata = pageMetadata("/agents");
 
 export default function AgentsPage() {
   return (
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">
       <PageHeader
+        path="/agents"
         kicker="Agents"
         title="Context without custody."
         lede={aiMcp.localRule}

@@ -6,14 +6,12 @@ import { contractTimeline, drift } from "@/content/drift";
 import { completed, roadmap } from "@/content/roadmap";
 import { auditedDoc, release, releaseTracks, site, source, storeStatus, unverified } from "@/content/site";
 import { listSmoke } from "@/lib/catalog";
-import { formatStamp } from "@/lib/format";
+import { formatDay, formatStamp } from "@/lib/format";
+import { pageMetadata } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
-export const metadata: Metadata = {
-  title: "Status",
-  description: "Thru Wallet source baseline, Chrome listing, the contract gap between them, and the browser smoke checklist stored in the catalog.",
-};
+export const metadata: Metadata = pageMetadata("/status");
 
 export default async function StatusPage() {
   const checks = await listSmoke();
@@ -22,9 +20,10 @@ export default async function StatusPage() {
   return (
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">
       <PageHeader
+        path="/status"
         kicker="Status"
         title="Three clocks. One version string."
-        lede="The store build stopped on 2026-10-04. Main kept going for 23 days and 13 contract versions. The repository's own status document describes neither, and one of a hundred browser checks is ticked."
+        lede={`The store build stopped on ${formatDay(storeStatus.publishedOn)}. Main kept going for ${drift.days} days and ${drift.contractVersions} contract versions. The repository\u2019s own status document describes neither, and ${unverified.checked} of ${unverified.cells} browser checks is ticked.`}
         meta={`${passed} of ${checks.length} desk rows marked pass · ${unverified.checked} of ${unverified.cells} cells in the extension's own runbook`}
       />
 

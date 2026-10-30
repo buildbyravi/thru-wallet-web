@@ -12,6 +12,24 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
   {
     version: "site",
+    date: "2026-10-30",
+    title: "One description, one canonical, and one file to edit them in",
+    tag: "DOCS",
+    summary:
+      "Search metadata moved out of eleven page files into src/content/seo.ts, which now also generates the sitemap, robots.txt, the verification file and the JSON-LD graph. Nothing about the extension moved. This entry exists so the sitemap's lastModified is not a lie.",
+    changes: [
+      "src/content/seo.ts is the single registry: title, description, keywords, canonical path, sitemap priority and crawl directives for all 21 indexable routes. pageMetadata(path) turns an entry into Next metadata.",
+      "/sitemap.xml lists 21 URLs, /robots.txt allows crawlers and AI agents while disallowing /api/ and /desk, and /manifest.webmanifest resolves. All three are generated from that registry, not written by hand.",
+      "Structured data: Organization and WebSite sitewide, SoftwareApplication on the homepage, BreadcrumbList on every section with visible breadcrumbs to match, TechArticle on documents, CollectionPage on /docs.",
+      "Google Search Console: the verification token is committed in src/content/seo.ts, so the meta tag is emitted and /google<token>.html answered by a rewrite on a deploy that sets nothing; GOOGLE_SITE_VERIFICATION and GOOGLE_SITE_VERIFICATION_FILE override either method without a code change. Steps are in SEO.md.",
+      "/extension and /chrome are now 308 rather than 307, so the old names pass their signal to /install instead of asking a crawler to keep both.",
+      "Three pages that were force-dynamic (/, /status, /changelog) revalidate every five minutes instead: a faster answer for a crawler, with desk writes still landing immediately through revalidatePath.",
+      "/desk is noindex, through both its metadata and an X-Robots-Tag header. It is an editor, not a page.",
+      "The primary nav existed but was never rendered. It is in the header now, so every section is one hop from every page.",
+    ],
+  },
+  {
+    version: "site",
     date: "2026-10-27",
     title: "Thirteen contract versions ahead, one version string",
     tag: "DOCS",
@@ -98,20 +116,6 @@ export const changelog: ChangelogEntry[] = [
     ],
   },
   {
-    version: "v17 → v19",
-    date: "2026-10-08",
-    title: "Forty-three DeFi methods, and name reads that answer the chain",
-    tag: "RELEASE",
-    summary:
-      "One drop declared the whole DeFi surface behind flags that are false, and made the name service a read-live, write-gated module. None of it is a screen you can reach.",
-    changes: [
-      "v17 and v18 append 29 read/local methods and 14 prepare/execute methods: program discovery, market reads and a watchlist, risk assessment, launchpad drafts, dex pools, intents, and desktop.open. Only intent.submit signs, and it refuses FEATURE_DISABLED.",
-      "v19 makes name.lookup, name.checkAvailability and name.getCanonicalRoot always-on truth asks while name.initRoot and name.setRecord stay gated. The canonical-root read is what lets the UI offer a root that actually exists on the running network.",
-      "Every DEFI_* flag is a build-time constant with no URL and no storage override, and the launchpad quarantine test keeps the override surface inert.",
-      "The same month's G-series work explores the live AMM and registry surfaces in scripts and evidence files. Exploration is not a screen.",
-    ],
-  },
-  {
     version: "v20 → v22",
     date: "2026-10-10",
     title: "A real intent pipeline, a primary name, and paid .thru leases",
@@ -123,6 +127,20 @@ export const changelog: ChangelogEntry[] = [
       "v21 adds the wallet-local, network-scoped primary-name record. Linking verifies on-chain ownership through the always-on lookup; nothing signs.",
       "v22 adds the official paid-lease registry reads plus purchase, renew and claim-expired, built from first-party formats with a 0n header fee — the registrar prices in its own payment token.",
       "None of it is reachable: the flags stay off and the only DeFi screen that ever shipped was withdrawn on 2026-10-26.",
+    ],
+  },
+  {
+    version: "v17 → v19",
+    date: "2026-10-08",
+    title: "Forty-three DeFi methods, and name reads that answer the chain",
+    tag: "RELEASE",
+    summary:
+      "One drop declared the whole DeFi surface behind flags that are false, and made the name service a read-live, write-gated module. None of it is a screen you can reach.",
+    changes: [
+      "v17 and v18 append 29 read/local methods and 14 prepare/execute methods: program discovery, market reads and a watchlist, risk assessment, launchpad drafts, dex pools, intents, and desktop.open. Only intent.submit signs, and it refuses FEATURE_DISABLED.",
+      "v19 makes name.lookup, name.checkAvailability and name.getCanonicalRoot always-on truth asks while name.initRoot and name.setRecord stay gated. The canonical-root read is what lets the UI offer a root that actually exists on the running network.",
+      "Every DEFI_* flag is a build-time constant with no URL and no storage override, and the launchpad quarantine test keeps the override surface inert.",
+      "The same month's G-series work explores the live AMM and registry surfaces in scripts and evidence files. Exploration is not a screen.",
     ],
   },
   {

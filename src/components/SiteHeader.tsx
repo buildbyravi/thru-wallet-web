@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Mark } from "@/components/Mark";
+import { PrimaryNav } from "@/components/PrimaryNav";
 import { StoreButton } from "@/components/StoreButton";
 
 export function SiteHeader() {
@@ -14,6 +15,13 @@ export function SiteHeader() {
           </span>
         </Link>
         <StoreButton />
+      </div>
+      {/* Every page links to every top-level page. A crawler gets one hop to any section, and a
+          reader does too — the footer alone put the whole map two screens down. */}
+      <div className="border-t border-rule/70">
+        <div className="mx-auto max-w-[1120px] px-5 py-2.5 sm:px-8">
+          <PrimaryNav />
+        </div>
       </div>
     </header>
   );

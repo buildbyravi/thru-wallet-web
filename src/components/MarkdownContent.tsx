@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { CopyButton } from "@/components/CopyButton";
+import { CodeBlock } from "@/components/CodeBlock";
 
 type Node =
   | { type: "h2" | "h3" | "p" | "quote"; text: string }
@@ -19,6 +19,8 @@ function isBlockStart(line: string) {
   );
 }
 
+const TABLE_SEPARATOR = /^\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?$/;
+
 function parseTable(lines: string[]): Node | null {
   const cells = (line: string) =>
     line
@@ -27,12 +29,15 @@ function parseTable(lines: string[]): Node | null {
       .map((cell) => cell.trim());
   if (lines.length < 2) return null;
   const headers = cells(lines[0] ?? "");
-  const rows = lines.slice(2).map(cells).filter((row) => row.length > 0);
   if (headers.length === 0) return null;
+  // The second row is the alignment separator only if it looks like one. Assuming it always is
+  // silently swallowed the first data row of any table written without a separator.
+  const hasSeparator = TABLE_SEPARATOR.test((lines[1] ?? "").trim());
+  const rows = lines.slice(hasSeparator ? 2 : 1).map(cells).filter((row) => row.length > 0);
   return { type: "table", headers, rows };
 }
 
-export function parseMarkdown(source: string): Node[] {
+function parseMarkdown(source: string): Node[] {
   const lines = source.replace(/\r\n/g, "\n").split("\n");
   const nodes: Node[] = [];
   let i = 0;
@@ -220,17 +225,11 @@ function renderNode(node: Node, index: number): ReactNode {
     );
   }
   if (node.type === "code") {
+    // Same figure the install page renders, rather than a near-copy of it. The two had drifted
+    // already: this one labelled the block with its language, the other with a caption.
     return (
       <div key={index} className="not-prose">
-        <figure className="overflow-hidden rounded-2xl bg-plate text-paper">
-          <figcaption className="flex items-center justify-between border-b border-white/10 px-4 py-2">
-            <span className="label text-paper/60">{node.lang ?? "text"}</span>
-            <CopyButton value={node.code} />
-          </figcaption>
-          <pre className="overflow-x-auto px-4 py-4">
-            <code className="mono text-[12.5px] leading-relaxed">{node.code}</code>
-          </pre>
-        </figure>
+        <CodeBlock code={node.code} label={node.lang ?? "text"} />
       </div>
     );
   }

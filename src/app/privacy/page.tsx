@@ -3,17 +3,15 @@ import Link from "next/link";
 import { PageHeader } from "@/components/Section";
 import { privacy } from "@/content/privacy";
 import { site } from "@/content/site";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Privacy",
-  description:
-    "Thru Wallet's privacy policy: what stays on your device, what leaves it, and what is never collected.",
-};
+export const metadata: Metadata = pageMetadata("/privacy");
 
 export default function PrivacyPage() {
   return (
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">
       <PageHeader
+        path="/privacy"
         kicker="Privacy"
         title="Nothing leaves your browser but signed transactions."
         lede={privacy.intro}

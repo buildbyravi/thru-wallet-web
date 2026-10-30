@@ -465,6 +465,7 @@ Authored product copy is TypeScript, so a change is reviewable.
 | src/content/docs.ts | Docs hub markdown |
 | src/content/smoke.ts | Smoke checklist seed and open doc slots |
 | src/content/privacy.ts | The privacy policy, published at /privacy |
+| src/content/seo.ts | Title, description, keywords, canonical path, sitemap priority and crawl directives for every route — see SEO.md |
 
 ## Desk
 

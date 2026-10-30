@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DocsCollectionJsonLd } from "@/components/JsonLd";
 import { PageHeader } from "@/components/Section";
 import { docSlots } from "@/content/smoke";
 import { docs } from "@/content/docs";
 import { DocsFilter } from "@/components/DocsFilter";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Docs",
-  description: "Thru Wallet documentation hub: install, architecture, security, agents, and the content guide.",
-};
+export const metadata: Metadata = pageMetadata("/docs");
 
 export default function DocsPage() {
   return (
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">
+      <DocsCollectionJsonLd />
       <PageHeader
+        path="/docs"
         kicker="Docs"
         title="A short dossier, not a second repository."
         lede="These pages describe the extension and this website. The extension repository remains authoritative for source behavior."

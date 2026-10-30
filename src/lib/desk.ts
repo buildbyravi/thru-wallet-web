@@ -1,5 +1,5 @@
 import { createHash, randomBytes, timingSafeEqual } from "crypto";
-import { eq } from "drizzle-orm";
+import { eq, lt } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { db } from "@/db";
 import { deskSessions } from "@/db/schema";
@@ -33,12 +33,20 @@ export async function createSession() {
   if (!db || !expectedPassword()) {
     throw new Error("DATABASE_URL and DESK_PASSWORD are required to open the desk.");
   }
+  // Two sessions per unlocked desk would otherwise accumulate forever: nothing else deletes rows,
+  // and an expired token stays valid-looking in the table. Clearing the tail on each login keeps
+  // the table bounded without a cron job.
+  await db.delete(deskSessions).where(lt(deskSessions.expiresAt, new Date()));
+
   const token = randomBytes(24).toString("hex");
   const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 12);
   await db.insert(deskSessions).values({ token, expiresAt });
   const jar = await cookies();
   jar.set(COOKIE, token, {
     httpOnly: true,
+    // Without this the session cookie is sent over plain HTTP as well, so anyone on the network
+    // path can lift a desk session from an http:// request. Production is HTTPS-only.
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
     expires: expiresAt,

@@ -5,13 +5,11 @@ import { createNote, deleteNote, login, logout, updateSmoke } from "@/app/desk/a
 import { listNotes, listSmoke } from "@/lib/catalog";
 import { deskIsWritable, isDeskAuthed, passwordHint } from "@/lib/desk";
 import { formatStamp } from "@/lib/format";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Desk",
-  description: "Local catalog desk for Thru Wallet field notes and smoke-check marks.",
-};
+export const metadata: Metadata = pageMetadata("/desk");
 
 export default async function DeskPage({
   searchParams,
@@ -30,11 +28,14 @@ export default async function DeskPage({
         ? "The note was rejected. Use a title of 4–140 characters and a body of 8–4000."
         : error === "auth"
           ? "The desk gate closed. Sign in again."
-          : null;
+          : error === "write"
+            ? "The catalog did not accept that write. Nothing was saved — try again."
+            : null;
 
   return (
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">
       <PageHeader
+        path="/desk"
         kicker="Desk"
         title="A ledger, not a wallet."
         lede="Field notes and smoke marks live in Postgres. The gate only protects this editor. It does not protect keys, and notes are public on the changelog."

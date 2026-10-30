@@ -55,6 +55,9 @@ read-only.
 | `DATABASE_URL` | no | Postgres connection for the desk (field notes, smoke marks, sessions). |
 | `DESK_PASSWORD` | no | Gate for `/desk` writes. No default — absent means read-only. |
 | `NEXT_PUBLIC_SITE_URL` | no | Canonical origin for metadata. Defaults to `https://thruwallet.vercel.app`. |
+| `GOOGLE_SITE_VERIFICATION` | no | Search Console token. Emits the verification meta tag; also the default for the HTML-file method. See [SEO.md](SEO.md). |
+| `GOOGLE_SITE_VERIFICATION_FILE` | no | Only if Search Console issues a different token for the HTML-file method. Defaults to the value above. |
+| `BING_SITE_VERIFICATION` | no | Bing Webmaster Tools token, emitted as `msvalidate.01`. |
 
 The desk needs **both** `DATABASE_URL` and `DESK_PASSWORD` to accept writes. Sessions live in a
 `thru_desk` cookie; the password is compared as SHA-256 digests with `timingSafeEqual`. The gate
@@ -105,6 +108,25 @@ npm run typecheck  # tsc --noEmit
 | `/api/health` | Database reachability |
 | `/api/smoke` | Smoke-check rows |
 
+## Search
+
+Every crawler-facing value comes from one file, [`src/content/seo.ts`](src/content/seo.ts): the
+title, the description, the canonical path, the sitemap priority, and the JSON-LD that describes
+the page. `src/lib/seo.ts` turns an entry into Next metadata; the pages call
+`pageMetadata("/install")` and nothing else.
+
+| Surface | Route | Source |
+| --- | --- | --- |
+| Sitemap | `/sitemap.xml` | `src/app/sitemap.ts` — 21 indexable routes, `lastModified` from the newest changelog entry |
+| Crawl policy | `/robots.txt` | `src/app/robots.ts` — allows crawlers and AI agents, disallows `/api/` and `/desk` |
+| Structured data | in every page | `src/components/JsonLd.tsx` — `Organization`, `WebSite`, `SoftwareApplication`, `BreadcrumbList`, `TechArticle`, `CollectionPage` |
+| Social card | `/opengraph-image` | `src/app/opengraph-image.tsx` |
+| Verification | meta + `/google<token>.html` | `GOOGLE_SITE_VERIFICATION`, rewritten in `next.config.ts` |
+
+`/desk`, `/api/*` and the 404s are `noindex`. `/extension` and `/chrome` are 308 redirects to
+`/install`. Setting up Google Search Console — property, verification, sitemap, first crawl — is
+written out step by step in **[SEO.md](SEO.md)**.
+
 ## Content map
 
 Product copy is TypeScript, so every fact is reviewable in a diff.
@@ -124,6 +146,7 @@ Product copy is TypeScript, so every fact is reviewable in a diff.
 | `src/content/smoke.ts` | Smoke checklist seed, open doc slots |
 | `src/content/seeds.ts` | Field notes used when Postgres is absent |
 | `src/content/ai.ts` | MCP policy tables, pasteable agent context |
+| `src/content/seo.ts` | Title, description, keywords, canonical path, sitemap priority and crawl directives for every route |
 
 ## Updating the facts
 
@@ -136,7 +159,8 @@ The site is only worth reading because the numbers are current. When the extensi
    `site.auditedDoc`.
 3. Re-count `docs/MANUAL_SMOKE_CHECKLIST.md` for `unverified` — quote the unit (lines vs cells).
 4. Add a changelog entry saying **which artifact moved**, then update the docs pages that repeat it.
-5. `npm run typecheck && npm run lint && npm run build`.
+5. `npm run typecheck && npm run lint && npm run build`. The sitemap's `lastModified`
+   follows the newest changelog entry, so a content change without an entry is a stale date.
 
 Rules the content layer is built around:
 

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArchDiagram } from "@/components/ArchDiagram";
 import { Badge } from "@/components/Badge";
@@ -15,7 +16,6 @@ import {
   chromeStoreUrl,
   extensionId,
   heroMetrics,
-  release,
   releaseTracks,
   site,
   storeStatus,
@@ -23,8 +23,13 @@ import {
 } from "@/content/site";
 import { listNotes } from "@/lib/catalog";
 import { formatDay, formatStamp } from "@/lib/format";
+import { pageMetadata } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
+// Indexed pages are re-rendered every five minutes instead of on every request: faster for a
+// crawler, and desk edits still land because the desk actions call revalidatePath().
+export const revalidate = 300;
+
+export const metadata: Metadata = pageMetadata("/");
 
 const installCommands = `git clone https://github.com/buildbyravi/thru-wallet-ext.git
 cd thru-wallet-ext
