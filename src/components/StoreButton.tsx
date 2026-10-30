@@ -1,20 +1,16 @@
 import { chromeStoreUrl } from "@/content/site";
 
+// Only two tones are ever asked for. "ink" and "line" existed as variants and were never passed:
+// the pages that want those tones use `className="btn btn-ink"` directly, because they link
+// somewhere other than the store. A variant no call site uses is a second way to do one thing.
 export function StoreButton({
   variant = "store",
   label = "Add to Chrome",
 }: {
-  variant?: "store" | "ink" | "line" | "ghost";
+  variant?: "store" | "ghost";
   label?: string;
 }) {
-  const tone =
-    variant === "ink"
-      ? "btn-ink"
-      : variant === "line"
-        ? "btn-line"
-        : variant === "ghost"
-          ? "btn-ghost"
-          : "btn-store";
+  const tone = variant === "ghost" ? "btn-ghost" : "btn-store";
 
   return (
     <a className={`btn ${tone}`} href={chromeStoreUrl} target="_blank" rel="noopener noreferrer">

@@ -16,7 +16,6 @@ import {
   chromeStoreUrl,
   extensionId,
   heroMetrics,
-  release,
   releaseTracks,
   site,
   storeStatus,

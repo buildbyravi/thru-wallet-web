@@ -9,17 +9,37 @@ export const extensionId = "ocahgpmgfeapjnceaknkikanjikhjgok";
 export const siteUrl = "https://thruwallet.vercel.app";
 export const privacyUrl = `${siteUrl}/privacy`;
 
+// The 144 methods, split by what the auth policy demands before a call is allowed. These four
+// numbers used to be literals inside llms.ts, where a contract change would have left them
+// silently wrong. `assertMethodSplit()` below keeps the parts and the total honest at build time.
+const methodSplit = {
+  callableWhenLocked: 72,
+  callableUnlocked: 51,
+  passwordGated: 12,
+  signingGated: 9,
+} as const;
+
+function assertMethodSplit() {
+  const parts = Object.values(methodSplit).reduce((sum, value) => sum + value, 0);
+  if (parts !== drift.sourceMethods) {
+    throw new Error(
+      `site.contract method split sums to ${parts}, but drift.sourceMethods is ${drift.sourceMethods}. ` +
+        "Update methodSplit in src/content/site.ts when the contract changes.",
+    );
+  }
+}
+
+assertMethodSplit();
+
 export const site = {
   name: "Thru Wallet",
   shortName: "Thru",
-  tagline: "Betanet",
   descriptor: "An experimental, self-custody browser extension for Thru's native Layer 1 betanet.",
   summary:
     "Thru Wallet is an unofficial, high-performance browser extension for personal key management, transfers, and .thru name registration on the Thru betanet — built on the real @thru/sdk and @thru/programs packages.",
   disclaimer:
     "Community-built, open-source software for the Thru betanet testnet. Not affiliated with or endorsed by Unto Labs. Not audited. Do not use with real financial value.",
   baselineCommit: drift.sourceCommit,
-  baselineDate: drift.sourceDate,
   routesCount: drift.sourceRoutes,
   status: "ALPHA" as const,
   warning:
@@ -99,6 +119,7 @@ export const site = {
     programs: "@thru/programs@0.4.2",
     kdf: "PBKDF2-SHA256 · 600,000",
     cipher: "AES-256-GCM",
+    ...methodSplit,
     unit: "THRU is displayed at nine decimals",
     auditedCommit: "4aa55ba",
     auditedOn: "2026-09-26",

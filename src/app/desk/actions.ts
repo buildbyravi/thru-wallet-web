@@ -43,19 +43,29 @@ export async function createNote(formData: FormData) {
 
 export async function deleteNote(formData: FormData) {
   if (!(await isDeskAuthed())) redirect("/desk?error=auth");
-  await removeNote(String(formData.get("id") ?? ""));
+  try {
+    await removeNote(String(formData.get("id") ?? ""));
+  } catch {
+    // A dropped connection or a database that is gone used to surface as the error boundary.
+    // The desk is an editor; a failed edit belongs next to the form.
+    redirect("/desk?error=write");
+  }
   refresh();
 }
 
 export async function updateSmoke(formData: FormData) {
   if (!(await isDeskAuthed())) redirect("/desk?error=auth");
   const keys = formData.getAll("keys").map(String);
-  await saveSmoke(
-    keys.map((itemKey) => ({
-      itemKey,
-      status: String(formData.get(`status:${itemKey}`) ?? "open"),
-      note: String(formData.get(`note:${itemKey}`) ?? ""),
-    })),
-  );
+  try {
+    await saveSmoke(
+      keys.map((itemKey) => ({
+        itemKey,
+        status: String(formData.get(`status:${itemKey}`) ?? "open"),
+        note: String(formData.get(`note:${itemKey}`) ?? ""),
+      })),
+    );
+  } catch {
+    redirect("/desk?error=write");
+  }
   refresh();
 }

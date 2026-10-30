@@ -17,12 +17,19 @@ export async function POST(request: Request) {
   } | null;
   const updates = body?.updates?.filter((item) => item.itemKey) ?? [];
   if (updates.length === 0) return Response.json({ error: "no_updates" }, { status: 400 });
-  await saveSmoke(
-    updates.map((item) => ({
-      itemKey: item.itemKey ?? "",
-      status: item.status ?? "open",
-      note: item.note ?? "",
-    })),
-  );
-  return Response.json({ ok: true });
+  try {
+    await saveSmoke(
+      updates.map((item) => ({
+        itemKey: item.itemKey ?? "",
+        status: item.status ?? "open",
+        note: item.note ?? "",
+      })),
+    );
+    return Response.json({ ok: true });
+  } catch (error) {
+    // saveSmoke needs Postgres; a session can outlive the database (or a Docker network), and an
+    // uncaught throw here answered with a bare 500 and no body.
+    const message = error instanceof Error ? error.message : "write_failed";
+    return Response.json({ error: message }, { status: 503 });
+  }
 }

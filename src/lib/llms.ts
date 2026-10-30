@@ -44,13 +44,13 @@ The store package was cut from the same commit as the source release (${drift.st
 
 ## Source facts (main, read ${site.contract.checkedOn})
 
-- Contract ${source.contract}, ${source.methods} methods; 72 callable while locked, 51 unlocked, 12 password-gated, 9 signing-gated
+- Contract ${source.contract}, ${source.methods} methods; ${site.contract.callableWhenLocked} callable while locked, ${site.contract.callableUnlocked} unlocked, ${site.contract.passwordGated} password-gated, ${site.contract.signingGated} signing-gated
 - ${source.routes} routes, popup ${site.contract.popupWidthPx}px, ${site.contract.domSinks} DOM sinks
 - Vault: ${site.contract.kdf}, ${site.contract.cipher}
 - Packages ${source.sdk} and ${source.programs}; network ${source.network} (${source.rpc}) as the only connect-src
 - Permissions: ${source.permissions.join(", ")}
 - Local suite: ${source.tests} — deterministic, local, not a browser
-- The 43-method DeFi surface exists behind build-time flags that are all false. No swap, launchpad or prediction screen ships
+- The ${drift.sourceDefi}-method DeFi surface exists behind build-time flags that are all false. No swap, launchpad or prediction screen ships
 - AGENTS.md rule 15: the frontend never waits on a chain read before first paint
 
 ## Domains (.thru)
@@ -83,8 +83,8 @@ ${sinceStore.map((item) => `- ${item.title} — ${item.detail}`).join("\n")}
 
 - ${privacy.intro}
 - Nothing is collected: no analytics, telemetry, tracking, third-party scripts, or remote code.
-- Only the betanet RPC is contacted, directly from the browser (https://rpc.betanet.thru.org). The developer runs no relay or backend.
-- Keys never leave local memory; the vault is PBKDF2-SHA256 600,000 then AES-256-GCM, ciphertext in chrome.storage.local, unlocked session in memory-only session storage.
+- Only the betanet RPC is contacted, directly from the browser (${source.rpc}). The developer runs no relay or backend.
+- Keys never leave local memory; the vault is ${site.contract.kdf} then ${site.contract.cipher}, ciphertext in chrome.storage.local, unlocked session in memory-only session storage.
 - Full policy: ${privacyUrl}
 
 ## Read
@@ -114,7 +114,7 @@ export function llmsFull() {
     .map((entry) => `### ${entry.version} · ${entry.date} · ${entry.title}\n\n${entry.summary}\n\n${entry.changes.map((change) => `- ${change}`).join("\n")}`)
     .join("\n\n");
   const docText = docs
-    .map((doc) => `## Doc: ${doc.title} (/${doc.slug})\n\n${doc.markdown.trim()}`)
+    .map((doc) => `## Doc: ${doc.title} (/docs/${doc.slug})\n\n${doc.markdown.trim()}`)
     .join("\n\n");
 
   return `${llmsShort()}

@@ -42,7 +42,6 @@ function newestDate(dates: string[]): string {
 }
 
 export const lastReviewed = newestDate(changelog.map((entry) => entry.date));
-export const siteUpdatedOn = lastReviewed;
 
 export const routes: RouteSeo[] = [
   {
@@ -241,13 +240,3 @@ export const organization = {
     "https://t.me/walletext",
   ],
 } as const;
-
-/** The phrases the site is actually trying to answer, used in the docs and in this file alike. */
-export const searchIntents = [
-  "thru wallet chrome extension",
-  "thru betanet wallet",
-  "how to install thru wallet",
-  "thru wallet contract version",
-  "thru name service .thru",
-  "thru wallet privacy policy",
-] as const;

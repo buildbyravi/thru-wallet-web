@@ -28,7 +28,9 @@ export default async function DeskPage({
         ? "The note was rejected. Use a title of 4–140 characters and a body of 8–4000."
         : error === "auth"
           ? "The desk gate closed. Sign in again."
-          : null;
+          : error === "write"
+            ? "The catalog did not accept that write. Nothing was saved — try again."
+            : null;
 
   return (
     <main className="mx-auto max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16">

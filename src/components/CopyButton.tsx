@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 
+type CopyState = "idle" | "copied" | "failed";
+
 export function CopyButton({ value, label = "Copy" }: { value: string; label?: string }) {
-  const [copied, setCopied] = useState(false);
+  const [state, setState] = useState<CopyState>("idle");
 
   return (
     <button
@@ -12,14 +14,16 @@ export function CopyButton({ value, label = "Copy" }: { value: string; label?: s
       onClick={async () => {
         try {
           await navigator.clipboard.writeText(value);
-          setCopied(true);
-          window.setTimeout(() => setCopied(false), 1400);
+          setState("copied");
         } catch {
-          setCopied(false);
+          // The clipboard API is unavailable outside a secure context and can be refused by
+          // permission. Saying so beats a button that silently keeps saying "Copy".
+          setState("failed");
         }
+        window.setTimeout(() => setState("idle"), 1800);
       }}
     >
-      {copied ? "Copied" : label}
+      {state === "copied" ? "Copied" : state === "failed" ? "Press ⌘C" : label}
     </button>
   );
 }

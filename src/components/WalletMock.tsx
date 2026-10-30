@@ -1,3 +1,6 @@
+import { Mark } from "@/components/Mark";
+import { drift } from "@/content/drift";
+
 export function WalletMock() {
   return (
     <figure className="relative">
@@ -5,12 +8,7 @@ export function WalletMock() {
       <div className="plate-grain overflow-hidden rounded-[1.7rem] border border-white/10 bg-plate text-paper shadow-[0_30px_70px_rgba(18,18,12,0.28)]">
         <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
           <div className="flex items-center gap-2">
-            <svg viewBox="0 0 32 32" className="h-6 w-6 text-paper" aria-hidden="true">
-              <rect width="32" height="32" rx="7" fill="currentColor" />
-              <rect x="9" y="6" width="3.2" height="20" fill="#12120c" />
-              <rect x="19.8" y="6" width="3.2" height="20" fill="#12120c" />
-              <rect x="14.2" y="13" width="3.6" height="6" fill="#5c6bf5" />
-            </svg>
+            <Mark className="h-6 w-6 text-paper" barFill="#12120c" />
             <div>
               <p className="font-serif text-sm leading-none">Thru</p>
               <p className="label mt-1 text-paper/50">Popup study · 400px</p>
@@ -65,7 +63,7 @@ export function WalletMock() {
             <span className="live-dot h-1.5 w-1.5 rounded-full bg-accent" />
             Betanet
           </p>
-          <p className="label text-paper/50">store v15 · main v28</p>
+          <p className="label text-paper/50">store {drift.storeContract} · main {drift.sourceContract}</p>
         </div>
       </div>
       <figcaption className="mt-3 text-sm text-warm">

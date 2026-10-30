@@ -116,20 +116,6 @@ export const changelog: ChangelogEntry[] = [
     ],
   },
   {
-    version: "v17 → v19",
-    date: "2026-10-08",
-    title: "Forty-three DeFi methods, and name reads that answer the chain",
-    tag: "RELEASE",
-    summary:
-      "One drop declared the whole DeFi surface behind flags that are false, and made the name service a read-live, write-gated module. None of it is a screen you can reach.",
-    changes: [
-      "v17 and v18 append 29 read/local methods and 14 prepare/execute methods: program discovery, market reads and a watchlist, risk assessment, launchpad drafts, dex pools, intents, and desktop.open. Only intent.submit signs, and it refuses FEATURE_DISABLED.",
-      "v19 makes name.lookup, name.checkAvailability and name.getCanonicalRoot always-on truth asks while name.initRoot and name.setRecord stay gated. The canonical-root read is what lets the UI offer a root that actually exists on the running network.",
-      "Every DEFI_* flag is a build-time constant with no URL and no storage override, and the launchpad quarantine test keeps the override surface inert.",
-      "The same month's G-series work explores the live AMM and registry surfaces in scripts and evidence files. Exploration is not a screen.",
-    ],
-  },
-  {
     version: "v20 → v22",
     date: "2026-10-10",
     title: "A real intent pipeline, a primary name, and paid .thru leases",
@@ -141,6 +127,20 @@ export const changelog: ChangelogEntry[] = [
       "v21 adds the wallet-local, network-scoped primary-name record. Linking verifies on-chain ownership through the always-on lookup; nothing signs.",
       "v22 adds the official paid-lease registry reads plus purchase, renew and claim-expired, built from first-party formats with a 0n header fee — the registrar prices in its own payment token.",
       "None of it is reachable: the flags stay off and the only DeFi screen that ever shipped was withdrawn on 2026-10-26.",
+    ],
+  },
+  {
+    version: "v17 → v19",
+    date: "2026-10-08",
+    title: "Forty-three DeFi methods, and name reads that answer the chain",
+    tag: "RELEASE",
+    summary:
+      "One drop declared the whole DeFi surface behind flags that are false, and made the name service a read-live, write-gated module. None of it is a screen you can reach.",
+    changes: [
+      "v17 and v18 append 29 read/local methods and 14 prepare/execute methods: program discovery, market reads and a watchlist, risk assessment, launchpad drafts, dex pools, intents, and desktop.open. Only intent.submit signs, and it refuses FEATURE_DISABLED.",
+      "v19 makes name.lookup, name.checkAvailability and name.getCanonicalRoot always-on truth asks while name.initRoot and name.setRecord stay gated. The canonical-root read is what lets the UI offer a root that actually exists on the running network.",
+      "Every DEFI_* flag is a build-time constant with no URL and no storage override, and the launchpad quarantine test keeps the override surface inert.",
+      "The same month's G-series work explores the live AMM and registry surfaces in scripts and evidence files. Exploration is not a screen.",
     ],
   },
   {

@@ -138,14 +138,24 @@ export async function saveSmoke(
   updates: Array<{ itemKey: string; status: string; note: string }>,
 ) {
   const database = requireDatabase();
+
+  // The desk submits one form containing every row, so a naive loop rewrites all 19 rows — and
+  // their `updatedAt` — when a person changed one checkbox. That falsifies "last updated", which
+  // the status page renders, and does 19 UPDATEs for one edit. Compare first, write the changes.
+  const existing = await database
+    .select({ itemKey: smokeChecks.itemKey, status: smokeChecks.status, note: smokeChecks.note })
+    .from(smokeChecks);
+  const current = new Map(existing.map((row) => [row.itemKey, row]));
+
   for (const update of updates) {
+    const before = current.get(update.itemKey);
+    if (!before) continue;
+    const status = normalizeSmokeStatus(update.status);
+    const note = update.note.trim() || null;
+    if (before.status === status && (before.note ?? null) === note) continue;
     await database
       .update(smokeChecks)
-      .set({
-        status: normalizeSmokeStatus(update.status),
-        note: update.note.trim() || null,
-        updatedAt: new Date(),
-      })
+      .set({ status, note, updatedAt: new Date() })
       .where(eq(smokeChecks.itemKey, update.itemKey));
   }
 }
