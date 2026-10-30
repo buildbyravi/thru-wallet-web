@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   // Google Search Console → Settings → Ownership verification → HTML tag.
   // The token is public by design; it ships in the page source of every verified site.
   verification: {
-    google: verificationToken ?? undefined,
+    google: verificationToken,
     other: bingVerificationToken ? { "msvalidate.01": bingVerificationToken } : undefined,
   },
   openGraph: {

@@ -20,7 +20,7 @@ should be set before you verify anything.
 | Variable | Example | Why |
 | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | `https://thruwallet.vercel.app` | Canonical tags, `og:url`, sitemap URLs, `robots.txt`, and every JSON-LD `@id`. If this is wrong, you are asking Google to index an address that is not the site. |
-| `GOOGLE_SITE_VERIFICATION` | `kZ8…` (43 characters) | Copied from Search Console. Emitted as `<meta name="google-site-verification">` **and** served as the HTML verification file. Public by design. |
+| `GOOGLE_SITE_VERIFICATION` | `kZ8…` (43 characters) | Optional override. The current token is committed in `src/content/seo.ts`, so the tag is already live; set this only to replace it. Emitted as `<meta name="google-site-verification">` **and** served as the HTML verification file. Public by design. |
 | `BING_SITE_VERIFICATION` | `1A2B…` | Optional. Emitted as `<meta name="msvalidate.01">` for Bing Webmaster Tools. |
 
 > A preview deployment must not inherit production's `NEXT_PUBLIC_SITE_URL`. If it does, two hosts
@@ -42,10 +42,18 @@ should be set before you verify anything.
 
 ### Method A — HTML tag (recommended here)
 
-1. Choose **HTML tag** in the verification dialog and copy the value of `content` — the token, not
-   the whole `<meta>` tag.
-2. In Vercel, add it as `GOOGLE_SITE_VERIFICATION` and redeploy.
-3. Confirm the tag is live before clicking **Verify**:
+The tag is already in the page source:
+
+```html
+<meta name="google-site-verification" content="BGKQlv57PUBBFxHxmUw8wgFcmO70Y3yl-g5vTKY4dCo" />
+```
+
+It comes from `googleVerificationToken` in [`src/content/seo.ts`](src/content/seo.ts), so a deploy
+that sets no environment variables still verifies. If Search Console issues a **new** token, either
+edit that constant or set `GOOGLE_SITE_VERIFICATION` — the environment wins — then redeploy.
+
+1. Choose **HTML tag** in the verification dialog. The `content` value should match the constant.
+2. Confirm the tag is live before clicking **Verify**:
 
    ```bash
    curl -s https://thruwallet.vercel.app/ | grep -o '<meta name="google-site-verification"[^>]*>'

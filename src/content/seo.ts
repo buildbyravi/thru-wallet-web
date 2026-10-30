@@ -212,6 +212,12 @@ export const privatePaths = [...routes, ...docRoutes]
   .filter((entry) => entry.noindex)
   .map((entry) => entry.path);
 
+// Google Search Console ownership token for https://thruwallet.vercel.app, issued 2026-10-30.
+// Public by design: it ships inside the page source of the very site it verifies, which is the
+// point. Keep it here rather than in a template so re-creating the property is one edit.
+// Override per-environment with GOOGLE_SITE_VERIFICATION (e.g. after moving to a custom domain).
+export const googleVerificationToken = "BGKQlv57PUBBFxHxmUw8wgFcmO70Y3yl-g5vTKY4dCo";
+
 export const organization = {
   name: "buildbyravi",
   role: "community developer",

@@ -18,9 +18,8 @@ export async function GET(
   const token = googleSiteVerification();
   const { file } = await params;
 
-  if (!token) {
-    return text("Google site verification is not configured on this deployment.\n", 404);
-  }
+  // The token is never empty — it falls back to the committed value — so the only failure mode
+  // is a filename that does not match it. Anything else is a 404 with a body, not an error page.
   if (file !== `google${token}.html`) {
     return text("Not found.\n", 404);
   }

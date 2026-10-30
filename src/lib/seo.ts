@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getRouteSeo, lastReviewed, organization, type RouteSeo } from "@/content/seo";
+import { getRouteSeo, googleVerificationToken, lastReviewed, organization, type RouteSeo } from "@/content/seo";
 import { chromeStoreUrl, site } from "@/content/site";
 
 // The site has one origin. Everything search engines read — canonical tags, Open Graph URLs, the
@@ -26,10 +26,15 @@ export function absoluteUrl(path = "/"): string {
   return new URL(path, siteOrigin()).toString();
 }
 
-/** The Google Search Console verification token, read once from the environment. */
-export function googleSiteVerification(): string | null {
-  const token = process.env.GOOGLE_SITE_VERIFICATION?.trim();
-  return token && token.length > 0 ? token : null;
+/**
+ * The Google Search Console verification token. `GOOGLE_SITE_VERIFICATION` wins so a re-created
+ * property or a new origin can be verified by changing an environment variable, and the committed
+ * token in `src/content/seo.ts` is the default so the meta tag is present on a deploy that sets
+ * nothing at all. Both are public — Search Console reads them from the page source.
+ */
+export function googleSiteVerification(): string {
+  const fromEnv = process.env.GOOGLE_SITE_VERIFICATION?.trim();
+  return fromEnv && fromEnv.length > 0 ? fromEnv : googleVerificationToken;
 }
 
 const OG_IMAGE = { url: "/opengraph-image", width: 1200, height: 630 } as const;
